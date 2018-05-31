@@ -10,9 +10,11 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
  */
 public class MecanumDT extends HolonomicDT {
     DcMotor lf, la, rf, ra;
-    public double leftForePow, rightForePow, angleBetween;
-    public MecanumDT(double brakePow){
+    public double leftForePow, rightForePow, leftAftPow, rightAftPow, angleBetween;
+    public final double MAXIMUM_SPEED;
+    public MecanumDT(double brakePow, double max){
         super(brakePow);
+        MAXIMUM_SPEED = max;
     }
     public void init(){
         super.init();
@@ -24,7 +26,7 @@ public class MecanumDT extends HolonomicDT {
 
     //returns the power of the left rear and right fore motors needed to drive at a given angle at a given speed
     public double getRightForePow(double ang, double speed){
-        return Math.sin(ang + Math.PI / 4) * speed / 2;
+        return Math.sin(ang + Math.PI / 4) * speed * MAXIMUM_SPEED / 2;
     }
 
     //returns the power of the left rear and right fore motors needed to drive along a given vector
@@ -34,7 +36,7 @@ public class MecanumDT extends HolonomicDT {
 
     //returns the power of the left fore and right rear motors needed to drive at a given angle at a given speed
     public double getLeftForePow(double ang, double speed){
-        return Math.cos(ang + Math.PI / 4) * speed / 2;
+        return Math.cos(ang + Math.PI / 4) * speed * MAXIMUM_SPEED / 2;
     }
     //returns the power of the left fore and right rear motors needed to drive along a given vector
     public double getLeftForePow(Vector2 vel){
@@ -43,36 +45,13 @@ public class MecanumDT extends HolonomicDT {
     //sets the power of the motors in order to drive at a given angle at a given speed
     public void setVelocity(double ang, double speed){
         rightForePow = getRightForePow(ang, speed);
-        leftForePow= getLeftForePow(ang, speed);
+        leftForePow = getLeftForePow(ang, speed);
+        leftAftPow = rightForePow;
+        rightAftPow = leftForePow;
     }
     //sets the power of the motors in order to drive at a given velocity
     public void setVelocity(Vector2 vel){
         setVelocity(vel.angle(), vel.magnitude());
-    }
-    //sets the power of the left fore and right rear motors
-    public void setLeftForePow(double pow){
-        leftForePow = pow;
-    }
-    //sets the power of the left fore and right rear motors in order to drive at a given angle at a given speed
-    public void setLeftForePow(double ang, double speed){
-        setLeftForePow(getLeftForePow(ang, speed));
-    }
-    //sets the direction of the right fore and left rear motors
-    public void setRightForePow(double pow){
-        rightForePow = pow;
-    }
-    //sets the direction of the right fore and left rear motors in order to drive at a given angle at a given speed
-    public void setRightForePow(double ang, double speed){
-        setRightForePow(getLeftForePow(ang, speed));
-    }
-    //sets the direction of the motors in order to drive at a given velocity
-    public void setRightForePow(Vector2 vel){
-        setRightForePow(vel.angle(), vel.magnitude());
-    }
-    //sets the turnPow variable
-    public void setTurn(double pow){
-        pow *= turnMult;
-        turnPow = pow;
     }
     //sets the motor powers to the specified values
     public void refreshMotors(double I, double II, double III, double IV){
@@ -90,10 +69,10 @@ public class MecanumDT extends HolonomicDT {
     }
     //sets the motor powers to rightForePow and leftForePow respectively
     public void refreshMotors(){
-        setPower(rf, rightForePow - turnPow);
-        setPower(la, rightForePow + turnPow);
-        setPower(lf, leftForePow + turnPow);
-        setPower(ra, leftForePow - turnPow);
+        setPower(rf, rightForePow);
+        setPower(la, leftAftPow);
+        setPower(lf, leftForePow);
+        setPower(ra, rightAftPow);
     }
     //sets the turnMult variable
     public void setTurnMult(double tm){
@@ -101,17 +80,24 @@ public class MecanumDT extends HolonomicDT {
     }
     //normalizes the motor powers to never go above 1 or below -1
     public void normalizeMotors(){
-        double max = UniversalFunctions.maxAbs(leftForePow, rightForePow);
+        double max = UniversalFunctions.maxAbs(leftForePow, rightForePow, leftAftPow, rightAftPow);
         leftForePow /= max;
         rightForePow /= max;
+    }
+
+    public void setTurnPow(){
+        leftForePow += turnPow;
+        leftAftPow += turnPow;
+        rightForePow -= turnPow;
+        rightAftPow -= turnPow;
     }
     public void loop() {
         updateGamepad1();
         setRobotAngle();
         angleBetween = leftStick1.angleBetween(robotAngle);
-        setRightForePow(angleBetween, leftStick1.magnitude());
-        setLeftForePow(angleBetween, leftStick1.magnitude());
+        setVelocity(angleBetween, leftStick1.magnitude());
         switchTurnState();
+        setTurnPow();
         normalizeMotors();
         refreshMotors();
     }
