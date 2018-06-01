@@ -13,20 +13,4 @@ public abstract class SwerveDT extends Drivetrain {
 
 
 
-    @Override
-    public String[] names(){
-        String[] names = {"rf", "lf", "lr", "rr"};
-        return names;
-    }
-
-    @Override
-    public DcMotor[] motors(){
-        DcMotor[] motors = {rf, lf, lr, rr};
-        return motors;
-    }
-    @Override
-    public DcMotor.Direction[] dir(){
-        DcMotor.Direction[] dir = {DcMotor.Direction.FORWARD, DcMotor.Direction.REVERSE, DcMotor.Direction.REVERSE, DcMotor.Direction.FORWARD};
-        return dir;
-    }
 }

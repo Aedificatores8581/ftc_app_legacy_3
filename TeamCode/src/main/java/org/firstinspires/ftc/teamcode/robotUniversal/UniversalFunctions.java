@@ -8,6 +8,18 @@ import java.util.Arrays;
  * Created by Frank Portman on 4/1/2018.
  */
 public abstract class UniversalFunctions {
+    public static double clamp(double min, double test, double max) {
+        if (max < min) {
+            double temp = min;
+            min = max;
+            max = temp;
+        }
+        return Math.max(Math.min(max, test), min);
+    }
+
+    public static boolean withinTolerance(double test, double limit, double tolerance) {
+        return test == clamp(limit - tolerance, test, limit + tolerance);
+    }
     public static double round(double d) {
         if (d < 0) {
             return Math.floor(d);

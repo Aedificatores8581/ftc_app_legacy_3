@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.robotTemplates;
 
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
@@ -17,9 +16,23 @@ public class WestCoast15 extends WestCoastDT{
 
     public WestCoast15(double brakePow, double sped){
         super(brakePow);
-        speed = sped;
+        maxSpeed = speed;
     }
+    @Override
+    public void init(){
+        usingIMU = true;
+        super.init();
+    }
+    @Override
+    public void start(){
+        super.start();
+    }
+    @Override
     public void loop(){
+<<<<<<< HEAD
+        super.loop();
+        initMotors();
+=======
         updateGamepad1();
 
         switch(controlState) {
@@ -65,19 +78,38 @@ public class WestCoast15 extends WestCoastDT{
         }
         setLeftPow();
         setRightPow();
+>>>>>>> master
     }
 
     public void setLeftPow(double pow) {
-        lf.setPower(pow * speed);
-        lr.setPower(pow * speed);
+        lf.setPower(pow * maxSpeed);
+        la.setPower(pow * maxSpeed);
         leftPow = pow;
     }
 
     public void setRightPow(double pow){
-        rf.setPower(pow * speed);
-        rr.setPower(pow * speed);
+        rf.setPower(pow * maxSpeed);
+        ra.setPower(pow * maxSpeed);
         rightPow = pow;
     }
+<<<<<<< HEAD
+    public void initMotors(){
+        rf = hardwareMap.dcMotor.get("rf");
+        lf = hardwareMap.dcMotor.get("lf");
+        la = hardwareMap.dcMotor.get("la");
+        ra = hardwareMap.dcMotor.get("ra");
+        rf.setDirection(REVERSE);
+        ra.setDirection(REVERSE);
+        lf.setDirection(FORWARD);
+        la.setDirection(FORWARD);
+        rf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
+        lf.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
+        la.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
+        ra.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
+    }
+    public void normalizeMotors(){
+
+=======
 
     public DcMotor[] motors(){
         DcMotor[] motors = {rf, lf, lr, rr};
@@ -92,5 +124,7 @@ public class WestCoast15 extends WestCoastDT{
     public DcMotor.Direction[] dir(){
         DcMotor.Direction[] dir = {FORWARD, REVERSE, REVERSE, FORWARD};
         return dir;
+>>>>>>> master
     }
+
 }

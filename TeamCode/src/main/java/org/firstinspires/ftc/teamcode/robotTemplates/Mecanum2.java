@@ -1,21 +1,23 @@
 package org.firstinspires.ftc.teamcode.robotTemplates;
 
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
-import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
-
 /**
  * Created by Frank Portman on 5/21/2018
  */
 public class Mecanum2 extends MecanumDT {
     public double turnMult, angleBetween;
-    public ControlState cs;
+    public Mecanum2(){
+        super(0.01);
+        maxSpeed = 1;
+    }
     public Mecanum2(double brakePow, double sped) {
         super(brakePow);
-        speed = sped;
+        maxSpeed = sped;
     }
     @Override
     public void init() {
+        usingIMU = true;
         super.init();
+        initMotors();
     }
     @Override
     public void start(){
@@ -23,21 +25,6 @@ public class Mecanum2 extends MecanumDT {
     }
     @Override
     public void loop() {
-        updateGamepad1();
-        setRobotAngle();
-        angleBetween = lStick1.angleBetween(robotAngle);
-        setRightForePow(angleBetween, lStick1.magnitude());
-        setLeftForePow(angleBetween, lStick1.magnitude());
-        switch (cs) {
-            case ARCADE:
-                turnMult = 1 - lStick1.magnitude() * (1 - super.turnMult);
-                setTurn(rStick1.magnitude() * turnMult);
-                break;
-            case FIELD_CENTRIC:
-                setTurn(Math.sin(rStick1.angleBetween(robotAngle)));
-                break;
-        }
-        normalizeMotorPow();
-        refreshMotors();
+        super.loop();
     }
 }
