@@ -5,12 +5,12 @@ package org.firstinspires.ftc.teamcode.robotTemplates;
  */
 public class Mecanum2 extends MecanumDT {
     public Mecanum2(){
-        super(0.01, 2.78032718203);
+        super(0.01);
         maxSpeed = 1;
     }
-    public Mecanum2(double brakePow, double sped) {
-        super(brakePow, 2.78032718203);
-        maxSpeed = sped;
+    public Mecanum2(double brakePow, double speed) {
+        super(brakePow);
+        maxSpeed = speed;
     }
     @Override
     public void init() {
