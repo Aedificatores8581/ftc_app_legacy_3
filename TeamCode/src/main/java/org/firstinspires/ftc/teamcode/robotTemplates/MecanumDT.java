@@ -10,11 +10,13 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
  */
 public class MecanumDT extends HolonomicDT {
     DcMotor lf, la, rf, ra;
-    public double leftForePow, rightForePow, leftAftPow, rightAftPow, angleBetween;
-    public final double MAXIMUM_SPEED;
-    public MecanumDT(double brakePow, double max){
+    public double       leftForePow,
+                        rightForePow,
+                        leftAftPow,
+                        rightAftPow,
+                        angleBetween;
+    public MecanumDT(double brakePow){
         super(brakePow);
-        MAXIMUM_SPEED = max;
     }
     public void init(){
         super.init();
@@ -26,7 +28,7 @@ public class MecanumDT extends HolonomicDT {
 
     //returns the power of the left rear and right fore motors needed to drive at a given angle at a given speed
     public double getRightForePow(double ang, double speed){
-        return Math.sin(ang + Math.PI / 4) * speed * MAXIMUM_SPEED / 2;
+        return Math.sin(ang + Math.PI / 4) * speed / 2;
     }
 
     //returns the power of the left rear and right fore motors needed to drive along a given vector
@@ -36,7 +38,7 @@ public class MecanumDT extends HolonomicDT {
 
     //returns the power of the left fore and right rear motors needed to drive at a given angle at a given speed
     public double getLeftForePow(double ang, double speed){
-        return Math.cos(ang + Math.PI / 4) * speed * MAXIMUM_SPEED / 2;
+        return Math.cos(ang + Math.PI / 4) * speed / 2;
     }
     //returns the power of the left fore and right rear motors needed to drive along a given vector
     public double getLeftForePow(Vector2 vel){
@@ -83,6 +85,8 @@ public class MecanumDT extends HolonomicDT {
         double max = UniversalFunctions.maxAbs(leftForePow, rightForePow, leftAftPow, rightAftPow);
         leftForePow /= max;
         rightForePow /= max;
+        rightAftPow /= max;
+        leftAftPow /= max;
     }
 
     public void setTurnPow(){
