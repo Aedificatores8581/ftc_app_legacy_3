@@ -22,14 +22,17 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
  */
 
 public abstract class Robot extends OpMode {
-    GyroAngles gyroangles;
-    Orientation angles;
-    BNO055IMU imu;
-    double startAngle;
+    GyroAngles     gyroangles;
+    Orientation    angles;
+    BNO055IMU      imu;
+    double         startAngle;
     public boolean usingIMU;
-    public Vector2 leftStick1, rightStick1, leftStick2, rightStick2;
+    public Vector2 leftStick1,
+                   rightStick1,
+                   leftStick2,
+                   rightStick2;
     public Vector2 robotAngle;
-    Robot.Module module;
+    Robot.Module   module;
     public Robot(Module mod, boolean isUsingIMU){
         usingIMU = isUsingIMU;
         module = mod;

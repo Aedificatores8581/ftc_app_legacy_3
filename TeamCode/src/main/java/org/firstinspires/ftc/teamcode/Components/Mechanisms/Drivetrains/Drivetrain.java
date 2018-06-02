@@ -8,10 +8,11 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
  * Created by Frank Portman on 5/21/2018
  */
 public abstract class Drivetrain{
-    public static final DcMotor.Direction FORWARD = DcMotor.Direction.FORWARD, REVERSE = DcMotor.Direction.REVERSE;
-    public double minTurn;
-    public double brakePow;
-    public double maxSpeed = 1;
+    public static final DcMotor.Direction FORWARD  = DcMotor.Direction.FORWARD,
+                                          REVERSE  = DcMotor.Direction.REVERSE;
+    public double                         minTurn;
+    public double                         brakePow;
+    public double                         maxSpeed = 1;
     public Drivetrain(double pow){
         brakePow = pow;
     }

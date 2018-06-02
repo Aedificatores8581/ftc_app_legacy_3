@@ -8,9 +8,9 @@ import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetra
 import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 
 public abstract class HolonomicDT extends Drivetrain {
-    public double turnPow, turnMult;
+    public double    turnPow,
+                     turnMult;
     public TurnState turnState;
-    public Vector2 drivetrainAngle;
     public HolonomicDT(double brakePow){super(brakePow);}
     //sets the power of the motors in order to drive at a given angle at a given speed
     public abstract void setVelocity(double ang, double speed);
