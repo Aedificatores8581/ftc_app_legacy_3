@@ -4,12 +4,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 
-
 /**
  * Created by Frank Portman on 5/21/2018
  */
 public abstract class Drivetrain{
-    public final DcMotor.Direction FORWARD = DcMotor.Direction.FORWARD, REVERSE = DcMotor.Direction.REVERSE;
+    public static final DcMotor.Direction FORWARD = DcMotor.Direction.FORWARD, REVERSE = DcMotor.Direction.REVERSE;
     public double minTurn;
     public double brakePow;
     public double maxSpeed = 1;

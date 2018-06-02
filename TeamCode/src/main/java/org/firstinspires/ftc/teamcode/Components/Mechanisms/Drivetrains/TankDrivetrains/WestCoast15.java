@@ -41,7 +41,6 @@ public class WestCoast15 extends TankDT {
         rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     public void normalizeMotors(){
-
     }
 
 }
