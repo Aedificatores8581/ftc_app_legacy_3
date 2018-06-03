@@ -22,9 +22,7 @@ public abstract class Drivetrain{
         FOR,
         BACK
     }
-    public void setPower(DcMotor m, double pow){
-        m.setPower(pow *  maxSpeed);
-    }
+    //public void setPower(DcMotor m, double pow){m.setPower(pow * maxSpeed);}
     public abstract void initMotors(HardwareMap map);
     public abstract void normalizeMotors();
 }
