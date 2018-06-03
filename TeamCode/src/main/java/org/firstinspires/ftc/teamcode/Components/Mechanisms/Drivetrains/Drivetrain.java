@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
-
 /**
  * Created by Frank Portman on 5/21/2018
  */
@@ -22,8 +20,8 @@ public abstract class Drivetrain{
         FOR,
         BACK
     }
-    public void setPower(DcMotor m, double pow){
-        m.setPower(pow *  maxSpeed);
+    public void setPower(double pow){
+        setPower(pow *  maxSpeed);
     }
     public abstract void initMotors(HardwareMap map);
     public abstract void normalizeMotors();

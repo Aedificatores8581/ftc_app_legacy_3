@@ -19,12 +19,12 @@ public abstract class SensorBot extends Robot {
     public TankDT drivetrain = new TankDT(0.05) {
         @Override
         public void setLeftPow(double pow) {
-            setPower(lm, pow);
+            setPower(pow);
             leftPow  = pow * maxSpeed;
         }
         @Override
         public void setRightPow(double pow) {
-            setPower(rm, pow);
+            setPower(pow);
             rightPow = pow * maxSpeed;
         }
         @Override

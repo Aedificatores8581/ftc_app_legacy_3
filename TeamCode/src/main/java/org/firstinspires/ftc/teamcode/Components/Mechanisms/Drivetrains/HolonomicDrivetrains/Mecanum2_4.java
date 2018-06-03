@@ -46,10 +46,10 @@ public class Mecanum2_4 extends MecanumDT {
     }
     //sets the motor powers to rightForePow and leftForePow respectively
     public void refreshMotors(){
-        setPower(rightFore, rightForePow);
-        setPower(leftRear, leftAftPow);
-        setPower(leftFore, leftForePow);
-        setPower(rightRear, rightAftPow);
+        setPower(rightForePow);
+        setPower(leftAftPow);
+        setPower(leftForePow);
+        setPower(rightAftPow);
     }
     public void brake(){
         refreshMotors(brakePow, brakePow, -brakePow, -brakePow);
