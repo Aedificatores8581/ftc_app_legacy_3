@@ -19,6 +19,8 @@ public class SensorBotTestDrive extends SensorBot {
     public void init(){
         super.init();
         activateGamepad1();
+        drivetrain.controlState = TankDT.ControlState.ARCADE;
+        drivetrain.turnState = TankDT.FCTurnState.FAST;
     }
     @Override
     public void start(){
