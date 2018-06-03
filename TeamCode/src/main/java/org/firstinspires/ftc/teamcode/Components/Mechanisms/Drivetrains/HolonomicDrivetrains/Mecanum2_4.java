@@ -25,10 +25,10 @@ public class Mecanum2_4 extends MecanumDT {
         rightRear.setDirection(REVERSE);
         leftFore.setDirection(FORWARD);
         leftRear.setDirection(FORWARD);
-        rightFore.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
-        leftFore.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
-        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
-        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
+        rightFore.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftFore.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     //sets the motor powers to the specified values
     public void refreshMotors(double I, double II, double III, double IV){
@@ -46,10 +46,10 @@ public class Mecanum2_4 extends MecanumDT {
     }
     //sets the motor powers to rightForePow and leftForePow respectively
     public void refreshMotors(){
-        setPower(rightFore, rightForePow);
-        setPower(leftRear, leftAftPow);
-        setPower(leftFore, leftForePow);
-        setPower(rightRear, rightAftPow);
+        rightFore.setPower(rightForePow * maxSpeed);
+        rightRear.setPower(rightAftPow * maxSpeed)
+        leftFore.setPower(leftForePow * maxSpeed);
+        leftRear.setPower(leftAftPow * maxSpeed);
     }
     public void brake(){
         refreshMotors(brakePow, brakePow, -brakePow, -brakePow);
