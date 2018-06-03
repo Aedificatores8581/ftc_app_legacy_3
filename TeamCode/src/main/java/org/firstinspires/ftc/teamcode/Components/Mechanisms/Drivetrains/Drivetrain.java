@@ -17,7 +17,6 @@ public abstract class Drivetrain{
         brakePow = pow;
     }
     //gives the motors holding power
-    public abstract void brake();
     public enum Direction{
         FOR,
         BACK

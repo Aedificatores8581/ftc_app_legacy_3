@@ -54,7 +54,4 @@ public class Mecanum2_4 extends MecanumDT {
         leftFore.setPower(leftForePow * maxSpeed);
         leftRear.setPower(leftAftPow * maxSpeed);
     }
-    public void brake(){
-        refreshMotors(brakePow, brakePow, -brakePow, -brakePow);
-    }
 }
