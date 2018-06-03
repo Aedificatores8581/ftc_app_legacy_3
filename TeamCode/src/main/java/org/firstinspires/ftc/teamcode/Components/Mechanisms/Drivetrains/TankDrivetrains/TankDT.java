@@ -47,6 +47,7 @@ public abstract class TankDT extends Drivetrain {
                 rightPow = -leftVect.y + turnMult * rightVect.x;
                 break;
             case FIELD_CENTRIC:
+                turnMult = 1;
                 angleBetween = leftVect.angleBetween(angle);
                 if (leftVect.magnitude() < UniversalConstants.Triggered.STICK)
                     brake();
@@ -90,7 +91,7 @@ public abstract class TankDT extends Drivetrain {
                 break;
             case TANK:
                 leftPow = -leftVect.y;
-                rightPow = -leftVect.y;
+                rightPow = -rightVect.y;
                 break;
         }
         setLeftPow();

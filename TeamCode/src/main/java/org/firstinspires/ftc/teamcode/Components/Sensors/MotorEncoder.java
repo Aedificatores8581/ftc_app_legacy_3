@@ -15,11 +15,9 @@ public class MotorEncoder {
     public void initEncoder(){
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    public int getEncoderPosition(){
-        return currentPosition;
-    }
-    public void updateEncoder(){
+    public double updateEncoder(){
         currentPosition = motor.getCurrentPosition() - resetPosition;
+        return currentPosition;
     }
     public void resetEncoder(){
         resetPosition = motor.getCurrentPosition();

@@ -20,13 +20,12 @@ public abstract class SensorBot extends Robot {
         @Override
         public void setLeftPow(double pow) {
             setPower(lm, pow);
-            leftPow  = pow;
+            leftPow  = pow * maxSpeed;
         }
-
         @Override
         public void setRightPow(double pow) {
             setPower(rm, pow);
-            rightPow = pow;
+            rightPow = pow * maxSpeed;
         }
         @Override
         public void initMotors(HardwareMap hardwareMap) {
@@ -36,12 +35,12 @@ public abstract class SensorBot extends Robot {
             rm.setDirection(Drivetrain.REVERSE);
         }
         public void normalizeMotors(){
-
         }
     };
     @Override
     public void init(){
         super.init();
+        drivetrain.initMotors(hardwareMap);
         //phoneServo1 = hardwareMap.servo.get("ps1");
         //phoneServo2 = hardwareMap.servo.get("ps2");
         //phoneServo1.setPosition(ps1InitPos);

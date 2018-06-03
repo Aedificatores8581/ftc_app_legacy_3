@@ -15,18 +15,15 @@ public class PIDController {
                         time,
                         TI            = 0,
                         TD            = 0,
-                        gain,
                         currentTime;
     public final double KP;
     public final double KI;
     public final double KD;
-    public final double DESIRED_SSE;
-    public PIDController(double kp, double ki, double kd, double tc, double sse){
+    public PIDController(double kp, double ki, double kd, double tc){
         KP = kp;
         KI = ki;
         KD = kd;
         deltaTime = tc;
-        DESIRED_SSE = sse;
     }
     //Sets TI and TD to the given parameters
     public void setStandardForm(double integralTime, double derivativeTime){
@@ -40,9 +37,7 @@ public class PIDController {
             integral += error * deltaTime;
             derivative = (error - prevError) / deltaTime;
             time = System.currentTimeMillis();
-            double temp = currentOutput;
-            currentOutput = KP * error + gain() - DESIRED_SSE + KI * integral + KD * derivative;
-            gain = currentOutput - temp;
+            currentOutput = KP * error + KI * integral + KD * derivative;
             prevError = error;
         }
     }
@@ -55,20 +50,10 @@ public class PIDController {
             if(time + TD >= currentTime)
                 derivative = (error - prevError) / deltaTime;
             time = System.currentTimeMillis();
-            double temp = currentOutput;
-            currentOutput = KP * error + gain() - DESIRED_SSE + KP / TI * integral + KP * TD * derivative;
-            gain = currentOutput - gain;
+            currentOutput = KP * error + KP / TI * integral + KP * TD * derivative;
             prevError = error;
         }
         currentTime = System.currentTimeMillis();
-    }
-    //calculates the gain of the loop
-    public double gain() {
-        return transferFunction() / (1 + gain * transferFunction());
-    }
-    //returns the value returned by the loop's transfer function
-    public double transferFunction(){
-        return currentOutput / (setpoint - gain * currentOutput);
     }
 
 }

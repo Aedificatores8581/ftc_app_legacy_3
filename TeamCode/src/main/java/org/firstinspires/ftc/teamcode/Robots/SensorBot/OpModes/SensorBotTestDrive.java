@@ -99,5 +99,7 @@ public class SensorBotTestDrive extends SensorBot {
                     switchControlState = true;
                 break;
         }
+        telemetry.addData("control State", drivetrain.controlState);
+        telemetry.addData("fcTurnState", drivetrain.turnState);
     }
 }
