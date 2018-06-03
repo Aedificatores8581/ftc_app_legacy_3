@@ -112,5 +112,7 @@ public class SensorBotTestDrive extends SensorBot {
         telemetry.addData("control State", drivetrain.controlState);
         telemetry.addData("fcTurnState", drivetrain.turnState);
         telemetry.addData("leftvec1", leftStick1);
+        telemetry.addData("leftPower", drivetrain.leftPow);
+        telemetry.addData("rightPower", drivetrain.rightPow);
     }
 }
