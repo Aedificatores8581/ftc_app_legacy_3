@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Robots.SensorBot.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
 import org.firstinspires.ftc.teamcode.Robots.SensorBot.SensorBot;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
@@ -23,6 +24,8 @@ public class SensorBotTestDrive extends SensorBot {
         rightStick1 = new Vector2();
         drivetrain.controlState = TankDT.ControlState.ARCADE;
         drivetrain.turnState = TankDT.FCTurnState.FAST;
+        drivetrain.controlState = TankDT.ControlState.ARCADE;
+        drivetrain.direction = Drivetrain.Direction.FOR;
     }
     @Override
     public void start(){
@@ -108,5 +111,6 @@ public class SensorBotTestDrive extends SensorBot {
         }
         telemetry.addData("control State", drivetrain.controlState);
         telemetry.addData("fcTurnState", drivetrain.turnState);
+        telemetry.addData("leftvec1", leftStick1);
     }
 }
