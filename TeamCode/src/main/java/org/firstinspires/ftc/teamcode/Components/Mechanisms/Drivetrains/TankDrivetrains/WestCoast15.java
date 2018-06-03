@@ -31,10 +31,12 @@ public class WestCoast15 extends TankDT {
         leftFront = map.dcMotor.get("lf");
         leftRear = map.dcMotor.get("la");
         rightRear = map.dcMotor.get("ra");
+
         rightFront.setDirection(REVERSE);
         rightRear.setDirection(REVERSE);
         leftFront.setDirection(FORWARD);
         leftRear.setDirection(FORWARD);
+
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

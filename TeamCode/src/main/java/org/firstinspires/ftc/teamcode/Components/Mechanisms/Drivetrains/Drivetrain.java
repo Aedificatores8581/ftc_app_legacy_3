@@ -14,14 +14,9 @@ public abstract class Drivetrain{
     public Drivetrain(double pow){
         brakePow = pow;
     }
-    //gives the motors holding power
-    public abstract void brake();
     public enum Direction{
         FOR,
         BACK
-    }
-    public void setPower(double pow){
-        setPower(pow *  maxSpeed);
     }
     public abstract void initMotors(HardwareMap map);
     public abstract void normalizeMotors();

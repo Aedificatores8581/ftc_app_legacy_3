@@ -16,15 +16,17 @@ public class Mecanum2_4 extends MecanumDT {
         super(brakePow, 1);
         maxSpeed = speed;
     }
-    public void  initMotors(HardwareMap map){
+    public void initMotors(HardwareMap map){
         rightFore = map.dcMotor.get("rf");
         leftFore = map.dcMotor.get("lf");
         leftRear = map.dcMotor.get("la");
         rightRear = map.dcMotor.get("ra");
+
         rightFore.setDirection(REVERSE);
         rightRear.setDirection(REVERSE);
         leftFore.setDirection(FORWARD);
         leftRear.setDirection(FORWARD);
+
         rightFore.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
         leftFore.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
         leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
@@ -46,12 +48,9 @@ public class Mecanum2_4 extends MecanumDT {
     }
     //sets the motor powers to rightForePow and leftForePow respectively
     public void refreshMotors(){
-        setPower(rightForePow);
-        setPower(leftAftPow);
-        setPower(leftForePow);
-        setPower(rightAftPow);
-    }
-    public void brake(){
-        refreshMotors(brakePow, brakePow, -brakePow, -brakePow);
+        rightFore.setPower(rightForePow * maxSpeed);
+        rightRear.setPower(rightAftPow * maxSpeed);
+        leftFore.setPower(leftForePow * maxSpeed);
+        leftRear.setPower(leftAftPow * maxSpeed);
     }
 }

@@ -49,9 +49,10 @@ public abstract class TankDT extends Drivetrain {
             case FIELD_CENTRIC:
                 turnMult = 1;
                 angleBetween = leftVect.angleBetween(angle);
-                if (leftVect.magnitude() < UniversalConstants.Triggered.STICK)
-                    brake();
-                else {
+                if (leftVect.magnitude() < UniversalConstants.Triggered.STICK) {
+                    setLeftPow(0);
+                    setRightPow(0);
+                } else {
                     switch (direction) {
                         case FOR:
                             if (Math.sin(angleBetween) < 0 && turn) {
@@ -120,8 +121,5 @@ public abstract class TankDT extends Drivetrain {
     //Sets the maximum speed of the drive motors
     public void setSpeed(double speed){
         maxSpeed = speed;
-    }
-    public void brake(){
-
     }
 }
