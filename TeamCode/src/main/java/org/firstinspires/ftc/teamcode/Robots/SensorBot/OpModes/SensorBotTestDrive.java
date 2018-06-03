@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
 import org.firstinspires.ftc.teamcode.Robots.SensorBot.SensorBot;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
+import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 
 /**
  * Created by Frank Portman on 6/1/2018
@@ -18,7 +19,8 @@ public class SensorBotTestDrive extends SensorBot {
     @Override
     public void init(){
         super.init();
-        activateGamepad1();
+        leftStick1 = new Vector2();
+        rightStick1 = new Vector2();
         drivetrain.controlState = TankDT.ControlState.ARCADE;
         drivetrain.turnState = TankDT.FCTurnState.FAST;
     }
@@ -27,7 +29,10 @@ public class SensorBotTestDrive extends SensorBot {
         super.start();
     }
     public void loop(){
-        updateGamepad1();
+        leftStick1.x = gamepad1.left_stick_x;
+        leftStick1.y = gamepad1.left_stick_y;
+        rightStick1.y = gamepad1.right_stick_y;
+        rightStick1.x = gamepad1.right_stick_x;
         setRobotAngle();
         drivetrain.teleOpLoop(leftStick1, rightStick1, robotAngle);
         switch(drivetrain.controlState){
