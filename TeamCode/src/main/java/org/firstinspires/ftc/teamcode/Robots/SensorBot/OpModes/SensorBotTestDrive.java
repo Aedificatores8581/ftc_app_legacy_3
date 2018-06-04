@@ -20,8 +20,7 @@ public class SensorBotTestDrive extends SensorBot {
     @Override
     public void init(){
         super.init();
-        leftStick1 = new Vector2();
-        rightStick1 = new Vector2();
+        activateGamepad1();
         drivetrain.controlState = TankDT.ControlState.ARCADE;
         drivetrain.turnState = TankDT.FCTurnState.FAST;
         drivetrain.direction = Drivetrain.Direction.FOR;
@@ -31,10 +30,7 @@ public class SensorBotTestDrive extends SensorBot {
         super.start();
     }
     public void loop(){
-        leftStick1.x = gamepad1.left_stick_x;
-        leftStick1.y = gamepad1.left_stick_y;
-        rightStick1.y = gamepad1.right_stick_y;
-        rightStick1.x = gamepad1.right_stick_x;
+        updateGamepad1();
         setRobotAngle();
         drivetrain.teleOpLoop(leftStick1, rightStick1, robotAngle);
         switch(drivetrain.controlState){
