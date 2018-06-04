@@ -87,6 +87,7 @@ public abstract class TankDT extends Drivetrain {
                                 leftPow = -directionMult;
                                 rightPow = directionMult * Math.cos(2 * angleBetween);
                             }
+                            break;
                     }
                 }
                 break;
