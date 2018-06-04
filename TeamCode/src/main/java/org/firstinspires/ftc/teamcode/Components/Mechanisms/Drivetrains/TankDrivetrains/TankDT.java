@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
+import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
 import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 
 /**
@@ -19,6 +20,7 @@ public abstract class TankDT extends Drivetrain {
                         leftPow,
                         rightPow;
     private boolean     turn          = false;
+    private double max;
     public Direction    direction;
     public ControlState controlState;
     public FCTurnState  turnState;
@@ -31,7 +33,8 @@ public abstract class TankDT extends Drivetrain {
     public enum ControlState{
         ARCADE,
         TANK,
-        FIELD_CENTRIC
+        FIELD_CENTRIC,
+        FIELD_CENTRIC_VECTOR
     }
     //Two algorithms for turning in field-centric mode
     public enum FCTurnState{
@@ -95,9 +98,42 @@ public abstract class TankDT extends Drivetrain {
                 leftPow = -leftVect.y;
                 rightPow = -rightVect.y;
                 break;
+            case FIELD_CENTRIC_VECTOR:
+                turnMult = 1;
+                angleBetween = leftVect.angleBetween(angle);
+                if (leftVect.magnitude() < UniversalConstants.Triggered.STICK) {
+                    leftPow = 0;
+                    rightPow = 0;
+                } else {
+                    switch (direction) {
+                        case FOR:
+                            if (Math.sin(angleBetween) < 0 && turn) {
+                                direction = Direction.BACK;
+                                directionMult *= -1;
+                                turn = false;
+                            } else if (Math.sin(angleBetween) >= 0)
+                                turn = true;
+                            break;
+                        case BACK:
+                            if (Math.sin(angleBetween) > 0 && turn) {
+                                direction = Direction.FOR;
+                                turn = false;
+                                directionMult *= -1;
+                            } else if (Math.sin(angleBetween) <= 0)
+                                turn = true;
+                            break;
+                    }
+                    leftVect.setFromPolar(leftVect.magnitude(), angleBetween);
+                    rightPow = (leftVect.y - leftVect.x) / 2 * directionMult;
+                    leftPow = (leftVect.x + leftVect.y) / 2 * directionMult;
+                    max = UniversalFunctions.maxAbs(leftPow, rightPow);
+                    leftPow /= max * leftVect.magnitude();
+                    rightPow /= max * leftVect.magnitude();
+                }
+                break;
         }
-        setLeftPow();
-        setRightPow();
+        setLeftPow(leftPow);
+        setRightPow(rightPow);
     }
     //returns the direction the robot is moving
     public Direction setTurnDir(){

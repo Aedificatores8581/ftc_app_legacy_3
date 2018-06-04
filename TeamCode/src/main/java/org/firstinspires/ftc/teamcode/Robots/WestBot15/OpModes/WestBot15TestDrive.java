@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
@@ -19,6 +20,9 @@ public class WestBot15TestDrive extends WestBot15 {
     public void init(){
         super.init();
         activateGamepad1();
+        drivetrain.controlState = TankDT.ControlState.ARCADE;
+        drivetrain.turnState = TankDT.FCTurnState.FAST;
+        drivetrain.direction = Drivetrain.Direction.FOR;
     }
     @Override
     public void start(){
@@ -86,6 +90,20 @@ public class WestBot15TestDrive extends WestBot15 {
                     switchControlState = true;
                 break;
             case TANK:
+                if(switchControlState){
+                    drivetrain.controlState = TankDT.ControlState.FIELD_CENTRIC_VECTOR;
+                    switchControlState = false;
+                    canSwitchControlState = false;
+                    drivetrain.directionMult = 1;
+                }
+                else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER){
+                    switchControlState = false;
+                    canSwitchControlState = true;
+                }
+                else if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
+                    switchControlState = true;
+                break;
+            case FIELD_CENTRIC_VECTOR:
                 if(switchControlState){
                     drivetrain.controlState = TankDT.ControlState.ARCADE;
                     switchControlState = false;
