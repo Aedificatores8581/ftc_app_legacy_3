@@ -50,8 +50,8 @@ public abstract class TankDT extends Drivetrain {
                 turnMult = 1;
                 angleBetween = leftVect.angleBetween(angle);
                 if (leftVect.magnitude() < UniversalConstants.Triggered.STICK) {
-                    setLeftPow(0);
-                    setRightPow(0);
+                    leftPow = 0;
+                    rightPow = 0;
                 } else {
                     switch (direction) {
                         case FOR:
