@@ -16,7 +16,7 @@ public abstract class SensorBot extends Robot {
     Servo phoneServo1, phoneServo2;
     double  ps1InitPos = 0,
             ps2InitPos = 0;
-    public TankDT drivetrain = new TankDT(0.05) {
+    public TankDT drivetrain = new TankDT() {
         @Override
         public void setLeftPow(double pow) {
             leftPow  = pow * maxSpeed;
