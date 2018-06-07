@@ -29,10 +29,13 @@ public class SensorBotTestDrive extends SensorBot {
     public void start(){
         super.start();
     }
+    @Override
     public void loop(){
         updateGamepad1();
         setRobotAngle();
         drivetrain.teleOpLoop(leftStick1, rightStick1, robotAngle);
+        rm.setPower(drivetrain.rightPow);
+        lm.setPower(drivetrain.leftPow);
         switch(drivetrain.controlState){
             case ARCADE:
                 if(switchControlState){
@@ -118,10 +121,13 @@ public class SensorBotTestDrive extends SensorBot {
                     switchControlState = true;
                 break;
         }
+
         telemetry.addData("control State", drivetrain.controlState);
         telemetry.addData("fcTurnState", drivetrain.turnState);
-        telemetry.addData("leftvec1", leftStick1);
+        telemetry.addData("leftvect1", leftStick1);
         telemetry.addData("leftPower", drivetrain.leftPow);
         telemetry.addData("rightPower", drivetrain.rightPow);
+        telemetry.addData("realLeftPower", lm.getPower());
+        telemetry.addData("realRightPower", rm.getPower());
     }
 }

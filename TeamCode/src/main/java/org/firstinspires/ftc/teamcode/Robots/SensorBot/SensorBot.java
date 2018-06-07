@@ -46,6 +46,7 @@ public abstract class SensorBot extends Robot {
         //phoneServo1.setPosition(ps1InitPos);
         //phoneServo2.setPosition(ps2InitPos);
     }
+    @Override
     public void start(){
         super.start();
     }

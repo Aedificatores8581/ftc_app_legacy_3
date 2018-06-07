@@ -25,7 +25,7 @@ public abstract class Robot extends OpMode {
     GyroAngles     gyroangles;
     Orientation    angles;
     BNO055IMU      imu;
-    double         startAngle;
+    public double  startAngle;
     public boolean usingIMU;
     public Vector2 leftStick1,
                    rightStick1,
