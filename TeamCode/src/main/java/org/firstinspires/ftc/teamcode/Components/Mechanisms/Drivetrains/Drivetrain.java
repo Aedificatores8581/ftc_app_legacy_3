@@ -11,9 +11,7 @@ public abstract class Drivetrain{
     public double                         minTurn;
     public double                         brakePow;
     public double                         maxSpeed = 1;
-    public Drivetrain(double pow){
-        brakePow = pow;
-    }
+
     public enum Direction{
         FOR,
         BACK

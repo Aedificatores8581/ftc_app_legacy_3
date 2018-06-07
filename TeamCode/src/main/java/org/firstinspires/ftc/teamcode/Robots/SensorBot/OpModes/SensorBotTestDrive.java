@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 /**
  * Created by Frank Portman on 6/1/2018
  */
+
 @TeleOp(name = "Sensor Bot Test Drive", group = "SensorBot")
 public class SensorBotTestDrive extends SensorBot {
     boolean switchControlState    = false,
@@ -25,6 +26,7 @@ public class SensorBotTestDrive extends SensorBot {
         drivetrain.turnState = TankDT.FCTurnState.FAST;
         drivetrain.direction = Drivetrain.Direction.FOR;
     }
+
     @Override
     public void start(){
         super.start();
@@ -38,74 +40,68 @@ public class SensorBotTestDrive extends SensorBot {
         lm.setPower(drivetrain.leftPow);
         switch(drivetrain.controlState){
             case ARCADE:
-                if(switchControlState){
+                if (switchControlState) {
                     drivetrain.controlState = drivetrain.controlState.FIELD_CENTRIC;
                     switchControlState = false;
                     canSwitchControlState = false;
                     drivetrain.directionMult = 1;
-                }
-                else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER){
+                } else if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {
                     switchControlState = false;
                     canSwitchControlState = true;
-                }
-                else if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
+                } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                     switchControlState = true;
                 break;
+
             case FIELD_CENTRIC:
-                switch(drivetrain.turnState){
+                switch (drivetrain.turnState) {
                     case FAST:
-                        if(switchTurnState){
+                        if (switchTurnState) {
                             drivetrain.turnState = TankDT.FCTurnState.SMOOTH;
                             switchTurnState = false;
                             canSwitchTurnState = false;
-                        }
-                        else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER){
+                        } else if (gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER) {
                             switchTurnState = false;
                             canSwitchTurnState = true;
-                        }
-                        else if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
+                        } else if (gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                             switchTurnState = true;
                         break;
+
                     case SMOOTH:
-                        if(switchTurnState){
+                        if (switchTurnState) {
                             drivetrain.turnState = TankDT.FCTurnState.FAST;
                             switchTurnState = false;
                             canSwitchTurnState = false;
-                        }
-                        else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER){
+                        } else if (gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER) {
                             switchTurnState = false;
                             canSwitchTurnState = true;
-                        }
-                        else if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
+                        } else if (gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                             switchTurnState = true;
                         break;
                 }
-                if(switchControlState){
+
+                if (switchControlState) {
                     drivetrain.controlState = TankDT.ControlState.TANK;
                     switchControlState = false;
                     canSwitchControlState = false;
-                }
-                else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER){
+                } else if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {
                     switchControlState = false;
                     canSwitchControlState = true;
-                }
-                else if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
+                } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                     switchControlState = true;
                 break;
             case TANK:
-                if(switchControlState){
+                if (switchControlState) {
                     drivetrain.controlState = TankDT.ControlState.FIELD_CENTRIC_VECTOR;
                     switchControlState = false;
                     canSwitchControlState = false;
                     drivetrain.directionMult = 1;
-                }
-                else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER){
+                } else if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {
                     switchControlState = false;
                     canSwitchControlState = true;
-                }
-                else if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
+                } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                     switchControlState = true;
                 break;
+
             case FIELD_CENTRIC_VECTOR:
                 if(switchControlState){
                     drivetrain.controlState = TankDT.ControlState.ARCADE;
@@ -121,7 +117,6 @@ public class SensorBotTestDrive extends SensorBot {
                     switchControlState = true;
                 break;
         }
-
         telemetry.addData("control State", drivetrain.controlState);
         telemetry.addData("fcTurnState", drivetrain.turnState);
         telemetry.addData("leftvect1", leftStick1);

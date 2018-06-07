@@ -19,16 +19,20 @@ public abstract class TankDT extends Drivetrain {
                         maxTurn       = 1,
                         leftPow,
                         rightPow;
+
     private boolean     turn          = false;
+
     private double max;
+
     public Direction    direction;
     public ControlState controlState;
     public FCTurnState  turnState;
-    public TankDT(double brakePow){
-        super(brakePow);
+
+    public TankDT(){
         leftPow = 0;
         rightPow = 0;
     }
+
     //Different control systems
     public enum ControlState{
         ARCADE,
@@ -36,11 +40,14 @@ public abstract class TankDT extends Drivetrain {
         FIELD_CENTRIC,
         FIELD_CENTRIC_VECTOR
     }
+
     //Two algorithms for turning in field-centric mode
     public enum FCTurnState{
         SMOOTH,
         FAST
     }
+
+    // TODO: Might need a fix, who knows.
     //Basic Tele-Op driving functionality
     public void teleOpLoop(Vector2 leftVect, Vector2 rightVect, Vector2 angle){
         switch(controlState) {
@@ -49,6 +56,7 @@ public abstract class TankDT extends Drivetrain {
                 leftPow = -leftVect.y - turnMult * rightVect.x;
                 rightPow = -leftVect.y + turnMult * rightVect.x;
                 break;
+
             case FIELD_CENTRIC:
                 turnMult = 1;
                 angleBetween = leftVect.angleBetween(angle);
@@ -65,6 +73,7 @@ public abstract class TankDT extends Drivetrain {
                             } else if (Math.sin(angleBetween) >= 0)
                                 turn = true;
                             break;
+
                         case BACK:
                             if (Math.sin(angleBetween) > 0 && turn) {
                                 direction = Direction.FOR;
@@ -81,12 +90,12 @@ public abstract class TankDT extends Drivetrain {
                             leftPow = directionMult * (-leftVect.magnitude() - turnMult * cos);
                             rightPow = directionMult * (-leftVect.magnitude() + turnMult * cos);
                             break;
+
                         case SMOOTH:
                             if(cos > 0) {
                                 rightPow = -directionMult;
                                 leftPow = directionMult * Math.cos(2 * angleBetween);
-                            }
-                            else{
+                            } else {
                                 leftPow = -directionMult;
                                 rightPow = directionMult * Math.cos(2 * angleBetween);
                             }
@@ -94,10 +103,12 @@ public abstract class TankDT extends Drivetrain {
                     }
                 }
                 break;
+
             case TANK:
                 leftPow = -leftVect.y;
                 rightPow = -rightVect.y;
                 break;
+
             case FIELD_CENTRIC_VECTOR:
                 turnMult = 1;
                 angleBetween = leftVect.angleBetween(angle);
@@ -114,6 +125,7 @@ public abstract class TankDT extends Drivetrain {
                             } else if (Math.sin(angleBetween) >= 0)
                                 turn = true;
                             break;
+
                         case BACK:
                             if (Math.sin(angleBetween) > 0 && turn) {
                                 direction = Direction.FOR;
@@ -123,10 +135,14 @@ public abstract class TankDT extends Drivetrain {
                                 turn = true;
                             break;
                     }
+
                     leftVect.setFromPolar(leftVect.magnitude(), angleBetween);
+
                     rightPow = (leftVect.y - leftVect.x) / 2 * directionMult;
                     leftPow = (leftVect.x + leftVect.y) / 2 * directionMult;
+
                     max = UniversalFunctions.maxAbs(leftPow, rightPow);
+
                     leftPow /= max * leftVect.magnitude();
                     rightPow /= max * leftVect.magnitude();
                 }
@@ -135,6 +151,7 @@ public abstract class TankDT extends Drivetrain {
         setLeftPow(leftPow);
         setRightPow(rightPow);
     }
+
     //returns the direction the robot is moving
     public Direction setTurnDir(){
         if(leftPow + rightPow > 0)
@@ -143,18 +160,23 @@ public abstract class TankDT extends Drivetrain {
             direction = Direction.BACK;
         return direction;
     }
+
     //Sets the power of the left motor(s)
     public abstract void setLeftPow(double pow);
+
     //Sets the power of the right motor(s)
     public abstract void setRightPow(double pow);
+
     //Sets the power of the left motor(s) to the leftPow variable
     public void setLeftPow(){
         setLeftPow(leftPow);
     }
+
     //Sets the power of the right motor(s) to the rightPow variable
     public void setRightPow(){
         setRightPow(rightPow);
     }
+
     //Sets the maximum speed of the drive motors
     public void setSpeed(double speed){
         maxSpeed = speed;

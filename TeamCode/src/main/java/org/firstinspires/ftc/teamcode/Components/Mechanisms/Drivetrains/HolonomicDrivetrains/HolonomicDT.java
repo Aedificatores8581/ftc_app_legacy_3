@@ -11,16 +11,19 @@ public abstract class HolonomicDT extends Drivetrain {
     public double    turnPow,
                      turnMult;
     public TurnState turnState;
-    public HolonomicDT(double brakePow){super(brakePow);}
+
+
     //sets the power of the motors in order to drive at a given angle at a given speed
     public abstract void setVelocity(double ang, double speed);
     //sets the power of the motors in order to drive at a given velocity
     public abstract void setVelocity(Vector2 vel);
+
     //sets the power of the left fore and right rear motors
     public void setTurn(double pow){
         pow *= turnMult;
         turnPow = pow;
     }
+
     public abstract void refreshMotors();
 
     public enum TurnState{
