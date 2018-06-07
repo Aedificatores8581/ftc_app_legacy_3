@@ -8,14 +8,22 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class WestCoast15 extends TankDT {
     public DcMotor rightFront, leftFront, leftRear, rightRear;
+
     public WestCoast15(){
-        super(0.001);
+        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         maxSpeed = 1;
     }
-    public WestCoast15(double brakePow, double speed){
-        super(brakePow);
+    public WestCoast15(DcMotor.ZeroPowerBehavior zeroPowerBehavior, double speed){
+        rightFront.setZeroPowerBehavior(zeroPowerBehavior);
+        rightRear.setZeroPowerBehavior(zeroPowerBehavior);
+        leftFront.setZeroPowerBehavior(zeroPowerBehavior);
+        leftRear.setZeroPowerBehavior(zeroPowerBehavior);
         maxSpeed = speed;
     }
+
     public void setLeftPow(double pow) {
         leftFront.setPower(pow * maxSpeed);
         leftRear.setPower(pow * maxSpeed);

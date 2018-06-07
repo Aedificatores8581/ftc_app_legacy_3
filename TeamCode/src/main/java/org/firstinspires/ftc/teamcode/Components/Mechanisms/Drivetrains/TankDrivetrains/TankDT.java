@@ -28,8 +28,7 @@ public abstract class TankDT extends Drivetrain {
     public ControlState controlState;
     public FCTurnState  turnState;
 
-    public TankDT(double brakePow){
-        super(brakePow);
+    public TankDT(){
         leftPow = 0;
         rightPow = 0;
     }
