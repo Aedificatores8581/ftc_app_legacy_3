@@ -17,8 +17,8 @@ public abstract class UniversalFunctions {
         return Math.max(Math.min(max, test), min);
     }
 
-    public static boolean withinTolerance(double test, double limit, double tolerance) {
-        return test == clamp(limit - tolerance, test, limit + tolerance);
+    public static boolean withinTolerance(double test, double lowerLimit, double upperLimit) {
+        return test == clamp(lowerLimit, test, upperLimit);
     }
     public static double round(double d) {
         if (d < 0) {
@@ -113,6 +113,9 @@ public abstract class UniversalFunctions {
             ret[i] = str.substring(ind, next);
         }
         return ret;
+    }
+    public static int sign(double input){
+        return input >= 0 ? 1 : -1;
     }
 
 }
