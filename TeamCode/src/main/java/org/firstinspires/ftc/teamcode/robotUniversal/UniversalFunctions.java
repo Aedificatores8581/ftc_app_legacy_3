@@ -16,9 +16,8 @@ public abstract class UniversalFunctions {
         }
         return Math.max(Math.min(max, test), min);
     }
-
-    public static boolean withinTolerance(double test, double lowerLimit, double upperLimit) {
-        return test == clamp(lowerLimit, test, upperLimit);
+    public static boolean withinTolerance(double test, double centerPoint, double lowerLimit, double upperLimit) {
+        return test == clamp(centerPoint - lowerLimit, test, centerPoint + upperLimit);
     }
     public static double round(double d) {
         if (d < 0) {
