@@ -18,12 +18,12 @@ public class IncrementalMotor {
     public double decelleration;
     public double currentPow;
     public double minPow;
-    public IncrementalMotor(DcMotor dc, double acc, double dec, double min){
+    public IncrementalMotor(DcMotor dc, double accPerSec, double decPerSec, double min){
         motor = dc;
         encoder = new MotorEncoder(motor);
         encoder.initEncoder();
-        acceleration = Math.abs(acc);
-        decelleration = Math.abs(dec);
+        acceleration = Math.abs(accPerSec);
+        decelleration = Math.abs(decPerSec);
         minPow = min;
     }
     public IncrementalMotor(DcMotor dc, double acc, double dec){
@@ -37,19 +37,22 @@ public class IncrementalMotor {
     public double getPower(){
         return encoder.updateEncoder();
     }
-    public synchronized void setPower(double pow){
-        desiredPow = pow;
+    public synchronized void setPower(){
         if(currentPow != desiredPow) {
-            if (currentPow > 0) {
+            if (currentPow > 0)
                 currentPow += currentPow < desiredPow ? acceleration : -decelleration;
-            }
             else if (currentPow < 0)
                 currentPow += currentPow < desiredPow ? decelleration : -acceleration;
             else
                 currentPow += UniversalFunctions.sign(desiredPow) * minPow;
         }
+        if(UniversalFunctions.withinTolerance(Math.abs(desiredPow), Math.abs(currentPow), decelleration, acceleration))
+            currentPow = desiredPow;
         currentPow = UniversalFunctions.clamp(-1, currentPow, 1);
         motor.setPower(currentPow);
+    }
+    public void stop(){
+        motor.setPower(0);
     }
 
 }
