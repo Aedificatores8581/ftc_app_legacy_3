@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
  * Created by Frank Portman on 6/1/2018
  */
 public class Encoder{
-    AnalogInput              encoder;
-    public int               directionMult;
-    public double            ticks;
-    public final double      TICK_VOLTAGE;
+    AnalogInput              encoder          ;
+    public int               directionMult    ;
+    public double            ticks            ;
+    public final double      TICK_VOLTAGE     ;
     public RotationDirection rotationDirection;
     public Encoder(AnalogInput enc, double voltage, RotationDirection dir){
         TICK_VOLTAGE = voltage;

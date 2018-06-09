@@ -10,8 +10,8 @@ package org.firstinspires.ftc.teamcode.robotUniversal.Threads;
 import org.firstinspires.ftc.teamcode.robotUniversal.SensorFunction;
 
 public class SensorThread<T> implements Runnable {
-    private boolean running;
-    private T value;
+    private boolean running           ;
+    private T value                   ;
     private SensorFunction<T> sensFunc;
 
 
@@ -20,7 +20,6 @@ public class SensorThread<T> implements Runnable {
             value = sensFunc.sensFunc();
         }
     }
-
     boolean getRunning() {
         return this.running;
     }
@@ -32,7 +31,6 @@ public class SensorThread<T> implements Runnable {
     T getValue() {
         return this.value;
     }
-
 
     public SensorThread(SensorFunction<T> f) {
         running = true;

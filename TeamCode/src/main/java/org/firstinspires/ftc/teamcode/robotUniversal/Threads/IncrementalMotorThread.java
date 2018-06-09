@@ -15,6 +15,7 @@ public class IncrementalMotorThread implements Runnable {
     public IncrementalMotorThread(int mil){
         MILLISECONDS_PER_ITERATION = mil;
     }
+    //Starts the thread
     public synchronized void start(){
         incrementalMotorThread = new Thread(this);
         incrementalMotorThread.start();
@@ -33,9 +34,11 @@ public class IncrementalMotorThread implements Runnable {
             e.printStackTrace();
         }
     }
+    //Adds a motor to the thread
     public void add(IncrementalMotor motor){
         motors[numberOfMotors++] = motor;
     }
+    //stops the motors during the next iteration of the thread
     public void terminate(){
         isEnabled = false;
     }

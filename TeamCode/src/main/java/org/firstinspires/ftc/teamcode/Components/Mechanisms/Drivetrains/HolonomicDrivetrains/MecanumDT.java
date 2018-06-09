@@ -9,11 +9,11 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
  * Created by Frank Portman on 5/21/2018
  */
 public abstract class MecanumDT extends HolonomicDT {
-    public double       leftForePow,
-                        rightForePow,
-                        leftAftPow,
-                        rightAftPow,
-                        angleBetween;
+    public double       leftForePow        ,
+                        rightForePow       ,
+                        leftAftPow         ,
+                        rightAftPow        ,
+                        angleBetween       ;
     public final double FRONT_TO_BACK_RATIO;
 
 
@@ -69,14 +69,14 @@ public abstract class MecanumDT extends HolonomicDT {
         rightAftPow /= max;
         leftAftPow /= max;
     }
-
+    //Updates the power variables to account for turning
     public void setTurnPow(){
-        leftForePow += turnPow;
-        leftAftPow += turnPow;
-        rightForePow -= turnPow;
-        rightAftPow -= turnPow;
+        leftForePow += turnPow * FRONT_TO_BACK_RATIO;
+        leftAftPow += turnPow / FRONT_TO_BACK_RATIO;
+        rightForePow -= turnPow * FRONT_TO_BACK_RATIO;
+        rightAftPow -= turnPow / FRONT_TO_BACK_RATIO;
     }
-
+    //Provides basic teleOp functionality
     public void teleOpLoop(Vector2 velocity, Vector2 turnVector, Vector2 angle) {
         angleBetween = velocity.angleBetween(angle);
         setVelocity(angleBetween, velocity.magnitude());

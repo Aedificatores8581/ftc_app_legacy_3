@@ -8,11 +8,9 @@ import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetra
 import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 
 public abstract class HolonomicDT extends Drivetrain {
-    public double    turnPow,
-                     turnMult;
+    public double    turnPow  ,
+                     turnMult ;
     public TurnState turnState;
-
-
     //sets the power of the motors in order to drive at a given angle at a given speed
     public abstract void setVelocity(double ang, double speed);
     //sets the power of the motors in order to drive at a given velocity
@@ -23,13 +21,14 @@ public abstract class HolonomicDT extends Drivetrain {
         pow *= turnMult;
         turnPow = pow;
     }
-
+    //updates the motor powers of the drivetrain
     public abstract void refreshMotors();
-
+    //Represents two types of turning
     public enum TurnState{
         ARCADE,
         FIELD_CENTRIC
     }
+    //Calls setTurn based on the current turnState
     public void switchTurnState(Vector2 velocity, Vector2 turnVector, Vector2 angle){
         turnMult = 1 - velocity.magnitude() * (1 - minTurn);
         switch (turnState) {

@@ -3,21 +3,19 @@ package org.firstinspires.ftc.teamcode.Components.Mechanisms;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Components.Sensors.MotorEncoder;
-import org.firstinspires.ftc.teamcode.robotUniversal.PIDController;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
-import org.opencv.core.Range;
 
 /**
  * Created by Frank Portman on 6/2/2018
  */
 public class IncrementalMotor {
-    public DcMotor      motor;
-    public MotorEncoder encoder;
-    public double       desiredPow;
-    public double       acceleration;
-    public double       decelleration;
-    public double       currentPow;
-    public double       minPow;
+    public DcMotor      motor        ;
+    public MotorEncoder encoder      ;
+    public double       desiredPow   ,
+                        acceleration ,
+                        decelleration,
+                        currentPow   ,
+                        minPow       ;
     public IncrementalMotor(DcMotor dc, double accPerSec, double decPerSec, double min){
         motor = dc;
         encoder = new MotorEncoder(motor);
@@ -34,10 +32,13 @@ public class IncrementalMotor {
         decelleration = Math.abs(dec);
         minPow = acceleration;
     }
+    //returns the actual current power of the motor
     public double getPower(){
-        return encoder.updateEncoder();
+        return motor.getPower();
     }
+    //incrementally sets the power to the desiredPow variable
     public synchronized void setPower(){
+        currentPow = getPower();
         if(currentPow != desiredPow) {
             if (currentPow > 0)
                 currentPow += currentPow < desiredPow ? acceleration : -decelleration;
@@ -51,6 +52,8 @@ public class IncrementalMotor {
         currentPow = UniversalFunctions.clamp(-1, currentPow, 1);
         motor.setPower(currentPow);
     }
+    //stops the motor
+
     public void stop(){
         motor.setPower(0);
     }

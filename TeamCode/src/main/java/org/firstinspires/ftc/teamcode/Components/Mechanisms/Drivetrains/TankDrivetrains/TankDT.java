@@ -12,13 +12,13 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
  * Created by Frank Portman on 5/21/2018
  */
 public abstract class TankDT extends Drivetrain {
-    public double       turnMult,
-                        angleBetween,
+    public double       turnMult     ,
+                        angleBetween ,
                         directionMult = 1,
-                        cos,
+                        cos          ,
                         maxTurn       = 1,
-                        leftPow,
-                        rightPow;
+                        leftPow      ,
+                        rightPow     ;
 
     private boolean     turn          = false;
 

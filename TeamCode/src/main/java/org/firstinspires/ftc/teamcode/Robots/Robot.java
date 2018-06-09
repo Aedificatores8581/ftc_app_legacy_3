@@ -8,12 +8,7 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.robotUniversal.GyroAngles;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.teamcode.robotUniversal.GyroAngles;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
 import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 
@@ -22,17 +17,17 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
  */
 
 public abstract class Robot extends OpMode {
-    GyroAngles     gyroangles;
-    Orientation    angles;
-    BNO055IMU      imu;
-    public double  startAngle;
-    public boolean usingIMU;
-    public Vector2 leftStick1,
+    GyroAngles     gyroangles ;
+    Orientation    angles     ;
+    BNO055IMU      imu        ;
+    public double  startAngle ;
+    public boolean usingIMU   ;
+    public Vector2 leftStick1 ,
                    rightStick1,
-                   leftStick2,
+                   leftStick2 ,
                    rightStick2;
-    public Vector2 robotAngle;
-    Robot.Module   module;
+    public Vector2 robotAngle ;
+    Robot.Module   module     ;
     public Robot(Module mod, boolean isUsingIMU){
         usingIMU = isUsingIMU;
         module = mod;
@@ -41,6 +36,8 @@ public abstract class Robot extends OpMode {
         module = Module.REV;
         usingIMU = true;
     }
+    @Override
+    //initializes the gyro sensor
     public void init() {
         if(isUsingIMU()) {
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -58,44 +55,28 @@ public abstract class Robot extends OpMode {
             robotAngle = new Vector2();
         }
     }
+    @Override
+    //sets the start angle of the robot
     public void start(){
         if(isUsingIMU()) {
             startAngle = getGyroAngle();
         }
     }
+    //returns the Z value of the gyro sensor`
     public double getGyroAngle(){
-        return gyroangles.refreshGyroAngles(imu.getAngularOrientation(AxesReference.INTRINSIC, GyroAngles.ORDER, GyroAngles.UNIT));
+        return gyroangles.refreshGyroAnglesZ(imu.getAngularOrientation(AxesReference.INTRINSIC, GyroAngles.ORDER, GyroAngles.UNIT));
     }
+    //Sets the start angle of the robot
     public void setStartAngle(){
         startAngle = getGyroAngle();
     }
+    //Normalizes the gyro
     public double normalizeGyroAngle(){
-        double angle = getGyroAngle();
-        angle -= startAngle;
-        double a2 = Math.abs(angle) %  360;
-        if(Math.abs(angle) != angle){
-            return 360 - a2;
-        }
-        return a2;
+        return UniversalFunctions.normalizeAngleDegrees(getGyroAngle(), startAngle);
     }
+    //Sets the angle value of robotAngle
     public void setRobotAngle(){
         robotAngle.setFromPolar(1, Math.toRadians(normalizeGyroAngle()));
-    }
-    public double normalizeGamepadAngleL(double angle){
-        return UniversalFunctions.normalizeAngle(getGamepadAngleL(), angle);
-    }
-    public double getGamepadAngleL(){
-        double x = gamepad1.left_stick_x;
-        double y = gamepad1.left_stick_y;
-        if(y < 0)
-            return Math.toDegrees(Math.acos(x / (Math.sqrt(x * x + y * y))));
-        else if(y > 0)
-            return -Math.toDegrees(Math.acos(x / (Math.sqrt(x * x + y * y))));
-        else if(x < 0)
-            return 180;
-        else
-            return 0;
-        // return (UniversalFunctions.round(y) / 2.0 + 0.5 * Math.abs(UniversalFunctions.round(y))) * 180 + Math.toDegrees(Math.acos(x / (Math.sqrt(x * x + y * y))));
     }
     //instantiates the vectors representing the first gamepad's sticks
     public void activateGamepad1(){
@@ -142,10 +123,12 @@ public abstract class Robot extends OpMode {
         updateGamepad1();
         updateGamepad2();
     }
+    //Represents the type of module used
     public enum Module{
         REV,
         MR
     }
+    //Returns true if and only if the robot is using the imu and a REV module
     private boolean isUsingIMU(){
         return module.equals(Module.REV) && usingIMU;
     }

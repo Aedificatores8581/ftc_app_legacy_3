@@ -4,21 +4,21 @@ package org.firstinspires.ftc.teamcode.robotUniversal;
  * Created by Frank Portman on 6/2/2018
  */
 public class PIDController {
-    public double       error,
-                        setpoint,
-                        processVar,
+    public double       error        ,
+                        setpoint     ,
+                        processVar   ,
                         integral      = 0,
-                        deltaTime,
-                        derivative,
-                        prevError,
+                        deltaTime    ,
+                        derivative   ,
+                        prevError    ,
                         currentOutput,
-                        time,
+                        time         ,
                         TI            = 0,
                         TD            = 0,
-                        currentTime;
-    public final double KP;
-    public final double KI;
-    public final double KD;
+                        currentTime  ;
+    public final double KP           ;
+    public final double KI           ;
+    public final double KD           ;
     public PIDController(double kp, double ki, double kd, double tc){
         KP = kp;
         KI = ki;

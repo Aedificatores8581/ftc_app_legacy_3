@@ -8,10 +8,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class TouchSensor {
     private DigitalChannel touchSensor;
+    //initializes the motors
     public void init(HardwareMap hardwareMap, String name){
         touchSensor = hardwareMap.digitalChannel.get(name);
         touchSensor.setMode(DigitalChannel.Mode.INPUT);
     }
+    //returns whether the sensor is pressed
     public boolean isPressed(){
         return touchSensor.getState();
     }

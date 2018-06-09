@@ -20,18 +20,18 @@ public class Vector3 {
         this.y = y;
         this.z = z;
     }
-
+    //Adds the components of a given Vector3 to this Vector3
     public void add(Vector3 vector) {
         x += vector.x;
         y += vector.y;
         z += vector.z;
     }
-
+    //Subtracts the components of a given Vector3 from this Vector3
     public void subtract(Vector3 vector) {
         vector.scalarMultiply(-1);
         add(vector);
     }
-
+    //Adds the components of a given Vector3 to this Vector3
     public void scalarMultiply(double a) {
         x *= a;
         y *= a;
