@@ -113,8 +113,5 @@ public abstract class UniversalFunctions {
         }
         return ret;
     }
-    public static int sign(double input){
-        return input >= 0 ? 1 : -1;
-    }
 
 }
