@@ -41,9 +41,7 @@ public class Vector2 {
     }
 
     //Length of vector
-    public double magnitude() {
-        return Math.sqrt(x*x + y*y);
-    }
+    public double magnitude() { return Math.hypot(x, y); }
 
     //Dot Product
     public double dot(Vector2 vector) {
