@@ -16,7 +16,8 @@ public class PIDController {
                   TI            = 0,
                   TD            = 0,
                   currentTime  ,
-                  integralMax   = Double.POSITIVE_INFINITY;
+                  integralMax   = Double.POSITIVE_INFINITY,
+                  sse           = 0;
     public double KP            = 0;
     public double KI            = 0;
     public double KD            = 0;
@@ -48,22 +49,28 @@ public class PIDController {
             time = System.currentTimeMillis();
             currentOutput = KP * error + KI * integral + KD * derivative;
             prevError = error;
+            calculateSSE();
         }
     }
     //one iteration of a standard PID loop
     public void standardLoop(){
         if(time + deltaTime >= currentTime) {
             error = setpoint - processVar;
-            if(time + TI >= currentTime)
+            if(time + TI >= currentTime) {
                 integral += error * deltaTime;
+                integral = integralMax > integral ? integral : integralMax;
+            }
             if(time + TD >= currentTime)
                 derivative = (error - prevError) / deltaTime;
             time = System.currentTimeMillis();
             currentOutput = KP * error + KP / TI * integral + KP * TD * derivative;
             prevError = error;
+            calculateSSE();
         }
         currentTime = System.currentTimeMillis();
     }
-
+    public void calculateSSE(){
+        sse = setpoint / (processVar - currentOutput);
+    }
 
 }
