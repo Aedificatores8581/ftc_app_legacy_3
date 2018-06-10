@@ -8,19 +8,13 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class WestCoast15 extends TankDT {
     public DcMotor rightFront, leftFront, leftRear, rightRear;
-
+    public DcMotor.ZeroPowerBehavior zeroPowerBehavior;
     public WestCoast15(){
-        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT;
         maxSpeed = 1;
     }
-    public WestCoast15(DcMotor.ZeroPowerBehavior zeroPowerBehavior, double speed){
-        rightFront.setZeroPowerBehavior(zeroPowerBehavior);
-        rightRear.setZeroPowerBehavior(zeroPowerBehavior);
-        leftFront.setZeroPowerBehavior(zeroPowerBehavior);
-        leftRear.setZeroPowerBehavior(zeroPowerBehavior);
+    public WestCoast15(DcMotor.ZeroPowerBehavior zeroPowBehavior, double speed){
+        zeroPowerBehavior = zeroPowBehavior;
         maxSpeed = speed;
     }
 
@@ -44,11 +38,6 @@ public class WestCoast15 extends TankDT {
         rightRear.setDirection(REVERSE);
         leftFront.setDirection(FORWARD);
         leftRear.setDirection(FORWARD);
-
-        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     public void normalizeMotors(){
     }

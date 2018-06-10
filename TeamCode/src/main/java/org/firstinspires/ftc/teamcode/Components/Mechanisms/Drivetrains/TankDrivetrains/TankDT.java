@@ -20,9 +20,9 @@ public abstract class TankDT extends Drivetrain {
                         leftPow      ,
                         rightPow     ;
 
-    private boolean     turn          = false;
+    public boolean     turn          = false;
 
-    private double max;
+    public double max;
 
     public Direction    direction;
     public ControlState controlState;
@@ -135,7 +135,6 @@ public abstract class TankDT extends Drivetrain {
                                 turn = true;
                             break;
                     }
-
                     leftVect.setFromPolar(leftVect.magnitude(), angleBetween);
 
                     rightPow = (leftVect.y - leftVect.x) / 2 * directionMult;

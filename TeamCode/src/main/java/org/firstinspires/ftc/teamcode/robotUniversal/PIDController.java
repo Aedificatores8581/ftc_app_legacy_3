@@ -72,5 +72,4 @@ public class PIDController {
     public void calculateSSE(){
         sse = setpoint / (processVar - currentOutput);
     }
-
 }

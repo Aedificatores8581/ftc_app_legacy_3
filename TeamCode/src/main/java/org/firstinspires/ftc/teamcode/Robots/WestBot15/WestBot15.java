@@ -11,12 +11,11 @@ public abstract class WestBot15 extends Robot {
 
     @Override
     public void init(){
+
         super.init();
         drivetrain.maxSpeed = 0.5;
         drivetrain.initMotors(hardwareMap);
-    }
-    public void initLoop(){
-
+        msStuckDetectInit = 50000;
     }
     @Override
     public void start(){
