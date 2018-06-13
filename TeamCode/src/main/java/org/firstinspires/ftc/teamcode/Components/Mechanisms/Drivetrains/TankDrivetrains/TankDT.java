@@ -50,7 +50,6 @@ public abstract class TankDT extends Drivetrain {
         FAST
     }
 
-    // TODO: Might need a fix, who knows.
     //Basic Tele-Op driving functionality
     public void teleOpLoop(Vector2 leftVect, Vector2 rightVect, Vector2 angle){
         switch(controlState) {
