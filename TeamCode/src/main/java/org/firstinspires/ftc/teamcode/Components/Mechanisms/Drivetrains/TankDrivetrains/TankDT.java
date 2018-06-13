@@ -180,23 +180,21 @@ public abstract class TankDT extends Drivetrain {
         switch(direction){
             case FOR:
                 if(isFacing(currentPos, destination, tolerance)){
-                    leftPow = Math.sin(angleBetween) + Math.cos(angleBetween);
-                    rightPow = Math.sin(angleBetween) - Math.cos(angleBetween);
+                    leftPow = (destination.y + destination.x) * Math.sqrt(2) / 2;
+                    rightPow = (destination.y - destination.x) * Math.sqrt(2) / 2;
                 }
                 else
                     turnToFace(currentPos, destination, turnSpeed);
                 break;
             case BACK:
                 if(isFacingBack(currentPos, destination, tolerance)){
-                    leftPow = Math.sin(angleBetween) - Math.cos(angleBetween);
-                    rightPow = Math.sin(angleBetween) + Math.cos(angleBetween);
+                    leftPow = (destination.y - destination.x) * Math.sqrt(2) / 2;
+                    rightPow = (destination.y + destination.x) * Math.sqrt(2) / 2;
                 }
                 else
                     turnToFace(currentPos, destination, turnSpeed);
                 break;
         }
-        leftPow = (destination.y + destination.x) * Math.sqrt(2) / 2;
-        rightPow = (destination.y - destination.x) * Math.sqrt(2) / 2;
         if(normalized && UniversalFunctions.maxAbs(leftPow, rightPow) > 1){
             max = UniversalFunctions.max(leftPow, rightPow);
             leftPow /= max;
