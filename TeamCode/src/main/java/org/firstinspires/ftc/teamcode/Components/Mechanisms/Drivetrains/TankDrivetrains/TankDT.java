@@ -22,15 +22,18 @@ public abstract class TankDT extends Drivetrain {
 
     public boolean      turn          = false;
 
-    public double       max;
+    public double       max          ;
 
-    public Direction    direction;
-    public ControlState controlState;
-    public FCTurnState  turnState;
+    public Direction    direction    ;
+    public ControlState controlState ;
+    public FCTurnState  turnState    ;
 
     public TankDT(){
         leftPow = 0;
         rightPow = 0;
+        direction = Direction.FOR;
+        controlState = ControlState.ARCADE;
+        turnState = FCTurnState.FAST;
     }
 
     //Different control systems
