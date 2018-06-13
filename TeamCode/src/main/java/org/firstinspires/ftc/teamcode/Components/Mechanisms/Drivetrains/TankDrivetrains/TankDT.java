@@ -221,6 +221,7 @@ public abstract class TankDT extends Drivetrain {
     public void setSpeed(double speed){
         maxSpeed = speed;
     }
+    //turns the front of the robot to the specified direction
     public void turnToFace(Vector2 currentAngle, Vector2 desiredAngle, double tolerance, double turnSpeed){
         angleBetween = currentAngle.angleBetween(desiredAngle);
         if(!isFacing(currentAngle, desiredAngle, tolerance)){
@@ -228,18 +229,22 @@ public abstract class TankDT extends Drivetrain {
             rightPow = angleBetween > 0 ? turnSpeed : -turnSpeed;
         }
     }
+    //returns a boolean representing whether the drivetrain is facing a given direction
     public boolean isFacing(Vector2 currentAngle, Vector2 desiredAngle, double tolerance){
         return UniversalFunctions.withinTolerance(-tolerance, currentAngle.angleBetween(desiredAngle), tolerance);
     }
+    //returns a boolean representing whether the drivetrain is facing a given direction
     public boolean isFacingBack(Vector2 currentAngle, Vector2 desiredAngle, double tolerance){
         return UniversalFunctions.withinTolerance(-tolerance, UniversalFunctions.normalizeAngleRadians(currentAngle.angleBetween(desiredAngle) + Math.PI), tolerance);
     }
+    //turns the front of the robot to the specified direction
     public void turnToFace(Vector2 currentAngle, Vector2 desiredAngle, double turnSpeed){
         angleBetween = currentAngle.angleBetween(desiredAngle);
         turnSpeed *= Math.sin(angleBetween);
         leftPow = -turnSpeed;
         rightPow = turnSpeed;
     }
+    //Turns the back of the robot to the specified direction
     public void turnToFaceBack(Vector2 currentAngle, Vector2 desiredAngle, double turnSpeed){
         angleBetween = UniversalFunctions.normalizeAngleRadians(currentAngle.angleBetween(desiredAngle) + Math.PI);
         turnSpeed *= Math.sin(angleBetween);
