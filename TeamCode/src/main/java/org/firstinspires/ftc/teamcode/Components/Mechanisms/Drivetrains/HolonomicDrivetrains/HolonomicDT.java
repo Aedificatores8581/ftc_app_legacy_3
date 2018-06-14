@@ -40,4 +40,15 @@ public abstract class HolonomicDT extends Drivetrain {
                 break;
         }
     }
+    public void switchTurnState(Vector2 velocity, double turnVector, Vector2 angle){
+        turnMult = 1 - velocity.magnitude() * (1 - minTurn);
+        switch (turnState) {
+            case ARCADE:
+                setTurn(turnVector);
+                break;
+            case FIELD_CENTRIC:
+                setTurn(Math.sin(velocity.angleBetween(angle)));
+                break;
+        }
+    }
 }
