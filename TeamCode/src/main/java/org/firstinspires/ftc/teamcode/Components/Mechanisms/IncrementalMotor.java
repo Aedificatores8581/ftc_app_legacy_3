@@ -9,20 +9,22 @@ import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
  * Created by Frank Portman on 6/2/2018
  */
 public class IncrementalMotor {
-    public DcMotor      motor        ;
-    public MotorEncoder encoder      ;
-    public double       desiredPow   ,
-                        acceleration ,
-                        decelleration,
-                        currentPow   ,
-                        minPow       ;
-    public IncrementalMotor(DcMotor dc, double accPerSec, double decPerSec, double min){
+    public DcMotor      motor         ;
+    public MotorEncoder encoder       ;
+    public double       desiredPow    ,
+                        acceleration  ,
+                        decelleration ,
+                        currentPow     = 0,
+                        maxPow         = 1,
+                        minPow         = -1,
+                        minAbsolutePow;
+    public IncrementalMotor(DcMotor dc, double accPerSec, double decPerSec, double minAbs){
         motor = dc;
         encoder = new MotorEncoder(motor);
         encoder.initEncoder();
         acceleration = Math.abs(accPerSec);
         decelleration = Math.abs(decPerSec);
-        minPow = min;
+        minAbsolutePow = minAbs;
     }
     public IncrementalMotor(DcMotor dc, double acc, double dec){
         motor = dc;
@@ -30,7 +32,7 @@ public class IncrementalMotor {
         encoder.initEncoder();
         acceleration = Math.abs(acc);
         decelleration = Math.abs(dec);
-        minPow = acceleration;
+        minAbsolutePow = acceleration;
     }
     //returns the actual current power of the motor
     public double getPower(){
@@ -38,18 +40,29 @@ public class IncrementalMotor {
     }
     //incrementally sets the power to the desiredPow variable
     public synchronized void setPower(){
-        currentPow = getPower();
-        if(currentPow != desiredPow) {
-            if (currentPow > 0)
-                currentPow += currentPow < desiredPow ? acceleration : -decelleration;
-            else if (currentPow < 0)
-                currentPow += currentPow < desiredPow ? decelleration : -acceleration;
-            else
-                currentPow += Math.signum(desiredPow) * minPow;
+        if(currentPow == 0) {
+            if (desiredPow != 0.0)
+                currentPow += Math.signum(desiredPow) * minAbsolutePow;
         }
-        if(UniversalFunctions.withinTolerance(Math.abs(desiredPow), Math.abs(currentPow), decelleration, acceleration))
-            currentPow = desiredPow;
-        currentPow = UniversalFunctions.clamp(-1, currentPow, 1);
+        if(currentPow < desiredPow){
+            if(currentPow > 0)
+                currentPow += acceleration;
+            else if (currentPow < 0)
+                currentPow += decelleration;
+            currentPow = Math.min(currentPow, Math.max(Math.signum(currentPow) * Math.abs(desiredPow), 0));
+        }
+        else if(currentPow > desiredPow){
+            if(currentPow > 0){
+                currentPow -= decelleration;
+                currentPow = Math.max(currentPow, 0);
+            }
+            else if (currentPow < 0){
+                currentPow -= acceleration;
+                currentPow = Math.max(currentPow, desiredPow);
+            }
+            currentPow = Math.max(currentPow, Math.max(Math.signum(currentPow) * desiredPow, 0));
+        }
+        currentPow = UniversalFunctions.clamp(minPow, currentPow, maxPow);
         motor.setPower(currentPow);
     }
     //stops the motor
