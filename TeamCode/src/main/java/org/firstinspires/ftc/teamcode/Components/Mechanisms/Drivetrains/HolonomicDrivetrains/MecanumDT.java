@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
 import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
+import org.opencv.core.Point;
 
 /**
  * Created by Frank Portman on 5/21/2018
@@ -81,6 +82,17 @@ public abstract class MecanumDT extends HolonomicDT {
         angleBetween = velocity.angleBetween(angle);
         setVelocity(angleBetween, velocity.magnitude());
         switchTurnState(velocity, turnVector, angle);
+        setTurnPow();
+        normalizeMotors();
+        refreshMotors();
+    }
+    //Provides basic Autonomous functionality
+    public void autonomousLoop1(Vector2 destination, Vector2 angle, double tolerance){
+        angleBetween = destination.angleBetween(angle);
+        setVelocity(angleBetween, destination.magnitude());
+        normalizeMotors();
+        turnState = TurnState.FIELD_CENTRIC;
+        switchTurnState(destination, 1, angle);
         setTurnPow();
         normalizeMotors();
         refreshMotors();

@@ -199,24 +199,24 @@ public abstract class TankDT extends Drivetrain {
         return direction;
     }
     //TODO: implement location tracking to find currentPos
-    public void autotomousLoop1(Vector2 currentPos, Vector2 destination, double tolerance, double turnSpeed, boolean normalized){
+    public void autotomousLoop1(Vector2 angle, Vector2 destination, double tolerance, double turnSpeed, boolean normalized){
         turnSpeed = Math.abs(turnSpeed);
         switch(direction){
             case FOR:
-                if(isFacing(currentPos, destination, tolerance)){
+                if(isFacing(angle, destination, tolerance)){
                     leftPow = (destination.y + destination.x) * Math.sqrt(2) / 2;
                     rightPow = (destination.y - destination.x) * Math.sqrt(2) / 2;
                 }
                 else
-                    turnToFace(currentPos, destination, turnSpeed);
+                    turnToFace(angle, destination, turnSpeed);
                 break;
             case BACK:
-                if(isFacingBack(currentPos, destination, tolerance)){
+                if(isFacingBack(angle, destination, tolerance)){
                     leftPow = (destination.y - destination.x) * Math.sqrt(2) / 2;
                     rightPow = (destination.y + destination.x) * Math.sqrt(2) / 2;
                 }
                 else
-                    turnToFace(currentPos, destination, turnSpeed);
+                    turnToFace(angle, destination, turnSpeed);
                 break;
         }
         if(normalized && UniversalFunctions.maxAbs(leftPow, rightPow) > 1){
