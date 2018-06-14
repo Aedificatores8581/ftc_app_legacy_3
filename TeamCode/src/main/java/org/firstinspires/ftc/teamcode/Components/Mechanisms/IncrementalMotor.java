@@ -15,8 +15,6 @@ public class IncrementalMotor {
                         acceleration  ,
                         decelleration ,
                         currentPow     = 0,
-                        maxPow         = 1,
-                        minPow         = -1,
                         minAbsolutePow;
     public IncrementalMotor(DcMotor dc, double accPerSec, double decPerSec, double minAbs){
         motor = dc;
@@ -39,7 +37,8 @@ public class IncrementalMotor {
         return motor.getPower();
     }
     //incrementally sets the power to the desiredPow variable
-    public synchronized void setPower(){
+    public synchronized void setPower(double pow){
+        desiredPow = pow;
         if(currentPow == 0) {
             if (desiredPow != 0.0)
                 currentPow += Math.signum(desiredPow) * minAbsolutePow;
@@ -62,11 +61,9 @@ public class IncrementalMotor {
             }
             currentPow = Math.max(currentPow, Math.max(Math.signum(currentPow) * desiredPow, 0));
         }
-        currentPow = UniversalFunctions.clamp(minPow, currentPow, maxPow);
-        motor.setPower(currentPow);
+        motor.setPower(currentPow );
     }
     //stops the motor
-
     public void stop(){
         motor.setPower(0);
     }
