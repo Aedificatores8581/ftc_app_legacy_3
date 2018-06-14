@@ -38,11 +38,6 @@ public class Mecanum2_4 extends MecanumDT {
         rightRear.setDirection(REVERSE);
         leftFore.setDirection(FORWARD);
         leftRear.setDirection(FORWARD);
-
-        rightFore.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
-        leftFore.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
-        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
-        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.UNKNOWN);
     }
 
     //sets the motor powers to the specified values
