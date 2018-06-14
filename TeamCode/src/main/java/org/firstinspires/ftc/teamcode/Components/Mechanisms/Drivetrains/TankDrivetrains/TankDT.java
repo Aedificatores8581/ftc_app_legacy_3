@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains;
 
+import android.util.Log;
+
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -58,7 +60,6 @@ public abstract class TankDT extends Drivetrain {
                 leftPow = leftVect.y + turnMult * rightVect.x;
                 rightPow = leftVect.y - turnMult * rightVect.x;
                 break;
-
             case FIELD_CENTRIC:
                 angleBetween = leftVect.angleBetween(angle);
                 if (leftVect.magnitude() < UniversalConstants.Triggered.STICK) {

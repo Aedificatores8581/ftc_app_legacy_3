@@ -6,6 +6,9 @@ import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetra
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
+import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
+
+import java.io.File;
 
 /**
  * Created by Frank Portman on 6/1/2018
@@ -31,6 +34,7 @@ public class WestBot15TestDrive extends WestBot15 {
     @Override
     public void loop(){
         updateGamepad1();
+        refreshStartAngle();
         setRobotAngle();
         drivetrain.teleOpLoop(leftStick1, rightStick1, robotAngle);
         switch(drivetrain.controlState){
@@ -146,6 +150,13 @@ public class WestBot15TestDrive extends WestBot15 {
                 else if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                     switchControlState = true;
                 break;
+        }
+    }
+    public void refreshStartAngle(){
+        if(gamepad1.left_stick_button){
+            startAngle = Math.toDegrees(leftStick1.angleBetween(robotAngle));
+            leftStick1.x = 0;
+            leftStick1.y = 0;
         }
     }
 }
