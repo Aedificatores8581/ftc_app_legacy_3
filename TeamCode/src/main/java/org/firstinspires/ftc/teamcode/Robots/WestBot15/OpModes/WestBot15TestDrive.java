@@ -25,7 +25,7 @@ public class WestBot15TestDrive extends WestBot15 {
         activateGamepad1();
         drivetrain.controlState = TankDT.ControlState.ARCADE;
         drivetrain.turnState = TankDT.FCTurnState.FAST;
-        drivetrain.direction = Drivetrain.Direction.FOR;
+        drivetrain.direction = TankDT.Direction.FOR;
     }
     @Override
     public void start(){
@@ -43,7 +43,6 @@ public class WestBot15TestDrive extends WestBot15 {
                     drivetrain.controlState = drivetrain.controlState.FIELD_CENTRIC;
                     switchControlState = false;
                     canSwitchControlState = false;
-                    drivetrain.directionMult = 1;
                 }
                 else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER){
                     switchControlState = false;
@@ -98,7 +97,6 @@ public class WestBot15TestDrive extends WestBot15 {
                     drivetrain.controlState = TankDT.ControlState.FIELD_CENTRIC_VECTOR;
                     switchControlState = false;
                     canSwitchControlState = false;
-                    drivetrain.directionMult = 1;
                 }
                 else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER){
                     switchControlState = false;
@@ -141,7 +139,6 @@ public class WestBot15TestDrive extends WestBot15 {
                     drivetrain.controlState = TankDT.ControlState.ARCADE;
                     switchControlState = false;
                     canSwitchControlState = false;
-                    drivetrain.directionMult = 1;
                 }
                 else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER){
                     switchControlState = false;
@@ -151,6 +148,15 @@ public class WestBot15TestDrive extends WestBot15 {
                     switchControlState = true;
                 break;
         }
+        telemetry.addData("control State", drivetrain.controlState);
+        telemetry.addData("fcTurnState", drivetrain.turnState);
+        telemetry.addData("leftvect1", leftStick1);
+        telemetry.addData("leftPower", drivetrain.leftPow);
+        telemetry.addData("rightPower", drivetrain.rightPow);
+        telemetry.addData("angle", Math.toDegrees(robotAngle.angle()));
+        telemetry.addData("direction", drivetrain.direction);
+        telemetry.addData("turn", drivetrain.turn);
+        telemetry.addData("sin", Math.sin(drivetrain.angleBetween));
     }
     public void refreshStartAngle(){
         if(gamepad1.left_stick_button){

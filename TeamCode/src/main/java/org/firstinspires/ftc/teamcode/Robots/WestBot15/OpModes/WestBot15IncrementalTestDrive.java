@@ -41,7 +41,6 @@ public class WestBot15IncrementalTestDrive extends WestBot15Inc {
                     drivetrain.controlState = drivetrain.controlState.FIELD_CENTRIC;
                     switchControlState = false;
                     canSwitchControlState = false;
-                    drivetrain.directionMult = 1;
                 }
                 else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER){
                     switchControlState = false;
@@ -149,6 +148,7 @@ public class WestBot15IncrementalTestDrive extends WestBot15Inc {
                     switchControlState = true;
                 break;
         }
+
     }
     public void refreshStartAngle(){
         if(gamepad1.left_stick_button){
