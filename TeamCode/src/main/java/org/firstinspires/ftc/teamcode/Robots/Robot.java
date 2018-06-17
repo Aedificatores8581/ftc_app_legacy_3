@@ -91,22 +91,22 @@ public abstract class Robot extends OpMode {
     //Updates the vectors representing the left stick of the first gamepad
     public void updateLeftStick1(){
         leftStick1.x = gamepad1.left_stick_x;
-        leftStick1.y = gamepad1.left_stick_y;
+        leftStick1.y = -gamepad1.left_stick_y;
     }
     //Updates the vectors representing the right stick of the first gamepad
     public void updateRightStick1() {
         rightStick1.x = gamepad1.right_stick_x;
-        rightStick1.y = gamepad1.right_stick_y;
+        rightStick1.y = -gamepad1.right_stick_y;
     }
     //Updates the vectors representing the left stick of the second gamepad
     public void updateLeftStick2(){
         leftStick2.x = gamepad2.left_stick_x;
-        leftStick2.y = gamepad2.left_stick_y;
+        leftStick2.y = -gamepad2.left_stick_y;
     }
     //Updates the vectors representing the right stick of the second gamepad
     public void updateRightStick2(){
         rightStick2.x = gamepad2.right_stick_x;
-        rightStick2.y = gamepad2.right_stick_y;
+        rightStick2.y = -gamepad2.right_stick_y;
     }
     //Updates the vectors representing the sticks of the second gamepad
     public void updateGamepad2(){
