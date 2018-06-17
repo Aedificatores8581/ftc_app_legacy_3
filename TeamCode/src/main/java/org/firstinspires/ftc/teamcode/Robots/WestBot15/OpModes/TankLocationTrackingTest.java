@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 
@@ -13,7 +14,6 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 @TeleOp(name = "Location tracking test", group = "WestBot15")
 public class TankLocationTrackingTest extends WestBot15 {
     double leftEncVal = 0, rightEncVal = 0, inner, outer, radius, lengthToCenter, angle;
-    final double encPerInch = 0;
     Vector2 currentPos = new Vector2();
     Vector2 angleChange = new Vector2();
     AngleDirection angleDirection;
@@ -43,8 +43,8 @@ public class TankLocationTrackingTest extends WestBot15 {
             angleDirection = rightEncVal > leftEncVal ? AngleDirection.RIGHT : AngleDirection.LEFT;
             inner = rightEncVal > leftEncVal ? leftEncVal : rightEncVal;
             outer = rightEncVal < leftEncVal ? leftEncVal : rightEncVal;
-            lengthToCenter = (outer / (outer - inner)) * 18 * encPerInch;
-            radius = lengthToCenter - 9 * encPerInch;
+            lengthToCenter = (outer / (outer - inner)) * 18 * drivetrain.ENC_PER_INCH;
+            radius = lengthToCenter - 9 * drivetrain.ENC_PER_INCH;
             angle = ((outer - inner) / 2) / (2 * radius * Math.PI);
             if(angleDirection.equals(AngleDirection.LEFT))
                 angle = Math.PI - angle;

@@ -12,6 +12,8 @@ public class WestCoast15 extends TankDT {
     public DcMotor rightFront, leftFront, leftRear, rightRear;
     public MotorEncoder rfEncoder, lfEncoder, lrEncoder, rrEncoder;
     public DcMotor.ZeroPowerBehavior zeroPowerBehavior;
+    //TODO: Find the value of ENC_PER_INCH
+    public final double ENC_PER_INCH = 0;
     public WestCoast15(){
         zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT;
         maxSpeed = 1;
@@ -24,7 +26,6 @@ public class WestCoast15 extends TankDT {
         leftMotors = new DcMotor[]{leftFront, leftRear};
         rightMotors = new DcMotor[]{rightFront, rightRear};
     }
-
     public void setLeftPow(double pow) {
         leftFront.setPower(pow * maxSpeed);
         leftRear.setPower(pow * maxSpeed);
