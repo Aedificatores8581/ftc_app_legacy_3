@@ -74,6 +74,13 @@ public class Vector2 {
         return Math.acos(this.dot(vector) / (this.magnitude() * vector.magnitude()));
     }
 
+    //Sets x and y rotated by the given angle in radians
+    public void rotate(double angle){
+        double tempX = x, tempY = y;
+        x = Math.cos(angle) * tempX - Math.sin(angle) * tempY;
+        y = Math.sin(angle) * tempY + Math.cos(angle) * tempY;
+    }
+
     public String toString(){
         return "(" + x + ", " + y + ")";
     }
