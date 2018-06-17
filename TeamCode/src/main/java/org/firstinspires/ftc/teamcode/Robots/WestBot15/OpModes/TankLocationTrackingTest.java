@@ -12,10 +12,10 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
  */
 @TeleOp(name = "Location tracking test", group = "WestBot15")
 public class TankLocationTrackingTest extends WestBot15 {
-    double leftEncVal = 0, rightEncVal = 0, inner, outer, radius, lengthToCenter, angle, x, y;
+    double leftEncVal = 0, rightEncVal = 0, inner, outer, radius, lengthToCenter, angle;
     final double encPerInch = 0;
-    Vector2 currentPos = new Vector2(0, 0);
-    Vector2 angleChange = new Vector2(0,0);
+    Vector2 currentPos = new Vector2();
+    Vector2 angleChange = new Vector2();
     AngleDirection angleDirection;
     @Override
     public void init(){
@@ -35,16 +35,14 @@ public class TankLocationTrackingTest extends WestBot15 {
     }
     @Override
     public void loop(){
-        leftEncVal = drivetrain.leftFront.getCurrentPosition() - leftEncVal;
-        rightEncVal = drivetrain.rightFront.getCurrentPosition() - rightEncVal;
+        leftEncVal = drivetrain.averageLeftEncoders() - leftEncVal;
+        rightEncVal = drivetrain.averageRightEncoders() - rightEncVal;
         if(leftEncVal == rightEncVal)
-            angleChange.setFromPolar(leftEncVal, Math.PI / 2 - robotAngle.angle());
+            angleChange.setFromPolar(leftEncVal, robotAngle.angle());
         else {
             angleDirection = rightEncVal > leftEncVal ? AngleDirection.RIGHT : AngleDirection.LEFT;
             inner = rightEncVal > leftEncVal ? leftEncVal : rightEncVal;
             outer = rightEncVal < leftEncVal ? leftEncVal : rightEncVal;
-            outer = rightEncVal;
-            inner = leftEncVal;
             lengthToCenter = (outer / (outer - inner)) * 18 * encPerInch;
             radius = lengthToCenter - 9 * encPerInch;
             angle = ((outer - inner) / 2) / (2 * radius * Math.PI);
@@ -54,7 +52,6 @@ public class TankLocationTrackingTest extends WestBot15 {
             angleChange.rotate(robotAngle.angle());
         }
         currentPos.add(angleChange);
-
         setRobotAngle();
     }
     public enum AngleDirection{

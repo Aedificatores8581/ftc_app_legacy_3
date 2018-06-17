@@ -21,13 +21,14 @@ public abstract class TankDT extends Drivetrain {
                         cos          ,
                         maxTurn       = 1,
                         leftPow      ,
-                        rightPow     ;
+                        rightPow     ,
+                        max          ;
 
     public boolean      turn          = false,
                         canSwitch     = false;
 
-    public double       max          ;
-
+    public DcMotor[]    leftMotors   ,
+                        rightMotors  ;
     public Direction    direction    ;
     public ControlState controlState ;
     public FCTurnState  turnState    ;

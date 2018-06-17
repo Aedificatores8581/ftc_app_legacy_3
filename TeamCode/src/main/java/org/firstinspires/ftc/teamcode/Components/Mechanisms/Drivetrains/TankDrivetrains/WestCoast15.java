@@ -15,10 +15,14 @@ public class WestCoast15 extends TankDT {
     public WestCoast15(){
         zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT;
         maxSpeed = 1;
+        leftMotors = new DcMotor[]{leftFront, leftRear};
+        rightMotors = new DcMotor[]{rightFront, rightRear};
     }
     public WestCoast15(DcMotor.ZeroPowerBehavior zeroPowBehavior, double speed){
         zeroPowerBehavior = zeroPowBehavior;
         maxSpeed = speed;
+        leftMotors = new DcMotor[]{leftFront, leftRear};
+        rightMotors = new DcMotor[]{rightFront, rightRear};
     }
 
     public void setLeftPow(double pow) {
@@ -49,5 +53,11 @@ public class WestCoast15 extends TankDT {
     }
     public void normalizeMotors(){
     }
+    public double averageLeftEncoders(){
+        return (lfEncoder.currentPosition + lrEncoder.currentPosition) / 2;
+    }
 
+    public double averageRightEncoders(){
+        return (rfEncoder.currentPosition + rrEncoder.currentPosition) / 2;
+    }
 }
