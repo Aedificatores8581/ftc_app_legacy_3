@@ -3,11 +3,14 @@ package org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDri
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.Components.Sensors.MotorEncoder;
+
 /**
  * Created by Frank Portman on 5/21/2018
  */
 public class WestCoast15 extends TankDT {
     public DcMotor rightFront, leftFront, leftRear, rightRear;
+    public MotorEncoder rfEncoder, lfEncoder, lrEncoder, rrEncoder;
     public DcMotor.ZeroPowerBehavior zeroPowerBehavior;
     public WestCoast15(){
         zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT;
@@ -38,6 +41,11 @@ public class WestCoast15 extends TankDT {
         rightRear.setDirection(REVERSE);
         leftFront.setDirection(FORWARD);
         leftRear.setDirection(FORWARD);
+
+        lfEncoder = new MotorEncoder(leftFront);
+        lrEncoder = new MotorEncoder(leftRear);
+        rfEncoder = new MotorEncoder(rightFront);
+        rrEncoder = new MotorEncoder(rightRear);
     }
     public void normalizeMotors(){
     }
