@@ -45,7 +45,7 @@ public class TankLocationTrackingTest extends WestBot15 {
             outer = rightEncVal < leftEncVal ? leftEncVal : rightEncVal;
             lengthToCenter = (outer / (outer - inner)) * 18 * drivetrain.ENC_PER_INCH;
             radius = lengthToCenter - 9 * drivetrain.ENC_PER_INCH;
-            angle = ((outer - inner) / 2) / (2 * radius * Math.PI);
+            angle = ((outer + inner) / 2) / (2 * radius * Math.PI);
             if(angleDirection.equals(AngleDirection.LEFT))
                 angle = Math.PI - angle;
             angleChange.setFromPolar(radius, angle);
