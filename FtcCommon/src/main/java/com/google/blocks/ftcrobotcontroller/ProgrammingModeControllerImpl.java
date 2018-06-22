@@ -5,7 +5,6 @@ import android.widget.TextView;
 
 import com.qualcomm.ftccommon.FtcEventLoopHandler;
 import com.qualcomm.ftccommon.ProgrammingModeController;
-import  org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 
 import org.openftc.turbo.TurboException;
 
@@ -15,7 +14,7 @@ import org.openftc.turbo.TurboException;
  */
 
 public class ProgrammingModeControllerImpl implements ProgrammingModeController {
-    public ProgrammingModeControllerImpl(org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity activity, TextView textView, ProgrammingWebHandlers programmingWebHandlers) {
+    public ProgrammingModeControllerImpl(Activity activity, TextView textView, ProgrammingWebHandlers programmingWebHandlers) {
 
     }
 
