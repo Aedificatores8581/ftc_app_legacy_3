@@ -343,7 +343,7 @@ public class UpdateUI {
     // Construction
     //------------------------------------------------------------------------------------------------
 
-    public UpdateUI(Activity activity, Dimmer dimmer) {
+    public UpdateUI(org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity.RobotRestarter activity, Dimmer dimmer) {
         this.activity = activity;
         this.dimmer = dimmer;
     }

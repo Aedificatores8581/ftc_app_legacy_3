@@ -1,22 +1,16 @@
 /* Copyright (c) 2014, 2015 Qualcomm Technologies Inc
-
 All rights reserved.
-
 Redistribution and use in source and binary forms, with or without modification,
 are permitted (subject to the limitations in the disclaimer below) provided that
 the following conditions are met:
-
 Redistributions of source code must retain the above copyright notice, this list
 of conditions and the following disclaimer.
-
 Redistributions in binary form must reproduce the above copyright notice, this
 list of conditions and the following disclaimer in the documentation and/or
 other materials provided with the distribution.
-
 Neither the name of Qualcomm Technologies Inc nor the names of its contributors
 may be used to endorse or promote products derived from this software without
 specific prior written permission.
-
 NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
 LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
@@ -40,7 +34,6 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.hardware.Camera;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.net.wifi.WifiManager;
@@ -53,7 +46,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -117,10 +109,6 @@ import org.openftc.rc.Utils;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import for_camera_opmodes.CameraPreview;
-import for_camera_opmodes.LinearOpModeCamera;
-import for_camera_opmodes.OpModeCamera;
-
 @SuppressWarnings("WeakerAccess")
 public class FtcRobotControllerActivity extends Activity {
     public static final String TAG = "RCActivity";
@@ -168,59 +156,8 @@ public class FtcRobotControllerActivity extends Activity {
 
     protected FtcEventLoop eventLoop;
     protected Queue<UsbDevice> receivedUsbAttachmentNotifications;
-  protected FtcEventLoop eventLoop;
-  protected Queue<UsbDevice> receivedUsbAttachmentNotifications;
-    /////////////////////////////////////////////////////////
-    // ADDED FOR CAMERA!!!
-
-    public void initPreview(final Camera camera, final OpModeCamera context, final Camera.PreviewCallback previewCallback) {
-      runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          context.preview = new CameraPreview(FtcRobotControllerActivity.this, camera, previewCallback);
-          FrameLayout previewLayout = (FrameLayout) findViewById(R.id.previewLayout);
-          previewLayout.addView(context.preview);
-        }
-      });
-    }
 
     protected class RobotRestarter implements Restarter {
-    // poor coding style here.  Shouldn't have to duplicate these routines for regular and linear OpModes.
-    public void initPreviewLinear(final Camera camera, final LinearOpModeCamera context, final Camera.PreviewCallback previewCallback) {
-      runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          context.preview = new CameraPreview(FtcRobotControllerActivity.this, camera, previewCallback);
-          FrameLayout previewLayout = (FrameLayout) findViewById(R.id.previewLayout);
-          previewLayout.addView(context.preview);
-        }
-      });
-    }
-
-
-    public void removePreview(final OpModeCamera context) {
-      runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          FrameLayout previewLayout = (FrameLayout) findViewById(R.id.previewLayout);
-          previewLayout.removeAllViews();
-        }
-      });
-    }
-
-    public void removePreviewLinear(final LinearOpModeCamera context) {
-      runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          FrameLayout previewLayout = (FrameLayout) findViewById(R.id.previewLayout);
-          previewLayout.removeAllViews();
-        }
-      });
-    }
-
-    // END CAMERA ADD!!!
-    //////////////////////////////////////////////
-  protected class RobotRestarter implements Restarter {
 
         public void requestRestart() {
             requestRobotRestart();
@@ -287,12 +224,12 @@ public class FtcRobotControllerActivity extends Activity {
         RobotLog.onApplicationStart();  // robustify against onCreate() following onDestroy() but using the same app instance, which apparently does happen
         RobotLog.vv(TAG, "onCreate()");
 
-    /* // Modified for OpenRC
-     * Check to see if the DS app is also installed.
-     * If it is, then show the user a dialog explaining
-     * the situation and offer them the option to uninstall
-     * either the DS app or the RC app
-     */
+        /* // Modified for OpenRC
+         * Check to see if the DS app is also installed.
+         * If it is, then show the user a dialog explaining
+         * the situation and offer them the option to uninstall
+         * either the DS app or the RC app
+         */
         if (BuildConfig.IS_OPENRC && Utils.isFtcDriverStationInstalled(getPackageManager())) {
             UiUtils.showDsAppInstalledDialog(this);
         }
