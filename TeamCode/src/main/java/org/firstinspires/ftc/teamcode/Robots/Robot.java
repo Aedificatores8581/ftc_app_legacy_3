@@ -88,6 +88,7 @@ public abstract class Robot extends OpMode {
         leftStick2 = new Vector2();
         rightStick2 = new Vector2();
     }
+    //TODO: Be absolutely certain that we need to make the y values of the gamepad vectors negative
     //Updates the vectors representing the left stick of the first gamepad
     public void updateLeftStick1(){
         leftStick1.x = gamepad1.left_stick_x;

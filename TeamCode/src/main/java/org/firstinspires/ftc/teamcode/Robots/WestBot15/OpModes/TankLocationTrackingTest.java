@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
  */
 @TeleOp(name = "Location tracking test", group = "WestBot15")
 public class TankLocationTrackingTest extends WestBot15 {
-    double leftEncVal = 0, rightEncVal = 0, inner, outer, radius, lengthToCenter, angle, totalAngle;
+    double leftEncVal = 0, rightEncVal = 0, inner, outer, radius, angle, totalAngle;
     Vector2 currentPos = new Vector2();
     Vector2 angleChange = new Vector2();
     AngleDirection angleDirection;

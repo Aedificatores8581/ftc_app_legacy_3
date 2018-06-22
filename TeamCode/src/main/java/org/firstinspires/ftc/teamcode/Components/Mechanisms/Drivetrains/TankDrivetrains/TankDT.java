@@ -60,15 +60,14 @@ public abstract class TankDT extends Drivetrain {
         switch(controlState) {
             case ARCADE:
                 turnMult = 1 - leftVect.magnitude() * (1 - maxTurn);
-                leftPow = leftVect.y + turnMult * rightVect.x;
-                rightPow = leftVect.y - turnMult * rightVect.x;
+                leftPow = leftVect.y - turnMult * rightVect.x;
+                rightPow = leftVect.y + turnMult * rightVect.x;
                 break;
             case FIELD_CENTRIC:
                 angleBetween = Math.toRadians(UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(leftVect.angle()), UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(angle.angle()))));
                 if (leftVect.magnitude() < UniversalConstants.Triggered.STICK) {
                     leftPow = 0;
                     rightPow = 0;
-
                 }
                 else {
                     switch (direction) {
@@ -99,7 +98,7 @@ public abstract class TankDT extends Drivetrain {
                             break;
 
                         case SMOOTH:
-                            if (cos > 0) {
+                            if (cos < 0) {
                                 leftPow = directionMult * leftVect.magnitude();
                                 rightPow = directionMult * -Math.cos(2 * angleBetween) * leftVect.magnitude();
                             } else {
@@ -121,6 +120,7 @@ public abstract class TankDT extends Drivetrain {
                         case FOR:
                             leftPow = leftVect.y + rightVect.x;
                             rightPow = leftVect.y - rightVect.x;
+
                             leftPow *= directionMult;
                             rightPow *= directionMult;
                             switch (turnState) {
@@ -130,8 +130,7 @@ public abstract class TankDT extends Drivetrain {
                                     rightPow = rightPow / max * leftVect.magnitude();
                                     break;
                                 case FAST:
-                                    leftPow *= leftVect.magnitude();
-                                    rightPow *= leftVect.magnitude();
+
                                     break;
                             }
                             if (Math.sin(angleBetween) < 0 && turn) {
@@ -154,8 +153,7 @@ public abstract class TankDT extends Drivetrain {
                                     rightPow = rightPow / max * leftVect.magnitude();
                                     break;
                                 case FAST:
-                                    leftPow *= leftVect.magnitude();
-                                    rightPow *= leftVect.magnitude();
+
                                     break;
                             }
                             if (Math.sin(angleBetween) > 0 && turn) {
