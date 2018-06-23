@@ -60,8 +60,8 @@ public abstract class TankDT extends Drivetrain {
         switch(controlState) {
             case ARCADE:
                 turnMult = 1 - leftVect.magnitude() * (1 - maxTurn);
-                leftPow = leftVect.y - turnMult * rightVect.x;
-                rightPow = leftVect.y + turnMult * rightVect.x;
+                leftPow = leftVect.y + turnMult * rightVect.x;
+                rightPow = leftVect.y - turnMult * rightVect.x;
                 break;
             case FIELD_CENTRIC:
                 angleBetween = Math.toRadians(UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(leftVect.angle()), UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(angle.angle()))));
@@ -93,8 +93,8 @@ public abstract class TankDT extends Drivetrain {
                     switch (turnState) {
                         case FAST:
                             turnMult = Math.abs(cos) + 1;
-                            leftPow = directionMult * (leftVect.magnitude() + turnMult * cos);
-                            rightPow = directionMult * (leftVect.magnitude() - turnMult * cos);
+                            leftPow = directionMult * (leftVect.magnitude() - turnMult * cos);
+                            rightPow = directionMult * (leftVect.magnitude() + turnMult * cos);
                             break;
 
                         case SMOOTH:
@@ -173,8 +173,8 @@ public abstract class TankDT extends Drivetrain {
                 rightPow = rightVect.y;
                 break;
         }
-        setLeftPow(-leftPow);
-        setRightPow(-rightPow);
+        setLeftPow(leftPow);
+        setRightPow(rightPow);
     }
 
     //returns the direction the robot is moving
