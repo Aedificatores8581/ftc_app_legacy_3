@@ -6,8 +6,8 @@ package org.firstinspires.ftc.teamcode.robotUniversal;
 
 //2D Vector. Components are doubles.
 public class Vector2 {
-    public double x;
-    public double y;
+    public double x,
+                  y;
 
     public Vector2() {
         x = 0.0;
@@ -24,26 +24,24 @@ public class Vector2 {
         this.x = Math.cos(theta) * r;
         this.y = Math.sin(theta) * r;
     }
-
+    //Adds the components of a given Vector2 to this Vector2
     public void add(Vector2 vector) {
         x += vector.x;
         y += vector.y;
     }
-
+    //subtracts the components of a given vector from this vector
     public void subtract(Vector2 vector) {
         vector.scalarMultiply(-1);
         add(vector);
     }
-
+    //multiplies x and y by the given value
     public void scalarMultiply(double a) {
         x *= a;
         y *= a;
     }
 
     //Length of vector
-    public double magnitude() {
-        return Math.sqrt(x*x + y*y);
-    }
+    public double magnitude() { return Math.hypot(x, y); }
 
     //Dot Product
     public double dot(Vector2 vector) {
@@ -74,6 +72,13 @@ public class Vector2 {
     //Returns angle between two vectors in radians.
     public double angleBetween(Vector2 vector) {
         return Math.acos(this.dot(vector) / (this.magnitude() * vector.magnitude()));
+    }
+
+    //Sets x and y rotated by the given angle in radians
+    public void rotate(double angle){
+        double tempX = x, tempY = y;
+        x = Math.cos(angle) * tempX - Math.sin(angle) * tempY;
+        y = Math.sin(angle) * tempY + Math.cos(angle) * tempY;
     }
 
     public String toString(){

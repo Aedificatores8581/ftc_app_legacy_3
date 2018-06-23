@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode.robotUniversal;
 
-import org.opencv.core.Mat;
-
 import java.util.Arrays;
 
 /**
  * Created by Frank Portman on 4/1/2018.
  */
 public abstract class UniversalFunctions {
+    //Caps the test value at min and max
     public static double clamp(double min, double test, double max) {
         if (max < min) {
             double temp = min;
@@ -16,47 +15,57 @@ public abstract class UniversalFunctions {
         }
         return Math.max(Math.min(max, test), min);
     }
-
-    public static boolean withinTolerance(double test, double limit, double tolerance) {
-        return test == clamp(limit - tolerance, test, limit + tolerance);
+    //Returns if test falls between two given deviations from the given center point
+    public static boolean withinTolerance(double test, double centerPoint, double lowerLimit, double upperLimit) {
+        return test == clamp(centerPoint - lowerLimit, test, centerPoint + upperLimit);
     }
+    //Returns if test falls between two given values
+    public static boolean withinTolerance(double test, double lowerLimit, double upperLimit) {
+        return test == clamp(lowerLimit, test, upperLimit);
+    }
+    //Rounds the given double variable away from zero
     public static double round(double d) {
         if (d < 0) {
             return Math.floor(d);
         }
         return Math.ceil(d);
     }
-    public static double normalizeAngle(double angle, double newStartAngle) {
+    //Returns a new angle which represents the normalized difference of the two given angles in degrees
+    public static double normalizeAngleDegrees(double angle, double newStartAngle) {
         angle -= newStartAngle;
+        return normalizeAngleDegrees(angle);
+    }
+    //Returns a new angle which represents the given angle normalized to between 0 degrees and 360 degrees
+    public static double normalizeAngleDegrees(double angle) {
         double a2 = Math.abs(angle) % 360;
         if (Math.abs(angle) != angle) {
             return 360 - a2;
         }
         return a2;
     }
-    public static double normalizeAngle(double angle) {
-        double a2 = Math.abs(angle) % 360;
-        if (Math.abs(angle) != angle) {
-            return 360 - a2;
-        }
-        return a2;
+    //Returns a new angle which represents the normalized difference of the two given angles
+    public static double normalizeAngleRadians(double angle, double newStartAngle) {
+        angle -= newStartAngle;
+        return normalizeAngleRadians(angle);
     }
+    //Returns a new angle which represents the given angle normalized to between 0 degrees and 2pi radians
+    public static double normalizeAngleRadians(double angle) {
+        return Math.toRadians(normalizeAngleDegrees(Math.toDegrees(angle)));
+    }
+    //Returns a new angle which represents the given angle normalized difference between the two angles
     public static double normalizeAngle180(double angle, double newStartAngle) {
-        double ang = normalizeAngle(angle, newStartAngle);
-        if(ang > 180){
-            ang = -180 + ang % 360;
-        }
-        return ang;
+        double ang = normalizeAngleDegrees(angle, newStartAngle);
+        return normalizeAngle180(ang);
     }
+    //Returns a new angle which represents the given angle normalized to between 0 degrees and 180 degrees
     public static double normalizeAngle180(double angle) {
-        double ang = normalizeAngle(angle);
+        double ang = normalizeAngleDegrees(angle);
         if(ang > 180){
             ang = -180 + ang % 360;
         }
         return ang;
     }
-
-
+    //Returns the maximum value of the parameters
     public static double max(double... ds) {
         switch(ds.length){
             case 0: return 0.0;
@@ -66,12 +75,11 @@ public abstract class UniversalFunctions {
                     max(Arrays.copyOfRange(ds, 1, ds.length)));
         }
     }
-
+    //Returns the maximum value of the absolute value of the parameters
     public static double maxAbs(double... ds) {
         for (int i = 0; i < ds.length; ++i){
             ds[i] = Math.abs(ds[i]);
         }
-
         switch(ds.length){
             case 0: return 0.0;
             case 1: return ds[0];
@@ -80,7 +88,7 @@ public abstract class UniversalFunctions {
                     max(Arrays.copyOfRange(ds, 1, ds.length)));
         }
     }
-
+    //Returns the minimum value of the parameters
     public static double min(double... ds){
         switch(ds.length){
             case 0: return 0.0;
@@ -90,7 +98,7 @@ public abstract class UniversalFunctions {
                     min(Arrays.copyOfRange(ds,1, ds.length)));
         }
     }
-
+    //Returns the minimum value of the absolute value of the parameters
     public static double minAbs(double... ds){
         for (int i = 0; i < ds.length; ++i){
             ds[i] = Math.abs(ds[i]);
@@ -103,6 +111,7 @@ public abstract class UniversalFunctions {
                     min(Arrays.copyOfRange(ds,1, ds.length)));
         }
     }
+    //Returns an array whose elements make up the contents of the given string separated by commas
     public static String[] formatArrayStr(String str, int len){
         String[] ret = new String[len];
         int i = 0, ind = str.indexOf(","), next;
@@ -114,5 +123,4 @@ public abstract class UniversalFunctions {
         }
         return ret;
     }
-
 }
