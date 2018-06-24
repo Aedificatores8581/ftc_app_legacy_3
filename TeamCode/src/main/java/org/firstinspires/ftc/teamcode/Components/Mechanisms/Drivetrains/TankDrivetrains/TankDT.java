@@ -16,19 +16,19 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
  */
 public abstract class TankDT extends Drivetrain {
     public double       turnMult     ,
-                        angleBetween ,
-                        directionMult = 1,
-                        cos          ,
-                        maxTurn       = 1,
-                        leftPow      ,
-                        rightPow     ,
-                        max          ;
+            angleBetween ,
+            directionMult = 1,
+            cos          ,
+            maxTurn       = 1,
+            leftPow      ,
+            rightPow     ,
+            max          ;
 
     public boolean      turn          = false,
-                        canSwitch     = false;
+            canSwitch     = false;
 
     public DcMotor[]    leftMotors   ,
-                        rightMotors  ;
+            rightMotors  ;
     public Direction    direction    ;
     public ControlState controlState ;
     public FCTurnState  turnState    ;
@@ -68,7 +68,6 @@ public abstract class TankDT extends Drivetrain {
                 if (leftVect.magnitude() < UniversalConstants.Triggered.STICK) {
                     leftPow = 0;
                     rightPow = 0;
-
                 }
                 else {
                     switch (direction) {
@@ -94,12 +93,12 @@ public abstract class TankDT extends Drivetrain {
                     switch (turnState) {
                         case FAST:
                             turnMult = Math.abs(cos) + 1;
-                            leftPow = directionMult * (leftVect.magnitude() + turnMult * cos);
-                            rightPow = directionMult * (leftVect.magnitude() - turnMult * cos);
+                            leftPow = directionMult * (leftVect.magnitude() - turnMult * cos);
+                            rightPow = directionMult * (leftVect.magnitude() + turnMult * cos);
                             break;
 
                         case SMOOTH:
-                            if (cos > 0) {
+                            if (cos < 0) {
                                 leftPow = directionMult * leftVect.magnitude();
                                 rightPow = directionMult * -Math.cos(2 * angleBetween) * leftVect.magnitude();
                             } else {
@@ -121,6 +120,7 @@ public abstract class TankDT extends Drivetrain {
                         case FOR:
                             leftPow = leftVect.y + rightVect.x;
                             rightPow = leftVect.y - rightVect.x;
+
                             leftPow *= directionMult;
                             rightPow *= directionMult;
                             switch (turnState) {
@@ -130,8 +130,7 @@ public abstract class TankDT extends Drivetrain {
                                     rightPow = rightPow / max * leftVect.magnitude();
                                     break;
                                 case FAST:
-                                    leftPow *= leftVect.magnitude();
-                                    rightPow *= leftVect.magnitude();
+
                                     break;
                             }
                             if (Math.sin(angleBetween) < 0 && turn) {
@@ -154,8 +153,7 @@ public abstract class TankDT extends Drivetrain {
                                     rightPow = rightPow / max * leftVect.magnitude();
                                     break;
                                 case FAST:
-                                    leftPow *= leftVect.magnitude();
-                                    rightPow *= leftVect.magnitude();
+
                                     break;
                             }
                             if (Math.sin(angleBetween) > 0 && turn) {
@@ -175,8 +173,8 @@ public abstract class TankDT extends Drivetrain {
                 rightPow = rightVect.y;
                 break;
         }
-        setLeftPow(-leftPow);
-        setRightPow(-rightPow);
+        setLeftPow(leftPow);
+        setRightPow(rightPow);
     }
 
     //returns the direction the robot is moving

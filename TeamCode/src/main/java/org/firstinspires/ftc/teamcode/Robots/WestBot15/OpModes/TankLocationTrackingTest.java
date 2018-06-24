@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
+import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
 import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 
 
@@ -13,10 +14,9 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
  */
 @TeleOp(name = "Location tracking test", group = "WestBot15")
 public class TankLocationTrackingTest extends WestBot15 {
-    double leftEncVal = 0, rightEncVal = 0, inner, outer, radius, lengthToCenter, angle;
+    double leftEncVal = 0, rightEncVal = 0, radius, angle, totalAngle = 0;
     Vector2 currentPos = new Vector2();
-    Vector2 angleChange = new Vector2();
-    AngleDirection angleDirection;
+    Vector2 turnVector;
     @Override
     public void init(){
         super.init();
@@ -34,28 +34,22 @@ public class TankLocationTrackingTest extends WestBot15 {
         super.start();
     }
     @Override
-    public void loop(){
-        leftEncVal = drivetrain.averageLeftEncoders() - leftEncVal;
-        rightEncVal = drivetrain.averageRightEncoders() - rightEncVal;
-        if(leftEncVal == rightEncVal)
-            angleChange.setFromPolar(leftEncVal, robotAngle.angle());
+    public void loop() {
+        leftEncVal = drivetrain.averageLeftEncoders();
+        rightEncVal = drivetrain.averageRightEncoders();
+        if(rightEncVal == leftEncVal)
+            turnVector.setFromPolar(rightEncVal, 0);
         else {
-            angleDirection = rightEncVal > leftEncVal ? AngleDirection.RIGHT : AngleDirection.LEFT;
-            inner = rightEncVal > leftEncVal ? leftEncVal : rightEncVal;
-            outer = rightEncVal < leftEncVal ? leftEncVal : rightEncVal;
-            lengthToCenter = (outer / (outer - inner)) * 18 * drivetrain.ENC_PER_INCH;
-            radius = lengthToCenter - 9 * drivetrain.ENC_PER_INCH;
-            angle = ((outer - inner) / 2) / (2 * radius * Math.PI);
-            if(angleDirection.equals(AngleDirection.LEFT))
-                angle = Math.PI - angle;
-            angleChange.setFromPolar(radius, angle);
-            angleChange.rotate(robotAngle.angle());
+            radius = drivetrain.ENC_PER_INCH * 9 * (leftEncVal + rightEncVal) / (rightEncVal - leftEncVal);
+            angle = (leftEncVal + rightEncVal) / (2 * radius);//angle = (rightEncVal - leftEncVal)  (18 * drivetrain.ENC_PER_INCH);
+            radius = Math.abs(radius);
+            turnVector.setFromPolar(radius, angle);
+            turnVector.setFromPolar(radius - turnVector.x, angle);
+            if(Math.min(leftEncVal, rightEncVal) == -UniversalFunctions.maxAbs(leftEncVal, rightEncVal))
+                turnVector.x *= -1;
         }
-        currentPos.add(angleChange);
-        setRobotAngle();
-    }
-    public enum AngleDirection{
-        RIGHT,
-        LEFT
+        turnVector.rotate(totalAngle);
+        currentPos.add(turnVector);
+        totalAngle += angle;
     }
 }
