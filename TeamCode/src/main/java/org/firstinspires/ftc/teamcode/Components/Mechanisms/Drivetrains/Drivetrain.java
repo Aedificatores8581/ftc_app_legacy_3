@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public abstract class Drivetrain{
     public static final DcMotor.Direction FORWARD  = DcMotor.Direction.FORWARD,
                                           REVERSE  = DcMotor.Direction.REVERSE;
-    public double                         minTurn  ;
-    public double                         maxSpeed = 1;
+    public double minTurn ;
+    public double maxSpeed = 1;
 
     public enum Direction{
         FOR,

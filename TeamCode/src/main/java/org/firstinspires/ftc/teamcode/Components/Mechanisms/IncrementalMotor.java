@@ -9,12 +9,12 @@ import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
  * Created by Frank Portman on 6/2/2018
  */
 public class IncrementalMotor {
-    public DcMotor      motor         ;
-    public MotorEncoder encoder       ;
-    public double       desiredPow    ,
-                        acceleration  ,
-                        decelleration ,
-                        currentPow     = 0,
+    public DcMotor      motor;
+    public MotorEncoder encoder;
+    public double       desiredPow,
+                        acceleration,
+                        decelleration,
+                        currentPow = 0,
                         minAbsolutePow;
     public IncrementalMotor(DcMotor dc, double accPerSec, double decPerSec, double minAbs){
         motor = dc;

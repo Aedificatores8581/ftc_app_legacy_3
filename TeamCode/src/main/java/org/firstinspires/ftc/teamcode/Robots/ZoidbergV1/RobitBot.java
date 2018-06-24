@@ -7,6 +7,10 @@ import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDriv
 import org.firstinspires.ftc.teamcode.Robots.Robot;
 import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 
+/**
+ * Writ by Theodore Lovinski and Nicholaus Winding Refn on 06/24/2018.
+ */
+
 public abstract class RobitBot extends Robot {
 
     public TankDT drivetrain = new TankDT() {
