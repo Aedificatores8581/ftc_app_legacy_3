@@ -22,8 +22,10 @@ public abstract class TankDT extends Drivetrain {
             maxTurn       = 1,
             leftPow      ,
             rightPow     ,
-            max          ;
-
+            max          ,
+            leftEncVal    = 0,
+            rightEncVal   = 0,
+            totalAngle    = 0;
     public boolean      turn          = false,
             canSwitch     = false;
 
@@ -33,6 +35,8 @@ public abstract class TankDT extends Drivetrain {
     public ControlState controlState ;
     public FCTurnState  turnState    ;
 
+    public Vector2      currentPos    = new Vector2(),
+                        turnVector    = new Vector2();
     public TankDT(){
         leftPow = 0;
         rightPow = 0;
@@ -98,7 +102,7 @@ public abstract class TankDT extends Drivetrain {
                             break;
 
                         case SMOOTH:
-                            if (cos < 0) {
+                            if (cos > 0) {
                                 leftPow = directionMult * leftVect.magnitude();
                                 rightPow = directionMult * -Math.cos(2 * angleBetween) * leftVect.magnitude();
                             } else {
@@ -212,6 +216,27 @@ public abstract class TankDT extends Drivetrain {
             rightPow /= max;
         }
     }
+    public synchronized void updateLocation(double encPerInch){
+        double angle = 0;
+        leftEncVal = averageLeftEncoders();
+        rightEncVal = averageRightEncoders();
+        if(rightEncVal == leftEncVal)
+            turnVector.setFromPolar(rightEncVal, 0);
+        else {
+            double radius = encPerInch * 9 * (leftEncVal + rightEncVal) / (rightEncVal - leftEncVal);
+            angle = (leftEncVal + rightEncVal) / (2 * radius);//angle = (rightEncVal - leftEncVal)  (18 * drivetrain.ENC_PER_INCH);
+            radius = Math.abs(radius);
+            turnVector.setFromPolar(radius, angle);
+            turnVector.setFromPolar(radius - turnVector.x, angle);
+            if(Math.min(leftEncVal, rightEncVal) == -UniversalFunctions.maxAbs(leftEncVal, rightEncVal))
+                turnVector.x *= -1;
+        }
+        turnVector.rotate(totalAngle);
+        currentPos.add(turnVector);
+        totalAngle += angle;
+    }
+
+
     //Sets the power of the left motor(s)
     public abstract void setLeftPow(double pow);
 
@@ -262,4 +287,7 @@ public abstract class TankDT extends Drivetrain {
         leftPow = -turnSpeed;
         rightPow = turnSpeed;
     }
+    public abstract double averageLeftEncoders();
+
+    public abstract double averageRightEncoders();
 }

@@ -57,7 +57,7 @@ public class WestCoast15 extends TankDT {
     public double averageLeftEncoders(){
         return (lfEncoder.currentPosition + lrEncoder.currentPosition) / 2;
     }
-
+    @Override
     public double averageRightEncoders(){
         return (rfEncoder.currentPosition + rrEncoder.currentPosition) / 2;
     }

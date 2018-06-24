@@ -45,6 +45,14 @@ public abstract class SensorBot extends Robot {
 
         public void normalizeMotors() {
         }
+        @Override
+        public double averageLeftEncoders(){
+            return 0;
+        }
+        @Override
+        public double averageRightEncoders(){
+            return 0;
+        }
     };
     @Override
     public void init(){
