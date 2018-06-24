@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Robots.Robot;
 import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 
 /**
- * Writ by Theodore Lovinski and Nicholaus Winding Refn on 06/24/2018.
+ * Writ by Theodore Lovinski on 06/24/2018.
  */
 
 public abstract class RobitBot extends Robot {
@@ -20,7 +20,6 @@ public abstract class RobitBot extends Robot {
 
             leftMotor.setDirection(FORWARD);
             rightMotor.setDirection(REVERSE);
-
 
         }
 
@@ -64,6 +63,15 @@ public abstract class RobitBot extends Robot {
         public void setRightPow(double pow) {
             rightPow = pow;
             rightMotor.setPower(rightPow);
+        }
+
+        @Override
+        public double averageLeftEncoders() {
+            return 0;
+        }
+        @Override
+        public double averageRightEncoders() {
+            return 0;
         }
     };
 
