@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.Robots.ZoidbergV1.OpModes;
+package org.firstinspires.ftc.teamcode.Robots.ZoidBot.OpModes;
 
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
-import org.firstinspires.ftc.teamcode.Robots.ZoidbergV1.RobitBot;
+import org.firstinspires.ftc.teamcode.Robots.ZoidBot.RoBot;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
 
-public class RoBotTestDrive extends RobitBot {
+public class RoBotTestDrive extends RoBot {
     boolean switchControlState    = false,
             canSwitchControlState = false,
             switchTurnState       = false,
