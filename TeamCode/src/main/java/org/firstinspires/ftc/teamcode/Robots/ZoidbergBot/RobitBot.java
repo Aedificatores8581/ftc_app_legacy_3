@@ -29,8 +29,6 @@ public abstract class RobitBot extends Robot {
 
         public void teleOpLoop(Vector2 leftVect, Vector2 rightVect, Vector2 angle) {
             switch (controlState) {
-                // TODO: Implement Field-Centric and Field-Centric Vector.
-
                 case ARCADE:
                     turnMult = 1 - leftVect.magnitude() * (1 - maxTurn);
                     leftPow = leftVect.y + turnMult * rightVect.x;

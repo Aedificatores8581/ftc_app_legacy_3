@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.Robots.ZoidbergBot.OpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
 import org.firstinspires.ftc.teamcode.Robots.ZoidbergBot.RobitBot;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
 
+@TeleOp(name = "RobitBotTestDrive", group = "Zoidberg")
 public class RobitBotTestDrive extends RobitBot {
     boolean switchControlState    = false,
             canSwitchControlState = false,
@@ -15,15 +18,16 @@ public class RobitBotTestDrive extends RobitBot {
     }
 
     @Override
-    public void start(){
-        super.start();
-    }
+    public void start(){ super.start(); }
+
     @Override
     public void loop() {
         updateGamepad1();
         refreshStartAngle();
         setRobotAngle();
+
         drivetrain.teleOpLoop(leftStick1, rightStick1, robotAngle);
+
         switch (drivetrain.controlState) {
             case ARCADE:
                 if (switchControlState) {
@@ -49,6 +53,7 @@ public class RobitBotTestDrive extends RobitBot {
                         } else if (gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                             switchTurnState = true;
                         break;
+
                     case SMOOTH:
                         if (switchTurnState) {
                             drivetrain.turnState = TankDT.FCTurnState.FAST;
@@ -132,7 +137,7 @@ public class RobitBotTestDrive extends RobitBot {
         telemetry.addData("angleBetween", drivetrain.angleBetween);
         telemetry.addData("angleBetween", Math.toDegrees(leftStick1.angleBetween(robotAngle)));
     }
-    public void refreshStartAngle(){
+    public void refreshStartAngle() {
         if (gamepad1.left_stick_button) {
             startAngle = Math.toDegrees(leftStick1.angleBetween(robotAngle));
             leftStick1.x = 0;
