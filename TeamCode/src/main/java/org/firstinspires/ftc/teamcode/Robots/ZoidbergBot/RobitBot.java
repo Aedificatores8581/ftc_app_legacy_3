@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Robots.ZoidBot;
+package org.firstinspires.ftc.teamcode.Robots.ZoidbergBot;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
  * Writ by Theodore Lovinski on 06/24/2018.
  */
 
-public abstract class RoBot extends Robot {
+public abstract class RobitBot extends Robot {
 
     public TankDT drivetrain = new TankDT() {
         public void initMotors(HardwareMap map) {
