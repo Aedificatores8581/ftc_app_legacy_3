@@ -35,8 +35,9 @@ public class TankLocationTrackingTest extends WestBot15 {
     }
     @Override
     public void loop() {
-        leftEncVal = drivetrain.averageLeftEncoders();
-        rightEncVal = drivetrain.averageRightEncoders();
+        drivetrain.updateEncoders();
+        leftEncVal -= drivetrain.averageLeftEncoders();
+        rightEncVal -= drivetrain.averageRightEncoders();
         if(rightEncVal == leftEncVal)
             turnVector.setFromPolar(rightEncVal, 0);
         else {
