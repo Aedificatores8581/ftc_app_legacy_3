@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
 import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
@@ -20,12 +19,12 @@ public class TankLocationTrackingTest extends WestBot15 {
     @Override
     public void init(){
         super.init();
-        drivetrain.leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        drivetrain.rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        drivetrain.leftFore.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        drivetrain.rightFore.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drivetrain.leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drivetrain.rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        drivetrain.leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        drivetrain.rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        drivetrain.leftFore.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        drivetrain.rightFore.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         drivetrain.leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         drivetrain.rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }

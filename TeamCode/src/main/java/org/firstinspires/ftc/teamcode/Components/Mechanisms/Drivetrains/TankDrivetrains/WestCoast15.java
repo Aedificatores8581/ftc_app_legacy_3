@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Components.Sensors.MotorEncoder;
  * Created by Frank Portman on 5/21/2018
  */
 public class WestCoast15 extends TankDT {
-    public DcMotor rightFront, leftFront, leftRear, rightRear;
+    public DcMotor rightFore, leftFore, leftRear, rightRear;
     public MotorEncoder rfEncoder, lfEncoder, lrEncoder, rrEncoder;
     public DcMotor.ZeroPowerBehavior zeroPowerBehavior;
     //TODO: Find the value of ENC_PER_INCH
@@ -17,39 +17,39 @@ public class WestCoast15 extends TankDT {
     public WestCoast15(){
         zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT;
         maxSpeed = 1;
-        leftMotors = new DcMotor[]{leftFront, leftRear};
-        rightMotors = new DcMotor[]{rightFront, rightRear};
+        leftMotors = new DcMotor[]{leftFore, leftRear};
+        rightMotors = new DcMotor[]{rightFore, rightRear};
     }
     public WestCoast15(DcMotor.ZeroPowerBehavior zeroPowBehavior, double speed){
         zeroPowerBehavior = zeroPowBehavior;
         maxSpeed = speed;
-        leftMotors = new DcMotor[]{leftFront, leftRear};
-        rightMotors = new DcMotor[]{rightFront, rightRear};
+        leftMotors = new DcMotor[]{leftFore, leftRear};
+        rightMotors = new DcMotor[]{rightFore, rightRear};
     }
     public void setLeftPow(double pow) {
-        leftFront.setPower(pow * maxSpeed);
+        leftFore.setPower(pow * maxSpeed);
         leftRear.setPower(pow * maxSpeed);
         leftPow = pow;
     }
     public void setRightPow(double pow){
-        rightFront.setPower(pow * maxSpeed);
+        rightFore.setPower(pow * maxSpeed);
         rightRear.setPower(pow * maxSpeed);
         rightPow = pow;
     }
     public void initMotors(HardwareMap map){
-        rightFront = map.dcMotor.get("rf");
-        leftFront = map.dcMotor.get("lf");
+        rightFore = map.dcMotor.get("rf");
+        leftFore = map.dcMotor.get("lf");
         leftRear = map.dcMotor.get("la");
         rightRear = map.dcMotor.get("ra");
 
-        rightFront.setDirection(REVERSE);
+        rightFore.setDirection(REVERSE);
         rightRear.setDirection(REVERSE);
-        leftFront.setDirection(FORWARD);
+        leftFore.setDirection(FORWARD);
         leftRear.setDirection(FORWARD);
 
-        lfEncoder = new MotorEncoder(leftFront);
+        lfEncoder = new MotorEncoder(leftFore);
         lrEncoder = new MotorEncoder(leftRear);
-        rfEncoder = new MotorEncoder(rightFront);
+        rfEncoder = new MotorEncoder(rightFore);
         rrEncoder = new MotorEncoder(rightRear);
     }
     public void normalizeMotors(){
