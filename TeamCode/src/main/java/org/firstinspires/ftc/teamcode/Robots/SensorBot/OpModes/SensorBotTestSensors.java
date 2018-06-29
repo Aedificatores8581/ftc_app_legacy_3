@@ -22,15 +22,17 @@ import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
 public class SensorBotTestSensors extends SensorBot {
 	int currentlyTestingSensor = 0;
 
+	static TouchSensor localTouchSensor = new TouchSensor();
+
 	@Override
 	public void init() {
 		super.init();
 		updateGamepad1();
 		setRobotAngle();
 
-		// TODO: Do I need these?
+		// Pretty pedantic, but they're not doing any harm.
+		// Remove them?
 		drivetrain.controlState = TankDT.ControlState.ARCADE;
-		drivetrain.turnState = TankDT.FCTurnState.FAST;
 		drivetrain.direction = Drivetrain.Direction.FOR;
 	}
 
@@ -50,11 +52,16 @@ public class SensorBotTestSensors extends SensorBot {
 
 		// TODO: Make this OpMode not pointless.
 		switch (currentlyTestingSensor) {
-			case 1:
 
+
+			case 1:
+				if (localTouchSensor.isPressed()) {telemetry.addData("Touch Sensor", "Pressed");}
+				else {telemetry.addData("Touch Sensor", "Not Pressed");}
+				break;
 
 			case 2:
 
+				break;
 		}
 	}
 }
