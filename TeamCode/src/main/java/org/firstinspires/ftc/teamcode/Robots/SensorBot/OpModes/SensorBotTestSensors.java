@@ -58,10 +58,6 @@ public class SensorBotTestSensors extends SensorBot {
 				if (localTouchSensor.isPressed()) {telemetry.addData("Touch Sensor", "Pressed");}
 				else {telemetry.addData("Touch Sensor", "Not Pressed");}
 				break;
-
-			case 2:
-
-				break;
 		}
 	}
 }
