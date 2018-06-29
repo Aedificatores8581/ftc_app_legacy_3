@@ -22,7 +22,7 @@ import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
 public class SensorBotTestSensors extends SensorBot {
 	int currentlyTestingSensor = 0;
 
-	static TouchSensor localTouchSensor = new TouchSensor();
+	TouchSensor localTouchSensor = new TouchSensor();
 
 	@Override
 	public void init() {
