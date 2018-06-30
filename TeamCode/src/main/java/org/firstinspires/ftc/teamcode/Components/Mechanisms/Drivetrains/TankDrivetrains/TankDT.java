@@ -173,8 +173,8 @@ public abstract class TankDT extends Drivetrain {
 
                 break;
             case TANK:
-                leftPow = leftVect.y;
-                rightPow = rightVect.y;
+                leftPow = rightVect.y;
+                rightPow = leftVect.y;
                 break;
         }
         setLeftPow(leftPow);
