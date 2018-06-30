@@ -16,27 +16,27 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
  */
 public abstract class TankDT extends Drivetrain {
     public double       turnMult     ,
-            angleBetween ,
+            angleBetween,
             directionMult = 1,
-            cos          ,
-            maxTurn       = 1,
-            leftPow      ,
-            rightPow     ,
-            max          ,
-            leftEncVal    = 0,
-            rightEncVal   = 0,
-            totalAngle    = 0;
-    public boolean      turn          = false,
-            canSwitch     = false;
+            cos,
+            maxTurn = 1,
+            leftPow,
+            rightPow,
+            max,
+            leftEncVal = 0,
+            rightEncVal = 0,
+            totalAngle = 0;
+    public boolean turn = false,
+                   canSwitch = false;
 
-    public DcMotor[]    leftMotors   ,
-            rightMotors  ;
-    public Direction    direction    ;
+    public DcMotor[] leftMotors,
+                     rightMotors;
+    public Direction direction    ;
     public ControlState controlState ;
-    public FCTurnState  turnState    ;
+    public FCTurnState turnState    ;
 
-    public Vector2      currentPos    = new Vector2(),
-                        turnVector    = new Vector2();
+    public Vector2 currentPos    = new Vector2(),
+                   turnVector    = new Vector2();
     public TankDT(){
         leftPow = 0;
         rightPow = 0;
