@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
+import org.firstinspires.ftc.teamcode.Components.Sensors.MagneticLimitSwitch;
 import org.firstinspires.ftc.teamcode.Components.Sensors.REVColorDistanceSensor;
 import org.firstinspires.ftc.teamcode.Components.Sensors.TouchSensor;
 import org.firstinspires.ftc.teamcode.Robots.SensorBot.SensorBot;
@@ -23,6 +24,7 @@ public class SensorBotTestSensors extends SensorBot {
 	int currentlyTestingSensor = 0;
 
 	TouchSensor localTouchSensor = new TouchSensor();
+	MagneticLimitSwitch localMagenteticSensor = new MagneticLimitSwitch();
 
 	@Override
 	public void init() {
@@ -55,8 +57,15 @@ public class SensorBotTestSensors extends SensorBot {
 
 
 			case 1:
+				// Touch sensor.
 				if (localTouchSensor.isPressed()) {telemetry.addData("Touch Sensor", "Pressed");}
 				else {telemetry.addData("Touch Sensor", "Not Pressed");}
+				break;
+
+			case 2:
+				// Magnet Sensor.
+				if (localMagenteticSensor.isActivated()) {telemetry.addData("Magnetic Sensor", "Pressed");}
+				else {telemetry.addData("Magnetic Sensor", "Not Pressed");}
 				break;
 		}
 	}
