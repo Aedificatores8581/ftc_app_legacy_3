@@ -25,6 +25,7 @@ public class SensorBotTestSensors extends SensorBot {
 
 	TouchSensor localTouchSensor = new TouchSensor();
 	MagneticLimitSwitch localMagenteticSensor = new MagneticLimitSwitch();
+	REVColorDistanceSensor localColorDistanceSensor = new REVColorDistanceSensor();
 
 	@Override
 	public void init() {
@@ -49,6 +50,8 @@ public class SensorBotTestSensors extends SensorBot {
 		rm.setPower(drivetrain.rightPow);
 		lm.setPower(drivetrain.leftPow);
 
+		localColorDistanceSensor.updateColorSensor();
+
 		if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER)     {currentlyTestingSensor += 1;}
 		else if (gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER) {currentlyTestingSensor -= 1;}
 
@@ -66,6 +69,17 @@ public class SensorBotTestSensors extends SensorBot {
 				// Magnet Sensor.
 				if (localMagenteticSensor.isActivated()) {telemetry.addData("Magnetic Sensor", "Pressed");}
 				else {telemetry.addData("Magnetic Sensor", "Not Pressed");}
+				break;
+
+			case 3:
+				telemetry.addData("r", localColorDistanceSensor.getRed());
+				telemetry.addData("g", localColorDistanceSensor.getGreen());
+				telemetry.addData("b", localColorDistanceSensor.getBlue());
+				telemetry.addData("a", localColorDistanceSensor.getOpacity());
+				break;
+
+			case 4:
+				telemetry.addData("Distace in cm.", localColorDistanceSensor.getDistanceCM());
 				break;
 		}
 	}
