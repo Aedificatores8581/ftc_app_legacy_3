@@ -81,6 +81,9 @@ public class SensorBotTestSensors extends SensorBot {
 			case 4:
 				telemetry.addData("Distace in cm.", localColorDistanceSensor.getDistanceCM());
 				break;
+
+			default:
+				telemetry.addData("Sensors","Currently testing nothing...");
 		}
 	}
 }
