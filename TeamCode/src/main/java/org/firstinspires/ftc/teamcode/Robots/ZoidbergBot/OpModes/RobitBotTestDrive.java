@@ -134,7 +134,7 @@ public class RobitBotTestDrive extends RobitBot {
                 break;
         }
 
-        if (SEND_SENSOR_TELEMETRY == true) {
+        if (SEND_SENSOR_TELEMETRY == false) {
             telemetry.addData("control State", drivetrain.controlState);
             telemetry.addData("fcTurnState", drivetrain.turnState);
             telemetry.addData("leftvect1", leftStick1);
