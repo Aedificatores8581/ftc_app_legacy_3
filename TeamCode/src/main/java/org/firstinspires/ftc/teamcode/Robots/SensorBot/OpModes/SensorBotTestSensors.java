@@ -46,6 +46,7 @@ public class SensorBotTestSensors extends SensorBot {
 	public void loop() {
 		updateGamepad1();
 		setRobotAngle();
+
 		drivetrain.teleOpLoop(leftStick1, rightStick1, robotAngle);
 		rm.setPower(drivetrain.rightPow);
 		lm.setPower(drivetrain.leftPow);
@@ -57,8 +58,6 @@ public class SensorBotTestSensors extends SensorBot {
 
 		// TODO: Make this OpMode not pointless.
 		switch (currentlyTestingSensor) {
-
-
 			case 1:
 				// Touch sensor.
 				if (localTouchSensor.isPressed()) {telemetry.addData("Touch Sensor", "Pressed");}

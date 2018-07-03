@@ -40,6 +40,7 @@ public class RobitBotTestDrive extends RobitBot {
                 } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                     switchControlState = true;
                 break;
+
             case FIELD_CENTRIC:
                 switch (drivetrain.turnState) {
                     case FAST:
@@ -66,6 +67,7 @@ public class RobitBotTestDrive extends RobitBot {
                             switchTurnState = true;
                         break;
                 }
+
                 if (switchControlState) {
                     drivetrain.controlState = TankDT.ControlState.TANK;
                     switchControlState = false;
@@ -76,6 +78,7 @@ public class RobitBotTestDrive extends RobitBot {
                 } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                     switchControlState = true;
                 break;
+
             case TANK:
                 if (switchControlState) {
                     drivetrain.controlState = TankDT.ControlState.FIELD_CENTRIC_VECTOR;
@@ -87,6 +90,7 @@ public class RobitBotTestDrive extends RobitBot {
                 } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                     switchControlState = true;
                 break;
+
             case FIELD_CENTRIC_VECTOR:
                 switch(drivetrain.turnState) {
                     case FAST:
@@ -137,6 +141,7 @@ public class RobitBotTestDrive extends RobitBot {
         telemetry.addData("angleBetween", drivetrain.angleBetween);
         telemetry.addData("angleBetween", Math.toDegrees(leftStick1.angleBetween(robotAngle)));
     }
+
     public void refreshStartAngle() {
         if (gamepad1.left_stick_button) {
             startAngle = Math.toDegrees(leftStick1.angleBetween(robotAngle));
