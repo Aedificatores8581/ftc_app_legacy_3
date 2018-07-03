@@ -11,8 +11,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  * Created by Frank Portman on 6/8/2018
  */
 public class REVColorDistanceSensor {
-    public NormalizedColorSensor colorSensor   ;
-    public NormalizedRGBA        colors        ;
+    public NormalizedColorSensor colorSensor;
+    public NormalizedRGBA        colors;
     public DistanceSensor        distanceSensor;
     public double                sumOfColors    = 0;
     //initializes the color sensor and distance sensor
