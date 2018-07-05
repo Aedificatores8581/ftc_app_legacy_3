@@ -91,7 +91,7 @@ public class SensorBotTestDrive extends SensorBot {
                 break;
             case TANK:
                 if (switchControlState) {
-                    drivetrain.controlState = TankDT.ControlState.FIELD_CENTRIC_VECTOR;
+                    drivetrain.controlState = TankDT.ControlState.ARCADE;
                     switchControlState = false;
                     canSwitchControlState = false;
                     drivetrain.directionMult = 1;
@@ -99,21 +99,6 @@ public class SensorBotTestDrive extends SensorBot {
                     switchControlState = false;
                     canSwitchControlState = true;
                 } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
-                    switchControlState = true;
-                break;
-
-            case FIELD_CENTRIC_VECTOR:
-                if(switchControlState){
-                    drivetrain.controlState = TankDT.ControlState.ARCADE;
-                    switchControlState = false;
-                    canSwitchControlState = false;
-                    drivetrain.directionMult = 1;
-                }
-                else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER){
-                    switchControlState = false;
-                    canSwitchControlState = true;
-                }
-                else if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                     switchControlState = true;
                 break;
         }

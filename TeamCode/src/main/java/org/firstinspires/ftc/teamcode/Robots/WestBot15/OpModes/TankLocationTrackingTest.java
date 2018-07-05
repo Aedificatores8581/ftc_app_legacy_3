@@ -14,10 +14,10 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 @TeleOp(name = "Location tracking test", group = "WestBot15")
 public class TankLocationTrackingTest extends WestBot15 {
     double leftEncVal = 0, rightEncVal = 0, radius, angle, totalAngle = 0;
-    Vector2 currentPos = new Vector2();
     Vector2 turnVector;
     @Override
     public void init(){
+        totalAngle = 90;
         super.init();
         drivetrain.leftFore.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drivetrain.rightFore.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -41,7 +41,7 @@ public class TankLocationTrackingTest extends WestBot15 {
             turnVector.setFromPolar(rightEncVal, 0);
         else {
             radius = drivetrain.ENC_PER_INCH * 9 * (leftEncVal + rightEncVal) / (rightEncVal - leftEncVal);
-            angle = (leftEncVal + rightEncVal) / (2 * radius);//angle = (rightEncVal - leftEncVal) / (18 * drivetrain.ENC_PER_INCH);
+            angle = (rightEncVal - leftEncVal) / (18 * drivetrain.ENC_PER_INCH);
             radius = Math.abs(radius);
             turnVector.setFromPolar(radius, angle);
             turnVector.setFromPolar(radius - turnVector.x, angle);
@@ -49,7 +49,7 @@ public class TankLocationTrackingTest extends WestBot15 {
                 turnVector.x *= -1;
         }
         turnVector.rotate(totalAngle);
-        currentPos.add(turnVector);
+        drivetrain.currentPos.add(turnVector);
         totalAngle += angle;
     }
 }
