@@ -15,6 +15,10 @@ public class TelemetryLoggerTester extends SensorBot {
     @Override
     public void init () {
         super.init();
+
+        x = 0;
+        y = 0;
+
         try {
             logger = new TelemetryLogger();
         } catch (IOException e) {
@@ -32,6 +36,8 @@ public class TelemetryLoggerTester extends SensorBot {
         telemetry.addData( "Millis", System.currentTimeMillis() - baseTimeMillis);
         telemetry.addData("X", x);
         telemetry.addData("Y", y);
+        x += 1;
+        y += 2;
     }
 
     @Override
