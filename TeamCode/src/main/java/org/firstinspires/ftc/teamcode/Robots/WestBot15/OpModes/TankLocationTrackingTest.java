@@ -35,13 +35,13 @@ public class TankLocationTrackingTest extends WestBot15 {
     @Override
     public void loop() {
         drivetrain.updateEncoders();
-        leftEncVal -= drivetrain.averageLeftEncoders();
-        rightEncVal -= drivetrain.averageRightEncoders();
+        leftEncVal = drivetrain.averageLeftEncoders() - leftEncVal;
+        rightEncVal = drivetrain.averageRightEncoders() - rightEncVal;
         if(rightEncVal == leftEncVal)
             turnVector.setFromPolar(rightEncVal, 0);
         else {
             radius = drivetrain.ENC_PER_INCH * 9 * (leftEncVal + rightEncVal) / (rightEncVal - leftEncVal);
-            angle = (leftEncVal + rightEncVal) / (2 * radius);//angle = (rightEncVal - leftEncVal)  (18 * drivetrain.ENC_PER_INCH);
+            angle = (leftEncVal + rightEncVal) / (2 * radius);//angle = (rightEncVal - leftEncVal) / (18 * drivetrain.ENC_PER_INCH);
             radius = Math.abs(radius);
             turnVector.setFromPolar(radius, angle);
             turnVector.setFromPolar(radius - turnVector.x, angle);

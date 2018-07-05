@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetra
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+
 import org.firstinspires.ftc.teamcode.robotUniversal.GyroAngles;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
@@ -19,7 +20,7 @@ public abstract class TankDT extends Drivetrain {
             angleBetween,
             directionMult = 1,
             cos,
-            maxTurn = 1,
+            maxTurn = 0.75,
             leftPow,
             rightPow,
             max,

@@ -39,8 +39,8 @@ public abstract class SensorBot extends Robot {
         public void initMotors(HardwareMap hardwareMap) {
             lm = hardwareMap.dcMotor.get("lm");
             rm = hardwareMap.dcMotor.get("rm");
-            lm.setDirection(Drivetrain.FORWARD);
-            rm.setDirection(Drivetrain.REVERSE);
+            lm.setDirection(Drivetrain.REVERSE);
+            rm.setDirection(Drivetrain.FORWARD);
         }
 
         public void normalizeMotors() {

@@ -123,4 +123,8 @@ public abstract class UniversalFunctions {
         }
         return ret;
     }
+
+    public static double getTimeInSeconds(){
+        return System.nanoTime() / Math.pow(10, 9);
+    }
 }
