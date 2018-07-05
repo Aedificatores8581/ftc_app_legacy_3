@@ -140,18 +140,18 @@ public abstract class TankDT extends Drivetrain {
         switch (direction) {
             case FOR:
                 if (Math.sin(angleBetween) < 0) {
-                    leftPow = Math.signum(leftPow);
-                    rightPow = Math.signum(rightPow);
+                    rightPow = rightPow > leftPow ? 1 : -1;
+                    leftPow = -rightPow;
                 }
                 break;
 
             case BACK:
                 directionMult = -1;
                 if (Math.sin(angleBetween) > 0) {
-                    leftPow = Math.signum(leftPow);
-                    rightPow = Math.signum(rightPow);
+                    rightPow = rightPow < leftPow ? 1 : -1;
+                    leftPow = -rightPow;
+                }
                 break;
-        }
         }
     }
 
