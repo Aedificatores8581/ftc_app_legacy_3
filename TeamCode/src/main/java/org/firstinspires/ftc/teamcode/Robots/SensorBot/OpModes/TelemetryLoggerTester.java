@@ -21,6 +21,7 @@ public class TelemetryLoggerTester extends SensorBot {
 
         try {
             logger = new TelemetryLogger();
+            logger.writeToLogInCSV("Millis", "X", "Y");
         } catch (IOException e) {
             telemetry.addLine(e.getMessage());
         }
