@@ -48,8 +48,8 @@ public class TankLocationTrackingTest extends WestBot15 {
             if(Math.min(leftEncVal, rightEncVal) == -UniversalFunctions.maxAbs(leftEncVal, rightEncVal))
                 turnVector.x *= -1;
         }
-        turnVector.rotate(totalAngle);
-        drivetrain.currentPos.add(turnVector);
+                turnVector.rotate(totalAngle);
+        drivetrain.position.add(turnVector);
         totalAngle += angle;
     }
 }

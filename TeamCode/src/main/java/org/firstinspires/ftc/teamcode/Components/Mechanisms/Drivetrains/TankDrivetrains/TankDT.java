@@ -24,7 +24,6 @@ public abstract class TankDT extends Drivetrain {
             maxTurn = 0.75,
             leftPow,
             rightPow,
-            max,
             leftEncVal = 0,
             rightEncVal = 0,
             totalAngle = 0;
@@ -37,8 +36,7 @@ public abstract class TankDT extends Drivetrain {
     public ControlState controlState ;
     public FCTurnState turnState    ;
 
-    public Vector2 currentPos    = new Vector2(),
-                   turnVector    = new Vector2();
+    public Vector2 turnVector    = new Vector2();
     public TankDT(){
         leftPow = 0;
         rightPow = 0;
@@ -157,23 +155,21 @@ public abstract class TankDT extends Drivetrain {
         }
     }
 
-    public synchronized void updateLocation(double encPerInch){
+    public synchronized void updateLocation(double encPerInch, double leftChange, double rightChange){
         double angle = 0;
-        leftEncVal = averageLeftEncoders();
-        rightEncVal = averageRightEncoders();
-        if(rightEncVal == leftEncVal)
-            turnVector.setFromPolar(rightEncVal, 0);
+        if(rightChange == leftChange)
+            turnVector.setFromPolar(rightChange, 0);
         else {
-            double radius = encPerInch * 9 * (leftEncVal + rightEncVal) / (rightEncVal - leftEncVal);
-            angle = (leftEncVal + rightEncVal) / (2 * radius);//angle = (rightEncVal - leftEncVal)  (18 * drivetrain.ENC_PER_INCH);
+            double radius = encPerInch * 9 * (leftChange + rightChange) / (rightChange - leftChange);
+            angle = (rightChange - leftChange) / (18 * encPerInch);
             radius = Math.abs(radius);
             turnVector.setFromPolar(radius, angle);
             turnVector.setFromPolar(radius - turnVector.x, angle);
-            if(Math.min(leftEncVal, rightEncVal) == -UniversalFunctions.maxAbs(leftEncVal, rightEncVal))
+            if(Math.min(leftChange, rightChange) == -UniversalFunctions.maxAbs(leftChange, rightChange))
                 turnVector.x *= -1;
         }
         turnVector.rotate(totalAngle);
-        currentPos.add(turnVector);
+        position.add(turnVector);
         totalAngle += angle;
     }
 

@@ -14,4 +14,8 @@ public class Position {
         this.y = y;
         this.angle = angle;
     }
+    public void add(Vector2 v){
+        x += v.x;
+        y += v.y;
+    }
 }
