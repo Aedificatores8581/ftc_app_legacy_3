@@ -23,9 +23,9 @@ import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
 public class SensorBotTestSensors extends SensorBot {
 	int currentlyTestingSensor = 0;
 
-	TouchSensor localTouchSensor = new TouchSensor();
-	MagneticLimitSwitch localMagenteticSensor = new MagneticLimitSwitch();
-	REVColorDistanceSensor localColorDistanceSensor = new REVColorDistanceSensor();
+	private TouchSensor localTouchSensor = new TouchSensor();
+	private MagneticLimitSwitch localMagenteticSensor = new MagneticLimitSwitch();
+	private REVColorDistanceSensor localColorDistanceSensor = new REVColorDistanceSensor();
 
 	@Override
 	public void init() {
