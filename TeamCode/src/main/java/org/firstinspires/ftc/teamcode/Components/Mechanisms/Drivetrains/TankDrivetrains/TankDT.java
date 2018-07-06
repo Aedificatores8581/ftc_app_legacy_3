@@ -17,6 +17,8 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
  * Created by Frank Portman on 5/21/2018
  */
 public abstract class TankDT extends Drivetrain {
+    public double ENC_PER_INCH;
+    public double DISTANCE_BETWEEN_WHEELS;
     public double       turnMult     ,
             angleBetween,
             directionMult = 1,
@@ -155,25 +157,25 @@ public abstract class TankDT extends Drivetrain {
         }
     }
 
-    public synchronized void updateLocation(double encPerInch, double leftChange, double rightChange){
+    public synchronized void updateLocation(double leftChange, double rightChange){
         double angle = 0;
         if(rightChange == leftChange)
             turnVector.setFromPolar(rightChange, 0);
         else {
-            double radius = encPerInch * 9 * (leftChange + rightChange) / (rightChange - leftChange);
-            angle = (rightChange - leftChange) / (18 * encPerInch);
+            double radius = ENC_PER_INCH * DISTANCE_BETWEEN_WHEELS / 2 * (leftChange + rightChange) / (rightChange - leftChange);
+            angle = (rightChange - leftChange) / (DISTANCE_BETWEEN_WHEELS * ENC_PER_INCH);
             radius = Math.abs(radius);
             turnVector.setFromPolar(radius, angle);
             turnVector.setFromPolar(radius - turnVector.x, angle);
             if(Math.min(leftChange, rightChange) == -UniversalFunctions.maxAbs(leftChange, rightChange))
                 turnVector.x *= -1;
         }
-        turnVector.rotate(totalAngle);
+        turnVector.rotate(position.angle);
         position.add(turnVector);
-        totalAngle += angle;
+        position.angle += angle;
     }
 
-
+    
     //Sets the power of the left motor(s)
     public abstract void setLeftPow(double pow);
 

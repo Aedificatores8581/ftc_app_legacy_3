@@ -12,9 +12,9 @@ public class WestCoast15 extends TankDT {
     public DcMotor rightFore, leftFore, leftRear, rightRear;
     public MotorEncoder rfEncoder, lfEncoder, lrEncoder, rrEncoder;
     public DcMotor.ZeroPowerBehavior zeroPowerBehavior;
-    //TODO: Find the value of ENC_PER_INCH
-    public final double ENC_PER_INCH = 140 / Math.PI;
     public WestCoast15(){
+        ENC_PER_INCH = 140 / Math.PI;
+        DISTANCE_BETWEEN_WHEELS = 390.9515 / 25.4;
         zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT;
         maxSpeed = 1;
         leftMotors = new DcMotor[]{leftFore, leftRear};
