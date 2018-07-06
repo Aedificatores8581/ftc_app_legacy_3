@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class TelemetryLogger {
@@ -26,20 +28,11 @@ public class TelemetryLogger {
      * Accepts variables in a similar vain to telemetry.addData(), but instead of writing it
      * to the console, it writes it to a file
      */
-    public int writeToLogInCSV(Object... data) {
+    public void writeToLogInCSV(Object... data) throws IOException{
         for (int i = 0; i < data.length; ++i) {
-            try {
-                this.os.write((data[i].toString() + ",").getBytes());
-            } catch (IOException e) {
-                return -1;
-            }
+            this.os.write((data[i].toString() + ",").getBytes());
         }
 
-        try {
-            this.os.write((byte)'\n');
-        } catch (IOException e) {
-            return -1;
-        }
-        return 0;
+        this.os.write((byte)'\n');
     }
 }
