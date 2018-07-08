@@ -8,7 +8,6 @@ import org.firstinspires.ftc.teamcode.Robots.Robot;
  */
 public abstract class WestBot15 extends Robot {
     public WestCoast15 drivetrain = new WestCoast15();
-
     @Override
     public void init(){
 

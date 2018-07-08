@@ -21,14 +21,23 @@ import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
 
 @TeleOp(name = "SensorBot Sensor Tests", group = "SensorBot")
 public class SensorBotTestSensors extends SensorBot {
-	int currentlyTestingSensor = 0;
+	private TouchSensor localTouchSensor = new TouchSensor();
+	private MagneticLimitSwitch localMagenteticSensor = new MagneticLimitSwitch();
+	private REVColorDistanceSensor localColorDistanceSensor = new REVColorDistanceSensor();
 
-	TouchSensor localTouchSensor = new TouchSensor();
-	MagneticLimitSwitch localMagenteticSensor = new MagneticLimitSwitch();
-	REVColorDistanceSensor localColorDistanceSensor = new REVColorDistanceSensor();
+	public enum testingSensor {
+		TOUCH,
+		MAGNET,
+		COLOR,
+		DISTANCE,
+		NONE,
+	}
+
+	public static testingSensor currentlyTestedSensor = testingSensor.NONE;
 
 	@Override
 	public void init() {
+
 		super.init();
 		updateGamepad1();
 		setRobotAngle();
@@ -53,36 +62,86 @@ public class SensorBotTestSensors extends SensorBot {
 
 		localColorDistanceSensor.updateColorSensor();
 
-		if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER)     {currentlyTestingSensor += 1;}
-		else if (gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER) {currentlyTestingSensor -= 1;}
+		if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {
+			switch (currentlyTestedSensor) {
+				case TOUCH:
+					currentlyTestedSensor = testingSensor.MAGNET;
+					break;
 
-		// TODO: Make this OpMode not pointless.
-		switch (currentlyTestingSensor) {
-			case 1:
+				case MAGNET:
+					currentlyTestedSensor = testingSensor.COLOR;
+					break;
+
+				case COLOR:
+					currentlyTestedSensor = testingSensor.DISTANCE;
+					break;
+
+				case DISTANCE:
+					currentlyTestedSensor = testingSensor.NONE;
+					break;
+
+				case NONE:
+					currentlyTestedSensor = testingSensor.TOUCH;
+					// Wraps around.
+					break;
+			}
+		} else if (gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER) {
+			switch (currentlyTestedSensor) {
+				case TOUCH:
+					// Wraparound is here.
+					currentlyTestedSensor = testingSensor.NONE;
+					break;
+
+				case MAGNET:
+					currentlyTestedSensor = testingSensor.TOUCH;
+					break;
+
+				case COLOR:
+					currentlyTestedSensor = testingSensor.MAGNET;
+					break;
+
+				case DISTANCE:
+					currentlyTestedSensor = testingSensor.COLOR;
+					break;
+
+				case NONE:
+					currentlyTestedSensor = testingSensor.DISTANCE;
+					// Wraps around.
+					break;
+			}
+		}
+
+		switch (currentlyTestedSensor) {
+			case TOUCH:
 				// Touch sensor.
 				if (localTouchSensor.isPressed()) {telemetry.addData("Touch Sensor", "Pressed");}
 				else {telemetry.addData("Touch Sensor", "Not Pressed");}
 				break;
 
-			case 2:
+			case MAGNET:
 				// Magnet Sensor.
 				if (localMagenteticSensor.isActivated()) {telemetry.addData("Magnetic Sensor", "Pressed");}
 				else {telemetry.addData("Magnetic Sensor", "Not Pressed");}
 				break;
 
-			case 3:
+			case COLOR:
 				telemetry.addData("r", localColorDistanceSensor.getRed());
 				telemetry.addData("g", localColorDistanceSensor.getGreen());
 				telemetry.addData("b", localColorDistanceSensor.getBlue());
 				telemetry.addData("a", localColorDistanceSensor.getOpacity());
 				break;
 
-			case 4:
+			case DISTANCE:
 				telemetry.addData("Distace in cm.", localColorDistanceSensor.getDistanceCM());
 				break;
 
-			default:
+			case NONE:
 				telemetry.addData("Sensors","Currently testing nothing...");
+				break;
+
+			default:
+				telemetry.addData("Error!","Enum inaccessible.");
+				break;
 		}
 	}
 }
