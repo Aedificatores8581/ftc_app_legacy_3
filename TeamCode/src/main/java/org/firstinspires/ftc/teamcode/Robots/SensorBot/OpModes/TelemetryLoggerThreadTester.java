@@ -15,9 +15,9 @@ import java.io.IOException;
  * writes that to a log file.
  * */
 public class TelemetryLoggerThreadTester extends SensorBot {
-    TelemetryLoggerThread loggerThread;
+    private TelemetryLoggerThread loggerThread;
     long baseTimeMillis; // Current System time when the loop starts
-    int x, y; // The MacGuffins
+    private int x, y; // The MacGuffins
 
     @Override
     public void init () {
@@ -42,12 +42,13 @@ public class TelemetryLoggerThreadTester extends SensorBot {
 
     @Override
     public void loop() {
-        telemetry.addData("Millis", System.currentTimeMillis());
+        telemetry.addData("Milliseconds", System.currentTimeMillis());
         telemetry.addData("X", x);
         telemetry.addData("Y", y);
 
-        if (loggerThread.exceptionThrown())
+        if (loggerThread.exceptionThrown()) {
             telemetry.addLine(loggerThread.getExceptionMessage());
+        }
     }
 
     @Override
@@ -55,8 +56,9 @@ public class TelemetryLoggerThreadTester extends SensorBot {
         super.stop();
         loggerThread.running = false;
 
-        if (loggerThread.exceptionThrown())
+        if (loggerThread.exceptionThrown()) {
             telemetry.addLine(loggerThread.getExceptionMessage());
+        }
     }
 
 
