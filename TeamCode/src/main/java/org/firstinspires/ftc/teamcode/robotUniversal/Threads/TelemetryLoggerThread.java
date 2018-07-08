@@ -23,6 +23,7 @@ public class TelemetryLoggerThread extends Thread {
     public TelemetryLoggerThread (String... labels) throws IOException{
 
         logger = new TelemetryLogger();
+        telemetryValues = new ArrayList<>();
         exceptionMessage = new ExceptionMessage();
 
         logger.writeToLogInCSV("Millis", labels);
@@ -30,8 +31,16 @@ public class TelemetryLoggerThread extends Thread {
     }
 
     public void setTelemetryValues(Object... data) {
-        telemetryValues.clear();
-        telemetryValues.addAll(Arrays.asList(data));
+
+        try {
+            this.telemetryValues.clear();
+            exceptionMessage.message = "";
+            exceptionMessage.thrown = false;
+        } catch (NullPointerException e) {
+            exceptionMessage.message = e.getMessage();
+            exceptionMessage.thrown = true;
+        }
+        this.telemetryValues.addAll(Arrays.asList(data));
 
     }
 

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robots.SensorBot.OpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.Robots.SensorBot.SensorBot;
@@ -14,6 +15,8 @@ import java.io.IOException;
  * To variables (x and y) increase and different rates, and TelemetryLoggerThread
  * writes that to a log file.
  * */
+
+@Autonomous(name = "Telemetry Logger Tester: Threaded", group = "Tele Test")
 public class TelemetryLoggerThreadTester extends SensorBot {
     TelemetryLoggerThread loggerThread;
     long baseTimeMillis; // Current System time when the loop starts
