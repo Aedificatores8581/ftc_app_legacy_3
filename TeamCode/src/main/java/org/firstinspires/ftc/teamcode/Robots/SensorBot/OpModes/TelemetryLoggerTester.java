@@ -17,8 +17,8 @@ import java.io.IOException;
 @Autonomous(name = "Telemetry Logger Tester: Non-Threaded", group = "Tele Test")
 public class TelemetryLoggerTester extends SensorBot {
 
-    TelemetryLogger logger;
-    int x, y;
+    private TelemetryLogger logger;
+    private int x, y;
     long baseTimeMillis; // Current System time when the start method finishes running
 
 
@@ -44,7 +44,7 @@ public class TelemetryLoggerTester extends SensorBot {
 
     @Override
     public void loop() {
-        telemetry.addData( "Millis", System.currentTimeMillis() - baseTimeMillis);
+        telemetry.addData( "Milliseconds", System.currentTimeMillis() - baseTimeMillis);
         telemetry.addData("X", x);
         telemetry.addData("Y", y);
         try {

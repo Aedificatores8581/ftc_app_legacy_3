@@ -33,7 +33,7 @@ public class SensorBotTestSensors extends SensorBot {
 		NONE,
 	}
 
-	public static testingSensor currentlyTestedSensor = testingSensor.NONE;
+	private static testingSensor currentlyTestedSensor = testingSensor.NONE;
 
 	@Override
 	public void init() {

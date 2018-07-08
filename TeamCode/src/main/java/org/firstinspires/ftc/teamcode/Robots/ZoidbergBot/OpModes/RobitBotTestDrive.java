@@ -109,6 +109,7 @@ public class RobitBotTestDrive extends RobitBot {
                         } else if (gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                             switchTurnState = true;
                         break;
+
                     case SMOOTH:
                         if (switchTurnState) {
                             drivetrain.turnState = TankDT.FCTurnState.FAST;
