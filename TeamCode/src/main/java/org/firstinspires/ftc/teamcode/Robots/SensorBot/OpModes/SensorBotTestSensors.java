@@ -33,7 +33,7 @@ public class SensorBotTestSensors extends SensorBot {
 		NONE,
 	}
 
-	private static testingSensor currentlyTestedSensor = testingSensor.NONE;
+	public static testingSensor currentlyTestedSensor = testingSensor.NONE;
 
 	@Override
 	public void init() {
@@ -64,10 +64,52 @@ public class SensorBotTestSensors extends SensorBot {
 
 		if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {
 			switch (currentlyTestedSensor) {
+				case TOUCH:
+					currentlyTestedSensor = testingSensor.MAGNET;
+					break;
 
+				case MAGNET:
+					currentlyTestedSensor = testingSensor.COLOR;
+					break;
+
+				case COLOR:
+					currentlyTestedSensor = testingSensor.DISTANCE;
+					break;
+
+				case DISTANCE:
+					currentlyTestedSensor = testingSensor.NONE;
+					break;
+
+				case NONE:
+					currentlyTestedSensor = testingSensor.TOUCH;
+					// Wraps around.
+					break;
+			}
+		} else if (gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER) {
+			switch (currentlyTestedSensor) {
+				case TOUCH:
+					// Wraparound is here.
+					currentlyTestedSensor = testingSensor.NONE;
+					break;
+
+				case MAGNET:
+					currentlyTestedSensor = testingSensor.TOUCH;
+					break;
+
+				case COLOR:
+					currentlyTestedSensor = testingSensor.MAGNET;
+					break;
+
+				case DISTANCE:
+					currentlyTestedSensor = testingSensor.COLOR;
+					break;
+
+				case NONE:
+					currentlyTestedSensor = testingSensor.DISTANCE;
+					// Wraps around.
+					break;
 			}
 		}
-		else if (gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER) {}
 
 		switch (currentlyTestedSensor) {
 			case TOUCH:
