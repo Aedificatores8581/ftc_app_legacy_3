@@ -121,8 +121,6 @@ import ftc.vision.FrameGrabber;
 @SuppressWarnings("WeakerAccess")
 public class FtcRobotControllerActivity extends Activity {
 
-    ////////////// START VISION PROCESSING CODE //////////////
-
     // Loads camera view of OpenCV for us to use. This lets us see using OpenCV
     private CameraBridgeViewBase cameraBridgeViewBase;
 
@@ -188,8 +186,6 @@ public class FtcRobotControllerActivity extends Activity {
             }
         }
     };
-
-    ////////////// END VISION PROCESSING CODE //////////////
 
     public static final String TAG = "RCActivity";
 
@@ -346,7 +342,7 @@ public class FtcRobotControllerActivity extends Activity {
         eventLoop = null;
 
         setContentView(R.layout.activity_ftc_controller);
-
+        myOnCreate();
         preferencesHelper = new PreferencesHelper(TAG, context);
         preferencesHelper.writeBooleanPrefIfDifferent(context.getString(R.string.pref_rc_connected), true);
         preferencesHelper.getSharedPreferences().registerOnSharedPreferenceChangeListener(sharedPreferencesListener);
@@ -455,12 +451,14 @@ public class FtcRobotControllerActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        myOnResume();
         RobotLog.vv(TAG, "onResume()");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        myOnPause();
         RobotLog.vv(TAG, "onPause()");
         if (isFullVersion && programmingModeController.isActive()) {
             programmingModeController.stopProgrammingMode();
@@ -479,7 +477,7 @@ public class FtcRobotControllerActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         RobotLog.vv(TAG, "onDestroy()");
-
+        myOnDestroy();
         shutdownRobot();  // Ensure the robot is put away to bed
         if (callback != null) {
             callback.close();
