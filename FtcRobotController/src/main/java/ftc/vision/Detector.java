@@ -10,7 +10,10 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 public abstract class Detector {
-
+    public enum OperatingState{
+        TUNING,
+        DETECTING
+    }
 
     public abstract void detect(Mat image);
 
