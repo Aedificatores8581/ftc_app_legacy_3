@@ -6,9 +6,24 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.core.Mat;
 
 public class FrameGrabber implements CameraBridgeViewBase.CvCameraViewListener2  {
+    public Detector detector = null;
+    public enum FrameGrabberMode {
+        SINGLE,
+        THROWAWAY,
+        STOPPED
+    }
+    private FrameGrabberMode mode = FrameGrabberMode.STOPPED;
+    private boolean resultReady = false;
 
-    public
-    FrameGrabber(CameraBridgeViewBase c) {
+    public FrameGrabber(CameraBridgeViewBase cameraBridgeViewBase, int frameWidthRequest, int frameHeightRequest) {
+        cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
+
+        cameraBridgeViewBase.setMinimumWidth(frameWidthRequest);
+        cameraBridgeViewBase.setMinimumHeight(frameHeightRequest);
+        cameraBridgeViewBase.setMaxFrameSize(frameWidthRequest, frameHeightRequest);
+        cameraBridgeViewBase.setCvCameraViewListener(this);
+    }
+    public FrameGrabber(CameraBridgeViewBase c) {
         c.setVisibility(SurfaceView.
                 VISIBLE
         );
@@ -29,6 +44,26 @@ public class FrameGrabber implements CameraBridgeViewBase.CvCameraViewListener2 
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        return inputFrame.rgba();
+        if(detector.equals(null))
+            return inputFrame.rgba();
+        detector.detect(inputFrame.rgba());
+        return detector.result();
+    }
+
+
+
+    public void grabSingleFrame(){
+        mode = FrameGrabberMode.SINGLE;
+        resultReady = false;
+    }
+    public void throwAwayFrames(){
+        mode = FrameGrabberMode.THROWAWAY;
+        resultReady = false;
+    }
+    public boolean isResultReady(){
+        return resultReady;
+    }
+    public void stopFrameGrabber(){
+        mode = FrameGrabberMode.STOPPED;
     }
 }
