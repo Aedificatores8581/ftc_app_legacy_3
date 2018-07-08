@@ -41,19 +41,23 @@ public class TelemetryLoggerTester extends SensorBot {
         telemetry.addData( "Millis", System.currentTimeMillis() - baseTimeMillis);
         telemetry.addData("X", x);
         telemetry.addData("Y", y);
-        x += 1;
-        y += 2;
         try {
             logger.writeToLogInCSV(baseTimeMillis, x, y);
         } catch(IOException e) {
             telemetry.addLine(e.getMessage());
         }
 
-
+        x += 1;
+        y += 2;
     }
 
     @Override
     public void stop() {
         super.stop();
+        try {
+            logger.close();
+        } catch (IOException e) {
+            telemetry.addLine(e.getMessage());
+        }
     }
 }

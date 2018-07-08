@@ -7,8 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 public class TelemetryLogger {
@@ -19,7 +17,7 @@ public class TelemetryLogger {
     public TelemetryLogger() throws FileNotFoundException{
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.mm.dd  hh-mm-ss");
 
-        teleLog = new File("/TeleLogs/" + dateFormat.format(new Date() + ".csv"));
+        teleLog = new File("/TeleLogs/" + dateFormat.format(new Date()) + ".csv");
 
         os = new FileOutputStream(teleLog);
     }
@@ -34,5 +32,9 @@ public class TelemetryLogger {
         }
 
         this.os.write((byte)'\n');
+    }
+
+    public void close() throws IOException {
+        os.close();
     }
 }

@@ -16,8 +16,8 @@ import java.io.IOException;
  * */
 public class TelemetryLoggerThreadTester extends SensorBot {
     TelemetryLoggerThread loggerThread;
-    long baseTimeMillis; // Current System time when the start method finishes running
-    int x, y;
+    long baseTimeMillis; // Current System time when the loop starts
+    int x, y; // The MacGuffins
 
     @Override
     public void init () {
@@ -45,6 +45,18 @@ public class TelemetryLoggerThreadTester extends SensorBot {
         telemetry.addData("Millis", System.currentTimeMillis());
         telemetry.addData("X", x);
         telemetry.addData("Y", y);
+
+        if (loggerThread.exceptionThrown())
+            telemetry.addLine(loggerThread.getExceptionMessage());
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        loggerThread.running = false;
+
+        if (loggerThread.exceptionThrown())
+            telemetry.addLine(loggerThread.getExceptionMessage());
     }
 
 

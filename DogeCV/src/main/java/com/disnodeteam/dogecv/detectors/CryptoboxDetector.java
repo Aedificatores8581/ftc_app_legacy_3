@@ -246,11 +246,11 @@ public class CryptoboxDetector extends OpenCVPipeline {
         return new Point(drawX, drawY);
     }
 
-    public ArrayList ones(int width, int height) {
-        ArrayList output = new ArrayList();
+    public ArrayList<ArrayList<Integer>> ones(int width, int height) {
+        ArrayList<ArrayList<Integer>> output = new ArrayList<ArrayList<Integer>>();
         for(int i = 1; i <= height; i++) {
-            ArrayList row = new ArrayList();
-            for(int j = 1; i <= width; i++) {
+            ArrayList<Integer> row = new ArrayList<Integer>();
+            for(int j = 1; j <= width; j++) {
                 row.add(1);
             }
             output.add(row);

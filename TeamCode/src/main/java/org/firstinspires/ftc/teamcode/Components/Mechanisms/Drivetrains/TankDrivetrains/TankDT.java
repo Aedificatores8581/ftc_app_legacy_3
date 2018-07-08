@@ -49,7 +49,8 @@ public abstract class TankDT extends Drivetrain {
     public enum ControlState{
         ARCADE,
         TANK,
-        FIELD_CENTRIC
+        FIELD_CENTRIC,
+        FIELD_CENTRIC_VECTOR
     }
 
     //Two algorithms for turning in field-centric mode

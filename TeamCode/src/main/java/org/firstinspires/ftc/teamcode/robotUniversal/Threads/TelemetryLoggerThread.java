@@ -10,7 +10,7 @@ public class TelemetryLoggerThread extends Thread {
     private TelemetryLogger logger;
     private ArrayList<Object> telemetryValues;
     public volatile boolean running;
-    private long baseTimeMillis;
+    private long baseTimeMillis; // Current System time when the thread starts
 
     ExceptionMessage exceptionMessage;
 
@@ -54,12 +54,22 @@ public class TelemetryLoggerThread extends Thread {
                 try {
                     logger.writeToLogInCSV( System.currentTimeMillis() - baseTimeMillis,
                             telemetryValues.toArray(new Object[telemetryValues.size()]));
+                    exceptionMessage.message = "";
+                    exceptionMessage.thrown = false;
 
                 } catch (IOException e){
                     exceptionMessage.message = e.getMessage();
                     exceptionMessage.thrown = true;
                 }
             }
+        }
+        try {
+            logger.close();
+            exceptionMessage.message = "";
+            exceptionMessage.thrown = false;
+        } catch(IOException e) {
+            exceptionMessage.message = e.getMessage();
+            exceptionMessage.thrown = true;
         }
     }
 }
