@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Holonom
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.robotUniversal.Position;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
 import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 import org.opencv.core.Point;
@@ -15,6 +16,7 @@ public abstract class MecanumDT extends HolonomicDT {
                         leftAftPow         ,
                         rightAftPow        ,
                         angleBetween       ;
+    public Position pos = new Position(0, 0, 0);
     public final double FRONT_TO_BACK_RATIO;
 
 
@@ -98,4 +100,7 @@ public abstract class MecanumDT extends HolonomicDT {
         refreshMotors();
     }
 
+    public void driveToPosition(Position destination){
+
+    }
 }
