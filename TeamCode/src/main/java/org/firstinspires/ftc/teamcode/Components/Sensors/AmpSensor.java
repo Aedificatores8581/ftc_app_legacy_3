@@ -12,31 +12,35 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 //TODO: Make sure a runtime error isn't thrown when the killPower() method is called
 public class AmpSensor {
-    private AnalogInput amperage ;
-    public double       limit    ;
-    HardwareDevice      mechanism;
-    public Type         type     ;
+    private AnalogInput amperage;
+    public double limit;
+    HardwareDevice mechanism;
+    public Type type;
+
     public AmpSensor(DcMotor hardwareDevice, double lim){
         limit = lim;
         type = Type.MOTOR;
         mechanism = hardwareDevice;
     }
+
     public AmpSensor(Servo hardwareDevice, double lim){
         limit = lim;
         type = Type.SERVO;
         mechanism = hardwareDevice;
     }
+
     public AmpSensor(CRServo hardwareDevice, double lim){
         limit = lim;
         type = Type.CRSERVO;
         mechanism = hardwareDevice;
     }
+
     //Initializes the sensor
     public void init(HardwareMap hardwareMap, String name){
         hardwareMap.analogInput.get(name);
     }
     //Sets the power to zero if the amperage is over the limit
-    public void killPower(){
+    public void killPower() {
         if(isOverLimit())
             switch(type){
                 case MOTOR:
@@ -52,12 +56,14 @@ public class AmpSensor {
     public boolean isOverLimit(){
         return amperage.getVoltage() > limit;
     }
+
     //Type of hardware device being used
-    public enum Type{
+    public enum Type {
         MOTOR,
         SERVO,
         CRSERVO
     }
+
     public String toString(){
         return type + " voltage: " + amperage.getVoltage() + ", is " + (isOverLimit()? "" : "not") + "over the limit";
     }

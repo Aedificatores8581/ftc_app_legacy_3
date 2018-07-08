@@ -17,7 +17,8 @@ public class PIDController {
                   TD            = 0,
                   currentTime  ,
                   integralMax   = Double.POSITIVE_INFINITY,
-                  sse           = 0;
+                  sse           = 0,
+                  prevTime      = 0;
     public double KP            = 0;
     public double KI            = 0;
     public double KD            = 0;
@@ -41,16 +42,28 @@ public class PIDController {
     }
     //one iteration of an ideal PID loop
     public void idealLoop(){
-        if(time + deltaTime >= System.currentTimeMillis()) {
+        if(time + deltaTime >= UniversalFunctions.getTimeInSeconds()) {
             error = setpoint - processVar;
             integral += error * deltaTime;
             integral = integralMax > integral ? integral : integralMax;
             derivative = (error - prevError) / deltaTime;
-            time = System.currentTimeMillis();
+            time = UniversalFunctions.getTimeInSeconds();
             currentOutput = KP * error + KI * integral + KD * derivative;
             prevError = error;
             calculateSSE();
         }
+    }
+
+    public void loop() {
+        deltaTime = UniversalFunctions.getTimeInSeconds() - prevTime;
+        error = setpoint - processVar;
+        integral += error * deltaTime;
+        integral = integralMax > integral ? integral : integralMax;
+        derivative = (error - prevError) / deltaTime;
+        prevTime = UniversalFunctions.getTimeInSeconds();
+        currentOutput = KP * error + KI * integral + KD * derivative;
+        prevError = error;
+        calculateSSE();
     }
     //one iteration of a standard PID loop
     public void standardLoop(){
@@ -67,7 +80,7 @@ public class PIDController {
             prevError = error;
             calculateSSE();
         }
-        currentTime = System.currentTimeMillis();
+        currentTime = UniversalFunctions.getTimeInSeconds();
     }
     public void calculateSSE(){
         sse = setpoint / (processVar - currentOutput);
