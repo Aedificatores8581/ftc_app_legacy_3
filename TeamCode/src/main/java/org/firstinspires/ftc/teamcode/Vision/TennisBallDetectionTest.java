@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.Vision;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
 import org.opencv.core.Core;
@@ -20,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Autonomous(name = "Tennis Ball Tracker", group = "vision")
+@Disabled
+//TODO: Completely restructure this opmode once vision code is made more modular
 public class TennisBallDetectionTest extends OpMode {
     VideoCapture video;
     //TODO: find values of the constants
