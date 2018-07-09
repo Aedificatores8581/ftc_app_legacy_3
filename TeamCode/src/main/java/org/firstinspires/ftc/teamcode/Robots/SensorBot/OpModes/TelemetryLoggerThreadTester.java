@@ -30,7 +30,7 @@ public class TelemetryLoggerThreadTester extends SensorBot {
         y = 0;
 
         try {
-            loggerThread = new TelemetryLoggerThread("X", "Y");
+            loggerThread = new TelemetryLoggerThread("Millis", "X", "Y");
         } catch (IOException e) {
             telemetry.addLine(e.getMessage());
         }
@@ -45,13 +45,15 @@ public class TelemetryLoggerThreadTester extends SensorBot {
 
     @Override
     public void loop() {
-        telemetry.addData("Milliseconds", System.currentTimeMillis());
+        telemetry.addData("Milliseconds", System.currentTimeMillis() - baseTimeMillis);
         telemetry.addData("X", x);
         telemetry.addData("Y", y);
 
         if (loggerThread.exceptionThrown()) {
             telemetry.addLine(loggerThread.getExceptionMessage());
         }
+
+        loggerThread.setTelemetryValues(System.currentTimeMillis() - baseTimeMillis, x, y);
     }
 
     @Override

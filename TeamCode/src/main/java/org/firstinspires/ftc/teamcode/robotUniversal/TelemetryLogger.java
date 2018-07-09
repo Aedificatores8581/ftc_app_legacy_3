@@ -17,7 +17,7 @@ public class TelemetryLogger {
     private static final String dirPath = "/sdcard/TeleLogs";
 
     public TelemetryLogger() throws IOException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.mm.dd  hh-mm-ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd  HH-mm-ss");
 
         File teleLogDir = new File(dirPath);
 
