@@ -3,6 +3,7 @@
       package="org.opencv"
       android:versionCode="3200"
       android:versionName="3.2.0">
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="21" />
 </manifest>

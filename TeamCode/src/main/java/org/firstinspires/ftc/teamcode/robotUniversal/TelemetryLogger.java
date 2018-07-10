@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.robotUniversal;
 
+import android.content.Context;
+import android.os.Environment;
 import android.os.SystemClock;
 
 import java.io.File;
@@ -12,12 +14,20 @@ import java.util.Date;
 public class TelemetryLogger {
     private File teleLog;
     private FileOutputStream os;
+    private static final String dirPath = "/sdcard/TeleLogs";
 
+    public TelemetryLogger() throws IOException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd  HH-mm-ss");
 
-    public TelemetryLogger() throws FileNotFoundException{
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.mm.dd  hh-mm-ss");
+        File teleLogDir = new File(dirPath);
 
-        teleLog = new File("/TeleLogs/" + dateFormat.format(new Date()) + ".csv");
+        if (!teleLogDir.exists()) {
+            teleLogDir.mkdirs();
+        }
+
+        teleLog = new File(teleLogDir, dateFormat.format(new Date()) + ".csv");
+
+        teleLog.createNewFile();
 
         os = new FileOutputStream(teleLog);
     }

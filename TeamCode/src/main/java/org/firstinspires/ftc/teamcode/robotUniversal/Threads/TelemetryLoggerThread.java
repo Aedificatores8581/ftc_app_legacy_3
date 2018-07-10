@@ -23,14 +23,23 @@ public class TelemetryLoggerThread extends Thread {
     public TelemetryLoggerThread (String... labels) throws IOException{
 
         logger = new TelemetryLogger();
+        telemetryValues = new ArrayList<>();
         exceptionMessage = new ExceptionMessage();
 
-        logger.writeToLogInCSV("Millis", labels);
+        logger.writeToLogInCSV(labels);
         running = true;
     }
 
     public void setTelemetryValues(Object... data) {
-        telemetryValues.clear();
+
+        try {
+            telemetryValues.clear();
+            exceptionMessage.message = "";
+            exceptionMessage.thrown = false;
+        } catch (NullPointerException e) {
+            exceptionMessage.message = e.getMessage();
+            exceptionMessage.thrown = true;
+        }
         telemetryValues.addAll(Arrays.asList(data));
 
     }
@@ -52,8 +61,7 @@ public class TelemetryLoggerThread extends Thread {
                 // The shenanigans with the "toArray" method are required since vararg methods
                 // don't take ArrayLists;
                 try {
-                    logger.writeToLogInCSV( System.currentTimeMillis() - baseTimeMillis,
-                            telemetryValues.toArray(new Object[telemetryValues.size()]));
+                    logger.writeToLogInCSV(telemetryValues.toArray(new Object[telemetryValues.size()]));
                     exceptionMessage.message = "";
                     exceptionMessage.thrown = false;
 
