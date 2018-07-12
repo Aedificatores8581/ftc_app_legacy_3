@@ -208,7 +208,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Grab"
+                android:text="Save"
                 android:id="@+id/button3"
                 android:layout_gravity="end|bottom"
                 android:onClick="frameButtonOnClick"/>

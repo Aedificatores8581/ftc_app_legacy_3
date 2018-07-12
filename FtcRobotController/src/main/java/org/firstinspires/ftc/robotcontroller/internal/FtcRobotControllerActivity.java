@@ -152,14 +152,6 @@ public class FtcRobotControllerActivity extends Activity {
         Object result = frameGrabber.getResult();
         //((TextView)findViewById(R.id.resultText)).setText(result.toString());*/
     }
-/*
-    void myOnWindowFocusChanged(boolean hasFocus){
-        if (hasFocus) {
-            frameGrabber.stopFrameGrabber();
-        } else {
-            frameGrabber.throwAwayFrames();
-        }
-    }*/
 
     void myOnPause(){
         if (cameraBridgeViewBase != null) {
