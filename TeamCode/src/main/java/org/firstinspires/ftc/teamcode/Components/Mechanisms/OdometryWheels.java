@@ -15,8 +15,8 @@ public class OdometryWheels {
             wheel2 = p2;
             wheel3 = p3;
         }
-        public Pose standardPositionTrack(Pose currentPos, double read1, double read2, double read3){
-            double  r = read1, l = read2, x = read3,
+        public Pose standardPositionTrack(Pose currentPos, double x/*read3*/, double l/*read2*/, double r/*read1*/){
+            double
                     diff1 = Math.cos(wheel1.angleOfVector() - wheel1.angle),
                     diff2 = Math.cos(wheel2.angleOfVector() - wheel2.angle),
                     diff3 = Math.cos(wheel3.angleOfVector() - wheel3.angle),
