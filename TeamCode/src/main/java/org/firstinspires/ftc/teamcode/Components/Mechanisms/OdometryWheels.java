@@ -25,7 +25,7 @@ public class OdometryWheels {
             x -= angle * wheel3.radius() * diff3;
             r -= angle * wheel1.radius() * diff1;
             l -= angle * wheel2.radius() * diff2;
-            //l and r should be equal
+            //assuming the calculations were done correctly, l and r should now be equal
             Vector2 velocity = new Vector2(x, l);
             Vector2 vel2 = new Vector2();
             if (angle != 0) {
