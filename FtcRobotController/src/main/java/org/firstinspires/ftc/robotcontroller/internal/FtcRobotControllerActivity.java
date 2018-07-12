@@ -152,14 +152,14 @@ public class FtcRobotControllerActivity extends Activity {
         Object result = frameGrabber.getResult();
         //((TextView)findViewById(R.id.resultText)).setText(result.toString());*/
     }
-
+/*
     void myOnWindowFocusChanged(boolean hasFocus){
         if (hasFocus) {
             frameGrabber.stopFrameGrabber();
         } else {
             frameGrabber.throwAwayFrames();
         }
-    }
+    }*/
 
     void myOnPause(){
         if (cameraBridgeViewBase != null) {
@@ -570,7 +570,7 @@ public class FtcRobotControllerActivity extends Activity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        myOnWindowFocusChanged(hasFocus);
+        //myOnWindowFocusChanged(hasFocus);
         // When the window loses focus (e.g., the action overflow is shown),
         // cancel any pending hide action. When the window gains focus,
         // hide the system UI.
