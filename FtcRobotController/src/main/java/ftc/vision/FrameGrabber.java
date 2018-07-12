@@ -44,13 +44,11 @@ public class FrameGrabber implements CameraBridgeViewBase.CvCameraViewListener2 
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        if(detector.equals(null))
+        if(detector.equals(null) || !detector.isInitialized)
             return inputFrame.rgba();
         detector.detect(inputFrame.rgba());
         return detector.result();
     }
-
-
 
     public void grabSingleFrame(){
         mode = FrameGrabberMode.SINGLE;
