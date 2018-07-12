@@ -7,7 +7,7 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 public class TennisBallDetector extends Detector {
-    int H_MIN = 0,
+    public int H_MIN = 0,
             S_MIN = 0,
             V_MIN = 0,
             H_MAX = 255,
@@ -16,6 +16,9 @@ public class TennisBallDetector extends Detector {
     Mat workingImage, hsvImage, threshold;
     public OperatingState opState = OperatingState.DETECTING;
 
+    public TennisBallDetector(){
+        super();
+    }
     public void detect(Mat image){
         switch(opState){
             case TUNING:
