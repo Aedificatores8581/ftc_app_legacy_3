@@ -18,4 +18,10 @@ public class Position {
         x += v.x;
         y += v.y;
     }
+    public double radius(){
+        return Math.hypot(x, y);
+    }
+    public double angleOfVector(){
+        return Math.atan2(y, x);
+    }
 }

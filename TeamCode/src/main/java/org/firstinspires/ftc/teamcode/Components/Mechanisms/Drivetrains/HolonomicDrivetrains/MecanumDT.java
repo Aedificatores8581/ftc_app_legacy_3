@@ -100,7 +100,5 @@ public abstract class MecanumDT extends HolonomicDT {
         refreshMotors();
     }
 
-    public void driveToPosition(Position destination){
 
-    }
 }
