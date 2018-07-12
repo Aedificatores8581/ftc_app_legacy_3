@@ -1,15 +1,15 @@
 package org.firstinspires.ftc.teamcode.robotUniversal;
 
-public class Position {
+public class Pose {
     public double x, y, angle;
 
-    public Position(){
+    public Pose(){
         x = 0;
         y = 0;
         angle = 0;
     }
 
-    public Position(double x, double y, double angle){
+    public Pose(double x, double y, double angle){
         this.x = x;
         this.y = y;
         this.angle = angle;

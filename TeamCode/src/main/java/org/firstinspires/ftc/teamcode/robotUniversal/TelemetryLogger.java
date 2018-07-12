@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+
 public class TelemetryLogger {
     private File teleLog;
     private FileOutputStream os;
-
 
     public TelemetryLogger() throws FileNotFoundException{
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.mm.dd  hh-mm-ss");
