@@ -3,18 +3,19 @@ package ftc.vision;
 import android.view.SurfaceView;
 
 import org.opencv.android.CameraBridgeViewBase;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
-public class FrameGrabber implements CameraBridgeViewBase.CvCameraViewListener2  {
+public class Frame implements CameraBridgeViewBase.CvCameraViewListener2  {
     public Detector detector = null;
     public boolean detectorInitialized = false;
     private boolean resultReady = false;
-    public FrameGrabber(CameraBridgeViewBase cameraBridgeViewBase) {
+    public Frame(CameraBridgeViewBase cameraBridgeViewBase) {
 
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
         cameraBridgeViewBase.setCvCameraViewListener(this);
     }
-    public FrameGrabber(CameraBridgeViewBase cameraBridgeViewBase, int frameWidthRequest, int frameHeightRequest) {
+    public Frame(CameraBridgeViewBase cameraBridgeViewBase, int frameWidthRequest, int frameHeightRequest) {
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
 
         cameraBridgeViewBase.setMinimumWidth(frameWidthRequest);
@@ -34,8 +35,11 @@ public class FrameGrabber implements CameraBridgeViewBase.CvCameraViewListener2 
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        if(detector == (null) || !detector.isInitialized)
-            return inputFrame.rgba();
+        if(detector == (null) || !detector.isInitialized) {
+            Mat temp = new Mat();
+            Core.rotate(inputFrame.rgba(), temp, Core.ROTATE_90_CLOCKWISE);
+            return temp;
+        }
         else {
             detector.detect(inputFrame.rgba());
             return detector.result();
