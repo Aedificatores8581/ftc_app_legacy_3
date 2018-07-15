@@ -36,6 +36,9 @@ public class TennisBallDetector extends Detector {
                 Imgproc.erode(threshold, threshold, erosionFactor);
                 Imgproc.dilate(threshold, threshold, dilationFactor);
                 Imgproc.dilate(threshold, threshold, dilationFactor);
+                Mat colSum = new Mat();
+                Core.reduce(threshold, colSum, 0, Core.REDUCE_SUM, 4);
+
 
                 //TODO: Add approximate location of images on the screen
                 //TODO: Add contour detection
@@ -49,6 +52,6 @@ public class TennisBallDetector extends Detector {
     public void tune(Mat image){
         Imgproc.cvtColor(image, hsvImage, Imgproc.COLOR_RGB2HSV_FULL);
         Core.inRange(hsvImage, new Scalar(H_MIN, S_MIN, V_MIN), new Scalar(H_MAX, S_MAX, V_MAX), threshold);
-        workingImage = threshold;
+        threshold.copyTo(workingImage);
     }
 }
