@@ -36,9 +36,7 @@ public class Frame implements CameraBridgeViewBase.CvCameraViewListener2  {
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         if(detector == (null) || !detector.isInitialized) {
-            Mat temp = new Mat();
-            Core.rotate(inputFrame.rgba(), temp, Core.ROTATE_90_CLOCKWISE);
-            return temp;
+            return inputFrame.rgba();
         }
         else {
             detector.detect(inputFrame.rgba());
