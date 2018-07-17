@@ -94,7 +94,7 @@ public class VisionTuningTest extends OpMode {
                             canSwitch = true;
                         break;
                 }
-                if(gamepad1.left_stick_y != 0) {
+                if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK) {
                     prevTime = System.currentTimeMillis();
                     adjust = adjust.CANT;
                 }
