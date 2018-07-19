@@ -8,17 +8,18 @@ import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
 
 import ftc.vision.Detector;
+import ftc.vision.RedJewelDetector;
 import ftc.vision.TennisBallDetector;
 
 @Autonomous(name = "visiontuning", group = "vision")
 public class VisionTuningTest extends OpMode {
-    Adjust adjust;
-    TennisBallDetector tennisBallDetector;
+    Adjust adjust = Adjust.CAN;
+    RedJewelDetector tennisBallDetector;
     DetectorRange dRange = DetectorRange.HMIN;
     boolean canSwitch = true;
     double prevTime;
     public void init(){
-        tennisBallDetector = new TennisBallDetector();
+        tennisBallDetector = new RedJewelDetector();
         tennisBallDetector.opState = Detector.OperatingState.TUNING;
         FtcRobotControllerActivity.frameGrabber.detector = tennisBallDetector;
         prevTime = System.currentTimeMillis();
@@ -98,6 +99,7 @@ public class VisionTuningTest extends OpMode {
                     prevTime = System.currentTimeMillis();
                     adjust = adjust.CANT;
                 }
+                break;
         }
 
         tennisBallDetector.V_MIN = (int)UniversalFunctions.clamp(0, tennisBallDetector.V_MIN, 254);
@@ -115,9 +117,7 @@ public class VisionTuningTest extends OpMode {
         telemetry.addData("Detecting", dRange);
     }
 
-    public void loop(){
-
-    }
+    public void loop(){ }
     @Override
     public void stop(){
         super.stop();
