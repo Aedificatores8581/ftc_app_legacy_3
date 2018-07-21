@@ -20,7 +20,7 @@ public class RedJewelDetector extends Detector {
             H_MAX = 255,
             S_MAX = 255,
             V_MAX = 255;
-    public int R_MIN = 135,
+    public int R_MIN = 100,
             G_MIN = 0,
             B_MIN = 0,
             R_MAX = 255,
@@ -40,7 +40,7 @@ public class RedJewelDetector extends Detector {
     public Mat workingImage = new Mat(), hsvImage= new Mat(), threshold= new Mat(), i = new Mat(), thresh = new Mat(),
             invert = new Mat(), hsv = new Mat(), r = new Mat(), g = new Mat(), b = new Mat();
     public OperatingState opState = OperatingState.TUNING;
-
+    public float[] radius = {1};
     public RedJewelDetector(){
         super();
     }
@@ -111,6 +111,11 @@ public class RedJewelDetector extends Detector {
         return workingImage;
     }
     public void tune(Mat image){
+        BlockDetector bl = new BlockDetector();
+        bl.G_MIN = 122;
+        bl.R_MAX = 255;
+        bl.tune(image);
+        Core.subtract(image, bl.workingImage, image);
         Mat threshold2 = new Mat();
         threshold = new Mat();
         hsvImage = new Mat();
@@ -144,7 +149,7 @@ public class RedJewelDetector extends Detector {
         List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
         Imgproc.findContours(i, contours, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
         double maxArea = 0;
-        float[] radius = new float[1];
+        radius = new float[1];
         Point center = new Point();
         for (int i = 0; i < contours.size(); i++) {
             MatOfPoint c = contours.get(i);
@@ -154,7 +159,7 @@ public class RedJewelDetector extends Detector {
             }
         }
         Imgproc.circle(image, center, (int)radius[0], new Scalar(0, 0, 255), 5);
-
+        Imgproc.putText(image,"approx" + (int)(480 * 3.7 / (int)radius[0] / 2) + "inches", new Point(center.x, center.y - (int)radius[0]), 2, 2, new Scalar(255, 255, 255), 1);
         image.copyTo(workingImage);
         threshold = new Mat();
         hsvImage = new Mat();

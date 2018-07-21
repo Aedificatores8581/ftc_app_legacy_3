@@ -17,7 +17,7 @@ import ftc.vision.TennisBallDetector;
 @Autonomous(name = "visiontuning", group = "vision")
 public class VisionTuningTest extends OpMode {
     Adjust adjust = Adjust.CAN;
-    BlockDetector tennisBallDetector;
+    RedJewelDetector tennisBallDetector;
     DetectorRange dRange = DetectorRange.HMIN;
     boolean canSwitch = true;
     double prevTime;
@@ -26,8 +26,9 @@ public class VisionTuningTest extends OpMode {
     Point max = new Point();
     double rAv = 0, gAv = 0, bAv = 0;
     double count = 1;
+    double distance = 1;
     public void init(){
-        tennisBallDetector = new BlockDetector();
+        tennisBallDetector = new RedJewelDetector();
         tennisBallDetector.opState = Detector.OperatingState.TUNING;
         FtcRobotControllerActivity.frameGrabber.detector = tennisBallDetector;
         prevTime = System.currentTimeMillis();
@@ -109,7 +110,6 @@ public class VisionTuningTest extends OpMode {
                 }
                 break;
         }
-
         tennisBallDetector.R_MIN = (int)UniversalFunctions.clamp(0, tennisBallDetector.R_MIN, 254);
         tennisBallDetector.G_MIN = (int)UniversalFunctions.clamp(0, tennisBallDetector.G_MIN, 254);
         tennisBallDetector.B_MIN = (int)UniversalFunctions.clamp(0, tennisBallDetector.B_MIN, 254);
@@ -123,28 +123,7 @@ public class VisionTuningTest extends OpMode {
         telemetry.addData("G Max", tennisBallDetector.G_MAX);
         telemetry.addData("B Max", tennisBallDetector.B_MAX);
         telemetry.addData("Detecting", dRange);
-        maxR = Math.max(Core.minMaxLoc(tennisBallDetector.r).maxVal, maxR);
-        maxG = Math.max(Core.minMaxLoc(tennisBallDetector.g).maxVal, maxG);
-        maxB = Math.max(Core.minMaxLoc(tennisBallDetector.b).maxVal, maxB);
-        minR = Math.min(Core.minMaxLoc(tennisBallDetector.r).minVal, minR);
-        minG = Math.min(Core.minMaxLoc(tennisBallDetector.g).minVal, minG);
-        minB = Math.min(Core.minMaxLoc(tennisBallDetector.b).minVal, minB);
-        telemetry.addData("rmax", maxR);
-        telemetry.addData("gmax", maxG);
-        telemetry.addData("bmax", maxB);
-        telemetry.addData("rmin", minR);
-        telemetry.addData("gmin", minG);
-        telemetry.addData("bmin", minB);
-        rAv = rAv + Core.minMaxLoc(tennisBallDetector.r).maxVal;
-        gAv = gAv + Core.minMaxLoc(tennisBallDetector.g).maxVal;
-        bAv = bAv + Core.minMaxLoc(tennisBallDetector.b).maxVal;
-        count ++;
-        telemetry.addData("rav", rAv / count);
-        telemetry.addData("gav", gAv / count);
-        telemetry.addData("bav", bAv / count);
-        //237 196 166
-
-        //255, 225, 176
+        telemetry.addData("distance away from camera (inches)",  480 * 3.7 / (int)tennisBallDetector.radius[0] / 2);
     }
 
     public void loop(){ }

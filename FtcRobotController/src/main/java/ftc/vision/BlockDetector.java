@@ -89,9 +89,14 @@ public class BlockDetector extends Detector {
         Core.inRange(hsv, new Scalar(H_MIN, S_MIN, V_MIN), new Scalar(H_MAX, S_MAX, V_MAX), thresh);
         Core.inRange(invert, new Scalar(R_MIN, G_MIN, B_MIN), new Scalar(R_MAX, G_MAX, B_MAX), threshold2);
         Core.bitwise_and(thresh, threshold2, threshold);
+
+        Mat erosionFactor = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3, 3));
+        Imgproc.erode(threshold, threshold, erosionFactor);
+        Imgproc.dilate(threshold, threshold, erosionFactor);
         Mat mask = new Mat(image.size(), 0);
         threshold.copyTo(mask);
         image.copyTo(i, mask);
+
         //Mat dilationFactor = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(1, 1));
         //Imgproc.dilate(thresh, thresh, dilationFactor);
         //Imgproc.GaussianBlur(i, i, new Size(9, 9), 2, 2);
