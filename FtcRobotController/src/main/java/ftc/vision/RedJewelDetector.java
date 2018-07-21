@@ -50,29 +50,25 @@ public class RedJewelDetector extends Detector {
                 tune(image);
                 break;
             case DETECTING:
+                Mat threshold2 = new Mat();
                 threshold = new Mat();
                 hsvImage = new Mat();
                 hsv = new Mat();
                 thresh = new Mat();
                 i = new Mat();
                 invert = new Mat();
-                Mat rgb = new Mat();
-                Mat threshold2 = new Mat();
-                Imgproc.cvtColor(image, rgb, Imgproc.COLOR_RGBA2RGB);
-                Core.inRange(hsvImage, new Scalar(R_MIN, G_MIN, B_MIN), new Scalar(R_MAX, G_MAX, B_MAX), threshold2);
-
+                Mat gray = new Mat();
+                Imgproc.cvtColor(image, gray, Imgproc.COLOR_RGBA2RGB);
                 Imgproc.cvtColor(image, hsvImage, Imgproc.COLOR_RGB2HSV_FULL);
                 hsvImage.copyTo(hsv);
                 Core.inRange(hsvImage, new Scalar(39, 42, 59), new Scalar(190, 255, 255), threshold);
-                Mat mask = new Mat(image.size(), 0);
 
                 Core.inRange(hsv, new Scalar(H_MIN, S_MIN, V_MIN), new Scalar(H_MAX, S_MAX, V_MAX), thresh);
 
                 Core.subtract(thresh, threshold, i);
 
-                Core.inRange(image, new Scalar(R_MIN, G_MIN, B_MIN), new Scalar(R_MAX, G_MAX, B_MAX), threshold);
+                Core.inRange(gray, new Scalar(R_MIN, G_MIN, B_MIN), new Scalar(R_MAX, G_MAX, B_MAX), threshold2);
                 Core.bitwise_and(i, threshold2, threshold);
-                i = new Mat();
                 threshold.copyTo(i);
                 Core.extractChannel(image, r, 0);
                 Core.extractChannel(image, g, 1);
@@ -107,7 +103,6 @@ public class RedJewelDetector extends Detector {
                 invert  = new Mat();
 
                 //TODO: Add approximate location of images on the screen
-                //TODO: Add contour detection
                 break;
         }
 
@@ -169,7 +164,6 @@ public class RedJewelDetector extends Detector {
         invert  = new Mat();
 
         //TODO: Add approximate location of images on the screen
-        //TODO: Add contour detection
         //135 0 0 255 96 91
     }
 }
