@@ -28,7 +28,17 @@ public class WestCoast15Inc extends TankDT {
         initAcceleratedMotors();
     }
 
-    public void setLeftPow(double pow) {
+@Override
+public double averageRightEncoders() {
+    return 0;
+}
+
+@Override
+public double averageLeftEncoders() {
+    return 0;
+}
+
+public void setLeftPow(double pow) {
         leftFore.setPower(pow * maxSpeed);
         leftRear.setPower(pow * maxSpeed);
         leftPow = pow;

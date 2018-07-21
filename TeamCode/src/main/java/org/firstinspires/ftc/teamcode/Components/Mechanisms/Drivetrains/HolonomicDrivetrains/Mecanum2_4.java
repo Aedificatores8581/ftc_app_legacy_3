@@ -7,8 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * Created by Frank Portman on 5/21/2018
  */
 public class Mecanum2_4 extends MecanumDT {
-    DcMotor leftFore, leftRear, rightFore, rightRear;
-
+    public DcMotor leftFore, leftRear, rightFore, rightRear;
 
     public Mecanum2_4(){
         super(1);

@@ -116,25 +116,41 @@ import org.openftc.rc.Utils;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import ftc.vision.FrameGrabber;
+import ftc.vision.Frame;
 
 @SuppressWarnings("WeakerAccess")
 public class FtcRobotControllerActivity extends Activity {
 
-    ////////////// START VISION PROCESSING CODE //////////////
+    static final int FRAME_WIDTH_REQUEST = 176 * 20;
+    static final int FRAME_HEIGHT_REQUEST = 144 * 20;
 
     // Loads camera view of OpenCV for us to use. This lets us see using OpenCV
     private CameraBridgeViewBase cameraBridgeViewBase;
 
+    //manages getting one frame at a time
+    public static Frame frameGrabber = null;
+
+    //set up the frameGrabber
     void myOnCreate(){
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.show_camera_activity_java_surface_view);
-        new FrameGrabber(cameraBridgeViewBase);
+        frameGrabber = new Frame(cameraBridgeViewBase, FRAME_WIDTH_REQUEST, FRAME_HEIGHT_REQUEST);
+
     }
 
     //when the "Grab" button is pressed
     public void frameButtonOnClick(View v){
+        /*frameGrabber.grabSingleFrame();
+        while (!frameGrabber.isResultReady()) {
+            try {
+                Thread.sleep(5); //sleep for 5 milliseconds
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        Object result = frameGrabber.getResult();
+        //((TextView)findViewById(R.id.resultText)).setText(result.toString());*/
     }
 
     void myOnPause(){
@@ -188,8 +204,6 @@ public class FtcRobotControllerActivity extends Activity {
             }
         }
     };
-
-    ////////////// END VISION PROCESSING CODE //////////////
 
     public static final String TAG = "RCActivity";
 
@@ -346,7 +360,7 @@ public class FtcRobotControllerActivity extends Activity {
         eventLoop = null;
 
         setContentView(R.layout.activity_ftc_controller);
-
+        myOnCreate();
         preferencesHelper = new PreferencesHelper(TAG, context);
         preferencesHelper.writeBooleanPrefIfDifferent(context.getString(R.string.pref_rc_connected), true);
         preferencesHelper.getSharedPreferences().registerOnSharedPreferenceChangeListener(sharedPreferencesListener);
@@ -455,12 +469,14 @@ public class FtcRobotControllerActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        myOnResume();
         RobotLog.vv(TAG, "onResume()");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        myOnPause();
         RobotLog.vv(TAG, "onPause()");
         if (isFullVersion && programmingModeController.isActive()) {
             programmingModeController.stopProgrammingMode();
@@ -479,7 +495,7 @@ public class FtcRobotControllerActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         RobotLog.vv(TAG, "onDestroy()");
-
+        myOnDestroy();
         shutdownRobot();  // Ensure the robot is put away to bed
         if (callback != null) {
             callback.close();
@@ -546,6 +562,7 @@ public class FtcRobotControllerActivity extends Activity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
+        //myOnWindowFocusChanged(hasFocus);
         // When the window loses focus (e.g., the action overflow is shown),
         // cancel any pending hide action. When the window gains focus,
         // hide the system UI.
