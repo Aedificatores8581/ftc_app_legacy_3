@@ -18,8 +18,7 @@ public class MecanumLocationTrackingTest extends MecBot2_4 {
     Vector2 currentPos = new Vector2();
     Vector2 turnVector = new Vector2();
     Vector2 velocity = new Vector2();
-    MotorEncoder xEnc, yEnc;
-    final double ODOMETRY_WHEEL_ENCODER_RADIUS = 0;
+    MotorEncoder xEncL, xEncR, yEnc;
     @Override
     public void init(){
         super.init();
@@ -39,20 +38,12 @@ public class MecanumLocationTrackingTest extends MecBot2_4 {
 
     @Override
     public void loop(){
-        xEnc.resetEncoder();
+        xEncL.resetEncoder();
         yEnc.resetEncoder();
-        xEnc.updateEncoder();
+        xEncR.resetEncoder();
+        xEncR.updateEncoder();
+        xEncL.updateEncoder();
         yEnc.updateEncoder();
-        double theta = Math.toRadians(getGyroAngle());
-        double thetaDiff = theta - prevTheta;
-        double y = yEnc.currentPosition - ODOMETRY_WHEEL_ENCODER_RADIUS * thetaDiff;
-        //Maybe multiply by -1
-        double x = xEnc.currentPosition + ODOMETRY_WHEEL_ENCODER_RADIUS * thetaDiff;
-        velocity.x = x;
-        velocity.y = y;
-        turnVector.setFromPolar(velocity.magnitude() / thetaDiff, thetaDiff);
-        turnVector.rotate(velocity.angle() + prevTheta);
-        currentPos.add(turnVector);
-        prevTheta = theta;
+        double angle = (xEncR.currentPosition - xEncL.currentPosition);
     }
 }

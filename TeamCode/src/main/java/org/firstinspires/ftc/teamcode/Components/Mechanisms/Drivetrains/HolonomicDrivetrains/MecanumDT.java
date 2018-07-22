@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.HolonomicDrivetrains;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-
+import org.firstinspires.ftc.teamcode.robotUniversal.Pose;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
 import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
-import org.opencv.core.Point;
 
 /**
  * Created by Frank Portman on 5/21/2018
@@ -15,6 +13,7 @@ public abstract class MecanumDT extends HolonomicDT {
                         leftAftPow         ,
                         rightAftPow        ,
                         angleBetween       ;
+    public Pose pos = new Pose(0, 0, 0);
     public final double FRONT_TO_BACK_RATIO;
 
 
@@ -97,5 +96,6 @@ public abstract class MecanumDT extends HolonomicDT {
         normalizeMotors();
         refreshMotors();
     }
+
 
 }
