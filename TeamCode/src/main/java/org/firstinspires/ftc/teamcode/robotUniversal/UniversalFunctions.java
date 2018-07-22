@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Created by Frank Portman on 4/1/2018.
  */
-public abstract class UniversalFunctions {
+public class UniversalFunctions {
     //Caps the test value at min and max
     public static double clamp(double min, double test, double max) {
         if (max < min) {

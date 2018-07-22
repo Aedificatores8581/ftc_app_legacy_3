@@ -118,6 +118,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import ftc.vision.Frame;
 
+
 @SuppressWarnings("WeakerAccess")
 public class FtcRobotControllerActivity extends Activity {
 
@@ -133,10 +134,8 @@ public class FtcRobotControllerActivity extends Activity {
     //set up the frameGrabber
     void myOnCreate(){
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
         cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.show_camera_activity_java_surface_view);
         frameGrabber = new Frame(cameraBridgeViewBase, FRAME_WIDTH_REQUEST, FRAME_HEIGHT_REQUEST);
-
     }
 
     //when the "Grab" button is pressed
