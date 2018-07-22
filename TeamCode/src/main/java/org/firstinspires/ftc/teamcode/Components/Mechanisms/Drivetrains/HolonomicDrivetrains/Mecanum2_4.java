@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Mecanum2_4 extends MecanumDT {
     public DcMotor leftFore, leftRear, rightFore, rightRear;
 
-
     public Mecanum2_4(){
         super(1);
         leftFore.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);

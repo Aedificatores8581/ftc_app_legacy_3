@@ -1,14 +1,10 @@
 package org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains;
 
-import android.util.Log;
-
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
-import org.firstinspires.ftc.teamcode.robotUniversal.GyroAngles;
-import org.firstinspires.ftc.teamcode.robotUniversal.Position;
+import org.firstinspires.ftc.teamcode.robotUniversal.Pose;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
 import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
@@ -31,7 +27,7 @@ public abstract class TankDT extends Drivetrain {
             totalAngle = 0;
     public boolean turn = false,
                    canSwitch = false;
-    public Position position;
+    public Pose position;
     public DcMotor[] leftMotors,
                      rightMotors;
     public Direction direction    ;
