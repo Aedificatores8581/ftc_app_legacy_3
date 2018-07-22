@@ -34,13 +34,22 @@ public class BlockDetector extends Detector {
     B_MAX = 176;
     //0 69 62 87 255 255
 
-    public Mat workingImage = new Mat(), hsvImage= new Mat(), threshold= new Mat(), i = new Mat(), thresh = new Mat(),
-            invert = new Mat(), hsv = new Mat(), r = new Mat(), g = new Mat(), b = new Mat();
+    public Mat workingImage = new Mat();
+    public Mat hsvImage= new Mat();
+    public Mat threshold= new Mat();
+    public Mat i = new Mat();
+    public Mat thresh = new Mat();
+    public Mat invert = new Mat();
+    public Mat hsv = new Mat();
+    public Mat r = new Mat();
+    public Mat g = new Mat();
+    public Mat b = new Mat();
     public OperatingState opState = OperatingState.TUNING;
 
     public BlockDetector(){
         super();
     }
+
     public void detect(Mat image){
         switch(opState){
             case TUNING:
@@ -71,6 +80,7 @@ public class BlockDetector extends Detector {
     public Mat result(){
         return workingImage;
     }
+
     public void tune(Mat image){
         Mat threshold2 = new Mat();
         threshold = new Mat();
@@ -79,6 +89,7 @@ public class BlockDetector extends Detector {
         thresh = new Mat();
         i = new Mat();
         invert = new Mat();
+
         Imgproc.cvtColor(image, invert, Imgproc.COLOR_RGBA2RGB);
         Imgproc.cvtColor(image, hsvImage, Imgproc.COLOR_RGB2HSV_FULL);
         hsvImage.copyTo(hsv);

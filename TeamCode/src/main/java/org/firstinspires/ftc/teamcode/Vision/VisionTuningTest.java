@@ -26,6 +26,7 @@ public class VisionTuningTest extends OpMode {
     Point max = new Point();
     double rAv = 0, gAv = 0, bAv = 0;
     double count = 1;
+
     public void init(){
         tennisBallDetector = new BlockDetector();
         tennisBallDetector.opState = Detector.OperatingState.TUNING;
@@ -33,6 +34,7 @@ public class VisionTuningTest extends OpMode {
         prevTime = System.currentTimeMillis();
 
     }
+    
     @Override
     public void init_loop(){
         switch(adjust){
@@ -105,7 +107,7 @@ public class VisionTuningTest extends OpMode {
                 }
                 if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK) {
                     prevTime = System.currentTimeMillis();
-                    adjust = adjust.CANT;
+                    adjust = Adjust.CANT;
                 }
                 break;
         }
