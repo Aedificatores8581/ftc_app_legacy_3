@@ -17,7 +17,11 @@ public abstract class SensorBot extends Robot {
     double  ps1InitPos = 0,
             ps2InitPos = 0;
 
-    public void SensorBot (DcMotor.ZeroPowerBehavior zeroPowerBehavior){
+    public SensorBot () {
+
+    }
+
+    public SensorBot (DcMotor.ZeroPowerBehavior zeroPowerBehavior){
         lm.setZeroPowerBehavior(zeroPowerBehavior);
         rm.setZeroPowerBehavior(zeroPowerBehavior);
     }

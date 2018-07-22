@@ -21,6 +21,9 @@ android {
 }
 dependencies {
     compile project(':FtcRobotController')
-    compile project(':openCVLibrary320')
-    compile project(':DogeCV')
+    api project(':openCVLibrary320')
+    api project(':DogeCV')
+
+    compile 'org.openftc:ftc-opmode-tuner-common:0.22'
+
 }
