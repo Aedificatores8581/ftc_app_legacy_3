@@ -136,7 +136,6 @@ public class RedJewelDetector extends Detector {
         thresh = new Mat();
         i = new Mat();
         invert = new Mat();
-        Mat gray = new Mat();
         Mat labImage = new Mat();
         Imgproc.cvtColor(image, labImage, Imgproc.COLOR_RGB2Lab);
         List<Mat> labChannels = new ArrayList<Mat>();
@@ -215,6 +214,9 @@ public class RedJewelDetector extends Detector {
             if (approx.elemSize() > 7 && (int) (480 * 3.7 / (int) radius[0] / 2) < 17 * 12 && UniversalFunctions.withinTolerance((double)Imgproc.boundingRect(contour).height / Imgproc.boundingRect(contour).width ,0.8, 1.25) && Core.mean(temp2).val[0] > 60) {
                 Imgproc.circle(i2, center, (int) radius[0], new Scalar(0, 0, 255), 5);
                 Imgproc.putText(i2, "approx" + (int) (480 * 3.7 / (int) radius[0] / 2) + "inches", new Point(center.x, center.y - (int) radius[0]), 1, 2, new Scalar(255, 255, 255), 1);
+                double x = 3.7 / radius[0] / 2 * (center.x - image.width() / 2);
+                double y = 3.7 / radius[0] / 2 * (center.y - image.height() / 2);
+                double z = (int) (480 * 3.7 / (int) radius[0] / 2);
             }
         }
                 Imgproc.drawContours(i2,contours,-1,new Scalar(230,70,70),2);
