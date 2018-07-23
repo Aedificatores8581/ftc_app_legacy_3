@@ -78,10 +78,6 @@ public class BlockDetector extends Detector {
         Imgproc.cvtColor(image, invert, Imgproc.COLOR_RGBA2RGB);
         Imgproc.cvtColor(image, hsvImage, Imgproc.COLOR_RGB2HSV_FULL);
         hsvImage.copyTo(hsv);
-        Core.extractChannel(image, r, 0);
-        Core.extractChannel(image, g, 1);
-        Core.extractChannel(image, b, 2);
-
         Core.inRange(hsv, new Scalar(H_MIN, S_MIN, V_MIN), new Scalar(H_MAX, S_MAX, V_MAX), thresh);
         Core.inRange(invert, new Scalar(R_MIN, G_MIN, B_MIN), new Scalar(R_MAX, G_MAX, B_MAX), threshold2);
         Core.bitwise_and(thresh, threshold2, threshold);

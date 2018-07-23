@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Vision;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
@@ -43,7 +44,7 @@ public class GenericDetector extends Detector {
     Mat rgbR = new Mat();
     Mat rgbG = new Mat();
     Mat rgbB = new Mat();
-
+    Mat mask = new Mat();
     Mat labL = new Mat();
     Mat labA = new Mat();
     Mat labB = new Mat();
@@ -98,86 +99,113 @@ public class GenericDetector extends Detector {
             yuvY.release();
             yuvU.release();
             yuvV.release();
+            mask.release();
         }
         public Mat result(){
             return workingImage;
         }
         public void tune(Mat image) {
-            rgbR.release();
-            rgbR = new Mat();
-            rgbG = new Mat();
-            rgbB = new Mat();
 
-            labL = new Mat();
-            labA = new Mat();
-            labB = new Mat();
+            rgbR = new Mat(image.size(), 0);
+            rgbG = new Mat(image.size(), 0);
+            rgbB = new Mat(image.size(), 0);
 
-            hsvH = new Mat();
-            hsvS = new Mat();
-            hsvV = new Mat();
+            labL = new Mat(image.size(), 0);
+            labA = new Mat(image.size(), 0);
+            labB = new Mat(image.size(), 0);
 
-            yuvY = new Mat();
-            yuvU = new Mat();
-            yuvV = new Mat();
+            hsvH = new Mat(image.size(), 0);
+            hsvS = new Mat(image.size(), 0);
+            hsvV = new Mat(image.size(), 0);
+
+            yuvY = new Mat(image.size(), 0);
+            yuvU = new Mat(image.size(), 0);
+            yuvV = new Mat(image.size(), 0);
 
             labImage = new Mat();
-            hsvImage = new Mat();
-            hlsImage = new Mat();
-
+            hsvImage = new Mat(image.size(), 0);
+            hlsImage = new Mat(image.size(), 0);
+            Mat gray = new Mat(image.size(), 0);
             Imgproc.cvtColor(image, labImage, Imgproc.COLOR_RGB2Lab);
-            List<Mat> channels = new ArrayList<Mat>();
-            Core.split(labImage, channels);
-            Imgproc.threshold(channels.get(0), labL, L_MIN, L_MAX, Imgproc.THRESH_BINARY);
-            Imgproc.threshold(channels.get(1), labA, a_MIN, a_MAX, Imgproc.THRESH_BINARY);
-            Imgproc.threshold(channels.get(2), labB, b_MIN, b_MAX, Imgproc.THRESH_BINARY);
-            temp = new Mat();
-            Core.bitwise_and(labL, labA, temp);
-            Core.bitwise_and(temp, labB, i);
-
-            channels = new ArrayList<Mat>();
-            Core.split(image, channels);
-            Imgproc.threshold(channels.get(0), rgbR, R_MIN, B_MAX, Imgproc.THRESH_BINARY);
-            Imgproc.threshold(channels.get(1), rgbG, G_MIN, G_MAX, Imgproc.THRESH_BINARY);
-            Imgproc.threshold(channels.get(2), rgbB, B_MIN, R_MAX, Imgproc.THRESH_BINARY);
-            temp = new Mat();
-            Core.bitwise_and(rgbR, rgbG, temp);
-            temp2 = new Mat();
-            Core.bitwise_and(temp, rgbB, temp2);
-            i2 = new Mat();
-            Core.bitwise_and(temp2, i, i2);
-
             Imgproc.cvtColor(image, hsvImage, Imgproc.COLOR_RGB2HSV_FULL);
-            channels = new ArrayList<Mat>();
-            Core.split(image, channels);
-            Imgproc.threshold(channels.get(0), hsvH, H_MIN, H_MAX, Imgproc.THRESH_BINARY);
-            Imgproc.threshold(channels.get(1), hsvS, S_MIN, S_MAX, Imgproc.THRESH_BINARY);
-            Imgproc.threshold(channels.get(2), hsvV, V_MIN, V_MAX, Imgproc.THRESH_BINARY);
+            Imgproc.cvtColor(image, hlsImage, Imgproc.COLOR_RGB2HLS_FULL);
+            Imgproc.cvtColor(image, image, Imgproc.COLOR_RGBA2RGB);
+            Imgproc.cvtColor(image, gray, Imgproc.COLOR_RGB2GRAY);
             temp = new Mat();
-            Core.bitwise_and(hsvH, hsvS, temp);
-            temp2 = new Mat();
-            Core.bitwise_and(temp, hsvV, temp2);
-            Core.bitwise_and(temp2, i2, i);
+            Core.inRange(image, new Scalar(R_MIN, G_MIN, B_MIN), new Scalar(R_MAX, G_MAX, B_MAX), temp);
+            mask = new Mat(image.size(), 0);
+            temp.copyTo(mask);
+            i = new Mat(image.size(), 0);
+            //image.copyTo(i, mask);
+            workingImage.release();
+            workingImage = new Mat();
+            //image.copyTo(workingImage, mask);
+
+            temp = new Mat();
+            Core.inRange(hsvImage, new Scalar(h_MIN, s_MIN, l_MIN), new Scalar(h_MAX, s_MAX, l_MAX), temp);
+            //mask = new Mat(image.size(), 0);
+            //temp.copyTo(mask);
+            //Core.add(mask, temp, mask);
+            i = new Mat(image.size(), 0);
+            //image.copyTo(i, mask);
+            //i.copyTo(image, mask);
+            workingImage.release();
+            workingImage = new Mat();
+            image.copyTo(workingImage, mask);
+
+            workingImage.copyTo(i, temp);
+
             i.copyTo(workingImage);
 
-            Imgproc.cvtColor(image, hlsImage, Imgproc.COLOR_RGB2HLS);
-            channels = new ArrayList<Mat>();
-            Core.split(image, channels);
-            hlsH = new Mat();
-            hlsL = new Mat();
-            hlsS = new Mat();
-            Imgproc.threshold(channels.get(0), hlsH, h_MIN, h_MAX, Imgproc.THRESH_BINARY);
-            Imgproc.threshold(channels.get(1), hlsL, l_MIN, l_MAX, Imgproc.THRESH_BINARY);
-            Imgproc.threshold(channels.get(2), hlsS, s_MIN, s_MAX, Imgproc.THRESH_BINARY);
             temp = new Mat();
-            Core.bitwise_and(hlsH, hlsL, temp);
-            temp2 = new Mat();
-            Core.bitwise_and(temp, hlsS, temp2);
-            Core.bitwise_and(temp2, i, i2);
-            i2.copyTo(workingImage);
+            Core.inRange(labImage, new Scalar(L_MIN, a_MIN, b_MIN), new Scalar(L_MAX, a_MAX, b_MAX), temp);
+            //mask = new Mat(image.size(), 0);
+            //temp.copyTo(mask);
+            //Core.add(mask, temp, mask);
+            i = new Mat(image.size(), 0);
+            //image.copyTo(i, mask);
+            //i.copyTo(image, mask);
+            workingImage.copyTo(i, temp);
+
+            i.copyTo(workingImage);
+
+
+/*
+
+            temp = new Mat();
+            Core.inRange(labImage, new Scalar(L_MIN, a_MIN, b_MIN), new Scalar(L_MAX, a_MAX, b_MAX), temp);
+            //mask = new Mat(image.size(), 0);
+            //temp.copyTo(mask);
+            //Core.add(mask, temp, mask);
+            i = new Mat(image.size(), 0);
+            //image.copyTo(i, mask);
+            //i.copyTo(image, mask);
+
+            workingImage.copyTo(i, temp);
+
+            i.copyTo(workingImage, temp);
+
+            temp = new Mat();
+            Core.inRange(hlsImage, new Scalar(h_MIN, l_MIN, s_MIN), new Scalar(h_MAX, l_MAX, s_MAX), temp);
+            //mask = new Mat(image.size(), 0);
+            //temp.copyTo(mask);
+            //Core.add(mask, temp, mask);
+            i = new Mat(image.size(), 0);
+            //image.copyTo(i, mask);
+            //i.copyTo(image, mask);
+
+            workingImage.copyTo(i, temp);
+
+            i.copyTo(workingImage, temp);*/
+
+            Imgproc.cvtColor(workingImage, gray, Imgproc.COLOR_RGB2GRAY);
+            List<MatOfPoint> contours = new ArrayList<>();
+            Imgproc.GaussianBlur(gray, gray, new Size(9, 9), 2, 2);
+            Imgproc.findContours(gray ,contours,new Mat(),Imgproc.RETR_TREE,Imgproc.CHAIN_APPROX_SIMPLE);
+
+            Imgproc.drawContours(workingImage,contours,-1,new Scalar(230,70,70),2);
+            gray.release();
             releaseMats();
-
-
-
         }
 
 }

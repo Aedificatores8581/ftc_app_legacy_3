@@ -226,4 +226,28 @@ public abstract class TankDT extends Drivetrain {
     public abstract double averageLeftEncoders();
 
     public abstract double averageRightEncoders();
+/*
+    public Pose updateLocation(double xVal, double yVal, double yDistance){
+        double angle = yVal / yDistance;
+        double x_val
+
+
+
+        leftEncVal = drivetrain.averageLeftEncoders() - leftEncVal;
+        rightEncVal = drivetrain.averageRightEncoders() - rightEncVal;
+        if(rightEncVal == leftEncVal)
+            turnVector.setFromPolar(rightEncVal, 0);
+        else {
+            radius = drivetrain.ENC_PER_INCH * drivetrain.DISTANCE_BETWEEN_WHEELS / 2 * (leftEncVal + rightEncVal) / (rightEncVal - leftEncVal);
+            angle = (rightEncVal - leftEncVal) / (drivetrain.DISTANCE_BETWEEN_WHEELS * drivetrain.ENC_PER_INCH);
+            radius = Math.abs(radius);
+            turnVector.setFromPolar(radius, angle);
+            turnVector.setFromPolar(radius - turnVector.x, angle);
+            if(Math.min(leftEncVal, rightEncVal) == -UniversalFunctions.maxAbs(leftEncVal, rightEncVal))
+                turnVector.x *= -1;
+        }
+        turnVector.rotate(totalAngle);
+        drivetrain.position.add(turnVector);
+        totalAngle += angle;
+    }*/
 }
