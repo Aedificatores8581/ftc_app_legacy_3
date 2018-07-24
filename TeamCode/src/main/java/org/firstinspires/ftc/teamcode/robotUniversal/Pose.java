@@ -18,6 +18,11 @@ public class Pose {
         x += v.x;
         y += v.y;
     }
+    public void add(Pose p){
+        x += p.x;
+        y += p.y;
+        angle += p.angle;
+    }
     public double radius(){
         return Math.hypot(x, y);
     }
