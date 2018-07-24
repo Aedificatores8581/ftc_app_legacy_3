@@ -168,7 +168,7 @@ public abstract class TankDT extends Drivetrain {
                 directionMult = -1;
                 break;
         }
-        double max = UniversalFunctions.maxAbs(l, r);
+        double max = directionMult * UniversalFunctions.maxAbs(l, r);
         setRightPow(r / max);
         setLeftPow(l / max);
     }
