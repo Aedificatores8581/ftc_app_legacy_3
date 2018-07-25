@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Components.Sensors.MotorEncoder;
+import org.firstinspires.ftc.teamcode.robotUniversal.Pose;
+import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
+import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 
 /**
  * Created by Frank Portman on 5/21/2018
@@ -65,5 +68,16 @@ public class WestCoast15 extends TankDT {
     }
     public double averageRightEncoders(){
         return (rfEncoder.currentPosition + rrEncoder.currentPosition) / 2;
+    }
+    public Pose updateLocation(Pose y, Pose x, double xVal, double yVal){
+        //xVal *= -1;
+        double angle = xVal / x.radius() / Math.cos(Math.PI / 2 - x.angleOfVector());
+        yVal += angle * y.radius() * Math.sin(Math.PI / 2 - y.angleOfVector());
+        Vector2 velocity = new Vector2();
+        double radius = yVal / angle;
+        velocity.setFromPolar(radius, angle);
+        velocity.x -= radius;
+        position.add(velocity);
+        return position;
     }
 }

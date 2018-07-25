@@ -154,6 +154,28 @@ public abstract class TankDT extends Drivetrain {
         }
     }
 
+    //x and y must be in inches
+    public synchronized void driveToPointCircular(double x, double y, Direction dir){
+        double radius = (x*x + y*y)/(2 * x);
+        double xOffset = Math.signum(radius) * Math.abs(radius);
+        radius = Math.abs(radius);
+        double angle = Math.atan2(y, x - xOffset);
+        double r = angle * (DISTANCE_BETWEEN_WHEELS + 2 * radius);
+        double l = angle * (DISTANCE_BETWEEN_WHEELS - 2 * radius);
+        directionMult = 1;
+        switch(dir){
+            case BACK:
+                directionMult = -1;
+                break;
+        }
+        double max = directionMult * UniversalFunctions.maxAbs(l, r);
+        setRightPow(r / max);
+        setLeftPow(l / max);
+    }
+    public synchronized void driveToPointCircular(double x, double y, Direction dir, double maxSpeed){
+        this.maxSpeed = maxSpeed;
+        
+    }
     public synchronized void updateLocation(double leftChange, double rightChange){
         double angle = 0;
         if(rightChange == leftChange)
