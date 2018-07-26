@@ -37,7 +37,7 @@ public class DigitalCamera {
         cameraSensor = new CameraSensor(width, height);
     }
     //TODO: Fix variable names
-    public Point getObjectLocation(Point pointOnImage, Size imageSize, double widthRatio, double heightRatio){
+    public Point getObjectLocation(Point pointOnImage, Size imageSize, double widthRatio, double heightRatio, double objectHeight){
         pointOnImage.x -= imageSize.width / 2;
         pointOnImage.y -= imageSize.height / 2;
         Vector2 temp = new Vector2(pointOnImage.x, pointOnImage.y);
@@ -47,8 +47,8 @@ public class DigitalCamera {
         double phi = Math.PI / 4 - horizontalAngleOfView(widthRatio) * (pointOnImage.x / imageSize.width - 0.5) + zAng;
         double theta = Math.PI / 4 - verticalAngleOfView(heightRatio) * (pointOnImage.y / imageSize.height - 0.5) - xAng;
         Point3 newPoint = new Point3(UniversalFunctions.sphericalToCartesian(1, theta, phi));
-        double newX = newPoint.x * z / -newPoint.z + x;
-        double newY = newPoint.y * z / -newPoint.z + y;
+        double newX = newPoint.x * (z - objectHeight) / -newPoint.z + x;
+        double newY = newPoint.y * (z - objectHeight) / -newPoint.z + y;
         return new Point(newX, newY);
     }
     public double horizontalAngleOfView(double widthRatio){
