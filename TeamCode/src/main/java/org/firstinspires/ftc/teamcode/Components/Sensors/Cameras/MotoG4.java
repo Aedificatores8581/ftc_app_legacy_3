@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.Components.Sensors.Cameras;
 
 import org.firstinspires.ftc.teamcode.Components.Sensors.DigitalCamera;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
+
 import java.lang.Math;
 public class MotoG4{
     //TODO: Fix the non-static import error when using the math class to define the focal length of the front camera in a way which makes sense

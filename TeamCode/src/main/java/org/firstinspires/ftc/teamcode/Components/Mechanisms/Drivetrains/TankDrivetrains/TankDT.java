@@ -4,10 +4,10 @@ import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetra
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-import org.firstinspires.ftc.teamcode.robotUniversal.Pose;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
-import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
+import org.firstinspires.ftc.teamcode.Universal.Pose;
+import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
+import org.firstinspires.ftc.teamcode.Universal.Vector2;
 
 /**
  * Created by Frank Portman on 5/21/2018

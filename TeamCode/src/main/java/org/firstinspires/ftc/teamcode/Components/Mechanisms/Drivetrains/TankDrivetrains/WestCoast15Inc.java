@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.IncrementalMotor;
-import org.firstinspires.ftc.teamcode.robotUniversal.Threads.IncrementalMotorThread;
+import org.firstinspires.ftc.teamcode.Universal.Threads.IncrementalMotorThread;
 
 /**
  * Created by Frank Portman on 6/13/2018

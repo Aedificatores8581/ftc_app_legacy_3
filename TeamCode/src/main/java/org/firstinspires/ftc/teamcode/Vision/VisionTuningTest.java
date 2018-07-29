@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.teamcode.Vision.Detectors.GenericDetector;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
+import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 
 import ftc.vision.Detector;
 

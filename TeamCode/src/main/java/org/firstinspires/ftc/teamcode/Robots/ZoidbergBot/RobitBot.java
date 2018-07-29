@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
 import org.firstinspires.ftc.teamcode.Robots.Robot;
-import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
+import org.firstinspires.ftc.teamcode.Universal.Vector2;
 
 /**
  * Writ by Theodore Lovinski on 06/24/2018.

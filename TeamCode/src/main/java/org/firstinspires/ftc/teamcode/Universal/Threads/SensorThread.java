@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robotUniversal.Threads;
+package org.firstinspires.ftc.teamcode.Universal.Threads;
 /*
 * Class: Sensor Thread
 *
@@ -7,7 +7,7 @@ package org.firstinspires.ftc.teamcode.robotUniversal.Threads;
 * Author: Mister Minister Master
 */
 
-import org.firstinspires.ftc.teamcode.robotUniversal.SensorFunction;
+import org.firstinspires.ftc.teamcode.Universal.SensorFunction;
 
 public class SensorThread<T> implements Runnable {
     private boolean running           ;

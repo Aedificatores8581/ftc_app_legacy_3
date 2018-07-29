@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
-import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
+import org.firstinspires.ftc.teamcode.Universal.Vector2;
 
 
 /**

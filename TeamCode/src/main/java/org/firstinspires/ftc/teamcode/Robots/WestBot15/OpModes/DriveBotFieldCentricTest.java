@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
+import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 
 /**
  * Created by Frank Portman on 6/17/2018

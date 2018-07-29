@@ -1,10 +1,7 @@
 package org.firstinspires.ftc.teamcode.Components.Sensors;
 
-import org.firstinspires.ftc.teamcode.robotUniversal.Pose;
-import org.firstinspires.ftc.teamcode.robotUniversal.Pose3;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
-import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
-import org.firstinspires.ftc.teamcode.robotUniversal.Vector3;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
+import org.firstinspires.ftc.teamcode.Universal.Vector2;
 import org.opencv.core.Point;
 import org.opencv.core.Point3;
 import org.opencv.core.Size;

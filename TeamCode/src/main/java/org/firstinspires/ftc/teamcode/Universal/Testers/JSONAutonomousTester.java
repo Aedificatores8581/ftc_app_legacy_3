@@ -1,10 +1,9 @@
-package org.firstinspires.ftc.teamcode.robotUniversal.Testers;
+package org.firstinspires.ftc.teamcode.Universal.Testers;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import org.firstinspires.ftc.teamcode.robotUniversal.JSONAutonGetter;
-import org.firstinspires.ftc.teamcode.robotUniversal.TelemetryLogger;
+import org.firstinspires.ftc.teamcode.Universal.JSONAutonGetter;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -41,6 +40,14 @@ public class JSONAutonomousTester extends OpMode {
 
     public void loop(){
         telemetry.addData("X + Y = ", x+y);
+    }
+
+    public void stop() {
+        try {
+            jsonHandler.close();
+        } catch (IOException e) {
+            telemetry.addLine("Couldn't close buffered reader in jsonHandler: " + e.getMessage());
+        }
     }
 }
 

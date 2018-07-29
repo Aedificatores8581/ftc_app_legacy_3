@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Components.Sensors.MagneticLimitSwitch;
 import org.firstinspires.ftc.teamcode.Components.Sensors.REVColorDistanceSensor;
 import org.firstinspires.ftc.teamcode.Components.Sensors.TouchSensor;
 import org.firstinspires.ftc.teamcode.Robots.SensorBot.SensorBot;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
+import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
 
 /**
  *
