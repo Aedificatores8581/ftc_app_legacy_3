@@ -26,7 +26,7 @@ public class TelemetryLoggerThread extends Thread {
         telemetryValues = new ArrayList<>();
         exceptionMessage = new ExceptionMessage();
 
-        logger.writeToLogInCSV(labels);
+        logger.writeToLogInCSV((Object[]) labels);
         running = true;
     }
 

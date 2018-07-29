@@ -19,8 +19,7 @@ import java.io.IOException;
 *       value)
 * */
 public class JSONAutonGetter {
-    private static final String BASE_DIR = Environment.getExternalStorageDirectory().getPath()
-            + "FIRST/JSON";
+    private static final String BASE_DIR = Environment.getExternalStorageDirectory().getPath() + "/FIRST/JSON/";
 
     private BufferedReader br;
     private String jsonBuffer;
@@ -28,6 +27,7 @@ public class JSONAutonGetter {
 
     public JSONAutonGetter(String path) throws IOException, JSONException {
         File f = new File(BASE_DIR + path);
+        jsonBuffer = "";
 
         if(!f.exists())
             f.createNewFile();
@@ -45,7 +45,4 @@ public class JSONAutonGetter {
     public void close() throws IOException {
         br.close();
     }
-
-
-
 }

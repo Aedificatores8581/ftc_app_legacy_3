@@ -25,6 +25,7 @@ public class JSONAutonomousTester extends OpMode {
             telemetry.addLine("Couldn't init JSON file handler: " + e.getMessage());
         }
 
+        telemetry.addLine("yo");
         try {
             x = jsonHandler.jsonObject.getInt("x");
         } catch (JSONException e) {
