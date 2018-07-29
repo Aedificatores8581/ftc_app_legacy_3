@@ -31,7 +31,7 @@ public class JSONAutonomousTester extends OpMode {
         } catch (JSONException e) {
             telemetry.addLine("Couldn't access 'x': " + e.getMessage());
         }
-        
+
         try {
             y = jsonHandler.jsonObject.getInt("y");
         } catch (JSONException e) {
