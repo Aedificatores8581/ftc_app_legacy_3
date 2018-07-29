@@ -4,39 +4,66 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
+import org.firstinspires.ftc.teamcode.Vision.Detectors.GenericDetector;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
 import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
-import org.opencv.core.Core;
-import org.opencv.core.Point;
 
-import ftc.vision.BlockDetector;
 import ftc.vision.Detector;
-import ftc.vision.RedJewelDetector;
-import ftc.vision.TennisBallDetector;
 
 @Autonomous(name = "visiontuning", group = "vision")
 public class VisionTuningTest extends OpMode {
     Adjust adjust = Adjust.CAN;
-    BlockDetector tennisBallDetector;
-    DetectorRange dRange = DetectorRange.HMIN;
+    GenericDetector detector;
+    DetectorRange dRange = DetectorRange.MIN1;
+    Colorspace colorspace = Colorspace.HSV;
     boolean canSwitch = true;
     double prevTime;
-    double maxR = 0, maxG = 0, maxB = 0, minR = 255, minG = 255, minB = 255;
-    Point min = new Point();
-    Point max = new Point();
-    double rAv = 0, gAv = 0, bAv = 0;
-    double count = 1;
-
+    boolean canSwitchColorSpace = true;
+    String detecting = "hsv H min";
     public void init(){
-        tennisBallDetector = new BlockDetector();
-        tennisBallDetector.opState = Detector.OperatingState.TUNING;
-        FtcRobotControllerActivity.frameGrabber.detector = tennisBallDetector;
+        detector = new GenericDetector();
+        detector.opState = Detector.OperatingState.TUNING;
+        FtcRobotControllerActivity.frameGrabber.detector = detector;
         prevTime = System.currentTimeMillis();
 
     }
-    
-    @Override
-    public void init_loop(){
+
+    public void loop(){
+        switch(colorspace){
+            case HSV:
+                if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchColorSpace){
+                    canSwitchColorSpace = false;
+                    colorspace = Colorspace.RGB;
+                }
+                else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER)
+                    canSwitchColorSpace = true;
+                break;
+            case RGB:
+                if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchColorSpace){
+                    canSwitchColorSpace = false;
+                    colorspace = Colorspace.Lab;
+                }
+                else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER)
+                    canSwitchColorSpace = true;
+                break;
+            case Lab:
+                if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchColorSpace){
+                    canSwitchColorSpace = false;
+                    colorspace = Colorspace.HLS;
+                }
+                else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER)
+                    canSwitchColorSpace = true;
+                break;
+            case HLS:
+                if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchColorSpace){
+                    canSwitchColorSpace = false;
+                    colorspace = Colorspace.HSV;
+                }
+                else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER)
+                    canSwitchColorSpace = true;
+                break;
+        }
+        int addition = (int) Math.signum(gamepad1.left_stick_y);
         switch(adjust){
             case CANT:
                 if(System.currentTimeMillis() > prevTime + 125)
@@ -44,62 +71,175 @@ public class VisionTuningTest extends OpMode {
                 break;
             case CAN:
                 switch(dRange){
-                    case HMIN:
-                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK)
-                            tennisBallDetector.R_MIN -= (int)Math.signum(gamepad1.left_stick_y);
+                    case MIN1:
+                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK) {
+                            switch(colorspace){
+                                case RGB:
+                                    detector.R_MIN -= addition;
+                                    detecting = "rgb R min";
+                                    break;
+                                case HSV:
+                                    detector.H_MIN -= addition;
+                                    detecting = "hsv H min";
+                                    break;
+                                case Lab:
+                                    detector.L_MIN -= addition;
+                                    detecting = "Lab L min";
+                                    break;
+                                case HLS:
+                                    detector.h_MIN -= addition;
+                                    detecting = "hls H min";
+                                    break;
+
+                            }
+                        }
                         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch){
                             canSwitch = false;
-                            dRange = DetectorRange.HMAX;
+                            dRange = DetectorRange.MIN2;
                         }
                         else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER)
                             canSwitch = true;
                         break;
-                    case HMAX:
-                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK)
-                            tennisBallDetector.G_MIN -= (int)Math.signum(gamepad1.left_stick_y);
+                    case MIN2:
+                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK){
+                            switch(colorspace){
+                                case RGB:
+                                    detector.G_MIN -= addition;
+                                    detecting = "rgb G min";
+                                    break;
+                                case HSV:
+                                    detector.S_MIN -= addition;
+                                    detecting = "hsv S min";
+                                    break;
+                                case Lab:
+                                    detector.a_MIN -= addition;
+                                    detecting = "Lab A min";
+                                    break;
+                                case HLS:
+                                    detector.l_MIN -= addition;
+                                    detecting = "hls L min";
+                                    break;
+
+                            }
+
+                        }
                         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch){
                             canSwitch = false;
-                            dRange = DetectorRange.SMIN;
+                            dRange = DetectorRange.MIN3;
                         }
                         else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER)
                             canSwitch = true;
                         break;
-                    case SMIN:
-                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK)
-                            tennisBallDetector.B_MIN -= (int)Math.signum(gamepad1.left_stick_y);
+                    case MIN3:
+                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK){
+                            switch(colorspace){
+                                case RGB:
+                                    detector.B_MIN -= addition;
+                                    detecting = "rgb B min";
+                                    break;
+                                case HSV:
+                                    detector.V_MIN -= addition;
+                                    detecting = "hsv V min";
+                                    break;
+                                case Lab:
+                                    detector.b_MIN -= addition;
+                                    detecting = "Lab B min";
+                                    break;
+                                case HLS:
+                                    detector.s_MIN -= addition;
+                                    detecting = "hls S min";
+                                    break;
+                            }
+                        }
                         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch){
                             canSwitch = false;
-                            dRange = DetectorRange.SMAX;
+                            dRange = DetectorRange.MAX1;
                         }
                         else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER)
                             canSwitch = true;
                         break;
-                    case SMAX:
-                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK)
-                            tennisBallDetector.R_MAX -= (int)Math.signum(gamepad1.left_stick_y);
+                    case MAX1:
+                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK){
+                            switch(colorspace){
+                                case RGB:
+                                    detector.R_MAX -= addition;
+                                    detecting = "rgb R max";
+                                    break;
+                                case HSV:
+                                    detector.H_MAX -= addition;
+                                    detecting = "hsv H max";
+                                    break;
+                                case Lab:
+                                    detector.L_MAX -= addition;
+                                    detecting = "Lab L max";
+                                    break;
+                                case HLS:
+                                    detector.h_MAX -= addition;
+                                    detecting = "hls H max";
+                                    break;
+
+                            }
+
+                        }
                         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch){
                             canSwitch = false;
-                            dRange = DetectorRange.VMIN;
+                            dRange = DetectorRange.MAX2;
                         }
                         else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER)
                             canSwitch = true;
                         break;
-                    case VMIN:
-                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK)
-                            tennisBallDetector.G_MAX -= (int)Math.signum(gamepad1.left_stick_y);
+                    case MAX2:
+                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK){
+                            switch(colorspace){
+                                case RGB:
+                                    detector.G_MAX -= addition;
+                                    detecting = "rgb G max";
+                                    break;
+                                case HSV:
+                                    detector.S_MAX -= addition;
+                                    detecting = "hsv S max";
+                                    break;
+                                case Lab:
+                                    detector.a_MAX -= addition;
+                                    detecting = "Lab A max";
+                                    break;
+                                case HLS:
+                                    detector.l_MAX -= addition;
+                                    detecting = "hls L max";
+                                    break;
+                            }
+                        }
                         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch){
                             canSwitch = false;
-                            dRange = DetectorRange.VMAX;
+                            dRange = DetectorRange.MAX3;
                         }
                         else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER)
                             canSwitch = true;
                         break;
-                    case VMAX:
-                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK)
-                            tennisBallDetector.B_MAX -= (int)Math.signum(gamepad1.left_stick_y);
+                    case MAX3:
+                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK){
+                            switch(colorspace){
+                                case RGB:
+                                    detector.B_MAX -= addition;
+                                    detecting = "rgb B max";
+                                    break;
+                                case HSV:
+                                    detector.V_MAX -= addition;
+                                    detecting = "hsv V max";
+                                    break;
+                                case Lab:
+                                    detector.b_MAX -= addition;
+                                    detecting = "Lab B max";
+                                    break;
+                                case HLS:
+                                    detector.s_MAX -= addition;
+                                    detecting = "hls S max";
+                                    break;
+                            }
+                        }
                         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch){
                             canSwitch = false;
-                            dRange = DetectorRange.HMIN;
+                            dRange = DetectorRange.MIN1;
                         }
                         else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER)
                             canSwitch = true;
@@ -107,64 +247,92 @@ public class VisionTuningTest extends OpMode {
                 }
                 if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK) {
                     prevTime = System.currentTimeMillis();
-                    adjust = Adjust.CANT;
+                    adjust = adjust.CANT;
                 }
                 break;
         }
+        detector.R_MIN = (int)UniversalFunctions.clamp(0, detector.R_MIN, 254);
+        detector.G_MIN = (int)UniversalFunctions.clamp(0, detector.G_MIN, 254);
+        detector.B_MIN = (int)UniversalFunctions.clamp(0, detector.B_MIN, 254);
+        detector.R_MAX = (int)UniversalFunctions.clamp(1, detector.R_MAX, 255);
+        detector.G_MAX = (int)UniversalFunctions.clamp(1, detector.G_MAX, 255);
+        detector.B_MAX = (int)UniversalFunctions.clamp(1, detector.B_MAX, 255);
 
-        tennisBallDetector.R_MIN = (int)UniversalFunctions.clamp(0, tennisBallDetector.R_MIN, 254);
-        tennisBallDetector.G_MIN = (int)UniversalFunctions.clamp(0, tennisBallDetector.G_MIN, 254);
-        tennisBallDetector.B_MIN = (int)UniversalFunctions.clamp(0, tennisBallDetector.B_MIN, 254);
-        tennisBallDetector.R_MAX = (int)UniversalFunctions.clamp(1, tennisBallDetector.R_MAX, 255);
-        tennisBallDetector.G_MAX = (int)UniversalFunctions.clamp(1, tennisBallDetector.G_MAX, 255);
-        tennisBallDetector.B_MAX = (int)UniversalFunctions.clamp(1, tennisBallDetector.B_MAX, 255);
-        telemetry.addData("R Min", tennisBallDetector.R_MIN);
-        telemetry.addData("G Min", tennisBallDetector.G_MIN);
-        telemetry.addData("B Min", tennisBallDetector.B_MIN);
-        telemetry.addData("R Max", tennisBallDetector.R_MAX);
-        telemetry.addData("G Max", tennisBallDetector.G_MAX);
-        telemetry.addData("B Max", tennisBallDetector.B_MAX);
-        telemetry.addData("Detecting", dRange);
-        maxR = Math.max(Core.minMaxLoc(tennisBallDetector.r).maxVal, maxR);
-        maxG = Math.max(Core.minMaxLoc(tennisBallDetector.g).maxVal, maxG);
-        maxB = Math.max(Core.minMaxLoc(tennisBallDetector.b).maxVal, maxB);
-        minR = Math.min(Core.minMaxLoc(tennisBallDetector.r).minVal, minR);
-        minG = Math.min(Core.minMaxLoc(tennisBallDetector.g).minVal, minG);
-        minB = Math.min(Core.minMaxLoc(tennisBallDetector.b).minVal, minB);
-        telemetry.addData("rmax", maxR);
-        telemetry.addData("gmax", maxG);
-        telemetry.addData("bmax", maxB);
-        telemetry.addData("rmin", minR);
-        telemetry.addData("gmin", minG);
-        telemetry.addData("bmin", minB);
-        rAv = rAv + Core.minMaxLoc(tennisBallDetector.r).maxVal;
-        gAv = gAv + Core.minMaxLoc(tennisBallDetector.g).maxVal;
-        bAv = bAv + Core.minMaxLoc(tennisBallDetector.b).maxVal;
-        count ++;
-        telemetry.addData("rav", rAv / count);
-        telemetry.addData("gav", gAv / count);
-        telemetry.addData("bav", bAv / count);
-        //237 196 166
+        detector.H_MIN = (int)UniversalFunctions.clamp(0, detector.H_MIN, 254);
+        detector.S_MIN = (int)UniversalFunctions.clamp(0, detector.S_MIN, 254);
+        detector.V_MIN = (int)UniversalFunctions.clamp(0, detector.V_MIN, 254);
+        detector.H_MAX = (int)UniversalFunctions.clamp(1, detector.H_MAX, 255);
+        detector.S_MAX = (int)UniversalFunctions.clamp(1, detector.S_MAX, 255);
+        detector.V_MAX = (int)UniversalFunctions.clamp(1, detector.V_MAX, 255);
 
-        //255, 225, 176
+        detector.L_MIN = (int)UniversalFunctions.clamp(0, detector.L_MIN, 254);
+        detector.a_MIN = (int)UniversalFunctions.clamp(0, detector.a_MIN, 254);
+        detector.b_MIN = (int)UniversalFunctions.clamp(0, detector.b_MIN, 254);
+        detector.L_MAX = (int)UniversalFunctions.clamp(1, detector.L_MAX, 255);
+        detector.a_MAX = (int)UniversalFunctions.clamp(1, detector.a_MAX, 255);
+        detector.b_MAX = (int)UniversalFunctions.clamp(1, detector.b_MAX, 255);
+
+        detector.h_MIN = (int)UniversalFunctions.clamp(0, detector.h_MIN, 254);
+        detector.s_MIN = (int)UniversalFunctions.clamp(0, detector.s_MIN, 254);
+        detector.l_MIN = (int)UniversalFunctions.clamp(0, detector.l_MIN, 254);
+        detector.h_MAX = (int)UniversalFunctions.clamp(1, detector.h_MAX, 255);
+        detector.s_MAX = (int)UniversalFunctions.clamp(1, detector.s_MAX, 255);
+        detector.l_MAX = (int)UniversalFunctions.clamp(1, detector.l_MAX, 255);
+
+        telemetry.addData(detecting, adjust);
+
+        telemetry.addData("h Min", detector.h_MIN);
+        telemetry.addData("l Min", detector.l_MIN);
+        telemetry.addData("s Min", detector.s_MIN);
+        telemetry.addData("h Max", detector.h_MAX);
+        telemetry.addData("l Max", detector.l_MAX);
+        telemetry.addData("s Max", detector.s_MAX);
+
+        telemetry.addData("l Min", detector.L_MIN);
+        telemetry.addData("a Min", detector.a_MIN);
+        telemetry.addData("b Min", detector.b_MIN);
+        telemetry.addData("l Max", detector.L_MAX);
+        telemetry.addData("a Max", detector.a_MAX);
+        telemetry.addData("b Max", detector.b_MAX);
+
+
+        telemetry.addData("r Min", detector.R_MIN);
+        telemetry.addData("g Min", detector.G_MIN);
+        telemetry.addData("b Min", detector.B_MIN);
+        telemetry.addData("r Max", detector.R_MAX);
+        telemetry.addData("g Max", detector.G_MAX);
+        telemetry.addData("b Max", detector.B_MAX);
+
+
+        telemetry.addData("h Min", detector.H_MIN);
+        telemetry.addData("s Min", detector.S_MIN);
+        telemetry.addData("v Min", detector.V_MIN);
+        telemetry.addData("h Max", detector.H_MAX);
+        telemetry.addData("s Max", detector.S_MAX);
+        telemetry.addData("v Max", detector.V_MAX);
     }
 
-    public void loop(){ }
-    @Override
     public void stop(){
         super.stop();
-        tennisBallDetector.isInitialized = false;
+        detector.isInitialized = false;
     }
     public enum DetectorRange{
-        HMIN,
-        HMAX,
-        SMIN,
-        SMAX,
-        VMIN,
-        VMAX;
+        MIN1,
+        MAX1,
+        MIN2,
+        MAX2,
+        MIN3,
+        MAX3;
     }
     public enum Adjust{
         CAN,
         CANT
     }
+    public enum Colorspace{
+        RGB,
+        HSV,
+        Lab,
+        HLS
+    }
+
 }

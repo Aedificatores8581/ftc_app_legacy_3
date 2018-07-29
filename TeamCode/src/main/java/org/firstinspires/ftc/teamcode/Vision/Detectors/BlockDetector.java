@@ -1,16 +1,12 @@
-package ftc.vision;
+package org.firstinspires.ftc.teamcode.Vision.Detectors;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.MatOfPoint2f;
-import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
-import java.util.ArrayList;
-import java.util.List;
+import ftc.vision.Detector;
 
 public class BlockDetector extends Detector {
     /*public int H_MIN = 21,
@@ -93,16 +89,17 @@ public class BlockDetector extends Detector {
         Imgproc.cvtColor(image, invert, Imgproc.COLOR_RGBA2RGB);
         Imgproc.cvtColor(image, hsvImage, Imgproc.COLOR_RGB2HSV_FULL);
         hsvImage.copyTo(hsv);
-        Core.extractChannel(image, r, 0);
-        Core.extractChannel(image, g, 1);
-        Core.extractChannel(image, b, 2);
-
         Core.inRange(hsv, new Scalar(H_MIN, S_MIN, V_MIN), new Scalar(H_MAX, S_MAX, V_MAX), thresh);
         Core.inRange(invert, new Scalar(R_MIN, G_MIN, B_MIN), new Scalar(R_MAX, G_MAX, B_MAX), threshold2);
         Core.bitwise_and(thresh, threshold2, threshold);
+
+        Mat erosionFactor = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3, 3));
+        Imgproc.erode(threshold, threshold, erosionFactor);
+        Imgproc.dilate(threshold, threshold, erosionFactor);
         Mat mask = new Mat(image.size(), 0);
         threshold.copyTo(mask);
         image.copyTo(i, mask);
+
         //Mat dilationFactor = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(1, 1));
         //Imgproc.dilate(thresh, thresh, dilationFactor);
         //Imgproc.GaussianBlur(i, i, new Size(9, 9), 2, 2);
