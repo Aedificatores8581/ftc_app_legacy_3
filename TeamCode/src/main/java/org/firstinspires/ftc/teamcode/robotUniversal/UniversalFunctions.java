@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Created by Frank Portman on 4/1/2018.
  */
-public abstract class UniversalFunctions {
+public class UniversalFunctions {
     //Caps the test value at min and max
     public static double clamp(double min, double test, double max) {
         if (max < min) {
@@ -126,5 +126,21 @@ public abstract class UniversalFunctions {
 
     public static double getTimeInSeconds(){
         return System.nanoTime() / Math.pow(10, 9);
+    }
+    //Rho represents the xy angle, theta represents the zy angle
+    public static double[] sphericalToCartesian(double rad, double theta, double rho) {
+        double  x = rad * Math.sin(theta) * Math.cos(rho),
+                y = rad * Math.sin(theta) * Math.sin(rho),
+                z = rad * Math.cos(theta);
+        double[] cartesian = {x, y, z};
+        return cartesian;
+    }
+
+    public static double[] cartesianToSpherical(double x, double y, double z){
+        double  radius = Math.sqrt(x * x + y * y + z * z),
+                theta  = Math.atan2(Math.hypot(x, y), z),
+                rho    = Math.atan2(y, x);
+        double[] spherical = {radius, theta, rho};
+        return spherical;
     }
 }

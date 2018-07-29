@@ -3,10 +3,10 @@ package ftc.vision;
 import android.view.SurfaceView;
 
 import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.core.Core;
+import org.opencv.android.JavaCameraView;
 import org.opencv.core.Mat;
 
-public class Frame implements CameraBridgeViewBase.CvCameraViewListener2  {
+public class Frame implements JavaCameraView.CvCameraViewListener2  {
     public Detector detector = null;
     public boolean detectorInitialized = false;
     private boolean resultReady = false;
