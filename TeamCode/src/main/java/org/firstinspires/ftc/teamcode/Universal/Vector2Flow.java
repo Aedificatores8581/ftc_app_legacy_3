@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Universal;
 public class Vector2Flow {
     public Pose location;
     public double strength;
+    //I plan to use this class for object avoidance and score-based pathfinding algorithms
     public Vector2Flow(){
         location = new Pose(0,0,0);
     }
