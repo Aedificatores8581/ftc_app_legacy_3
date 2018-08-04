@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode.Universal;
 
-public class Vector2Flow {
+public class AttractionField {
     public Pose location;
     public double strength;
     //I plan to use this class for object avoidance and score-based pathfinding algorithms
-    public Vector2Flow(){
+    public AttractionField(){
         location = new Pose(0,0,0);
+        strength = 1;
     }
-    public Vector2Flow(Pose pose, double strength){
+    public AttractionField(Pose pose, double strength){
         location = new Pose(pose.x, pose.y, pose.angle);
         this.strength = strength;
         if(Math.signum(strength) == -1){
@@ -15,7 +16,7 @@ public class Vector2Flow {
             location.angle = UniversalFunctions.normalizeAngleRadians(Math.PI + location.angle);
         }
     }
-    public Vector2Flow(Pose pose){
+    public AttractionField(Pose pose){
         location = new Pose(pose.x, pose.y, pose.angle);
         strength = 1;
     }
