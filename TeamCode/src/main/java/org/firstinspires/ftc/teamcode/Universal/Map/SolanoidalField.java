@@ -1,5 +1,8 @@
-package org.firstinspires.ftc.teamcode.Universal;
+package org.firstinspires.ftc.teamcode.Universal.Map;
 
+
+import org.firstinspires.ftc.teamcode.Universal.Math.Pose;
+import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 
 public class SolanoidalField extends AttractionField{
     public SolanoidalField(){

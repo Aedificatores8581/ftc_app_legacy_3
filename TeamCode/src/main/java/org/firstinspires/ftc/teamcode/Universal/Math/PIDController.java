@@ -1,4 +1,6 @@
-package org.firstinspires.ftc.teamcode.Universal;
+package org.firstinspires.ftc.teamcode.Universal.Math;
+
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 
 /**
  * Created by Frank Portman on 6/2/2018

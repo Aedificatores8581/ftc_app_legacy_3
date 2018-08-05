@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
-import org.firstinspires.ftc.teamcode.Universal.Vector2;
+import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 
 
 /**

@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetra
 /**
  * Created by Frank Portman on 5/29/2018
  */
-import org.firstinspires.ftc.teamcode.Universal.Vector2;
+import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 
 public abstract class HolonomicDT extends Drivetrain {
     public double    turnPow  ,

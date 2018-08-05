@@ -1,4 +1,8 @@
-package org.firstinspires.ftc.teamcode.Universal;
+package org.firstinspires.ftc.teamcode.Universal.Map;
+
+import org.firstinspires.ftc.teamcode.Universal.Math.Pose;
+import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 
 public class AttractionField {
     public Pose location;
@@ -26,7 +30,7 @@ public class AttractionField {
         temp.rotate(location.angle);
         return temp;
     }
-    public Vector2 interact(Vector2 object){
+    protected Vector2 interact(Vector2 object){
         return interact(new Pose(object.x, object.y, 0));
     }
     public double getStrength(double distance){
