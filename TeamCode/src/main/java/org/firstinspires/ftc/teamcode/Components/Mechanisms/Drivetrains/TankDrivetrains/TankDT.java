@@ -257,7 +257,7 @@ public abstract class TankDT extends Drivetrain {
         driveToPoint(destination.x, destination.y, dir);
     }
     public void driveToPose2(Pose destination, Direction dir){
-        double theta = Math.atan2(-destination.y, -destination.x) - Math.signum(destination.angleOfVector()) * Math.PI / 4;
+        double theta = Math.atan2(-destination.y, -destination.x) - Math.signum(Math.cos(destination.angleOfVector())) * Math.PI / 2;
         Vector2 temp = new Vector2();
         temp.setFromPolar(1, theta);
         driveToPoint(destination.x, destination.y, dir);
