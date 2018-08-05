@@ -10,11 +10,9 @@ public class AttractionField {
     }
     public AttractionField(Pose pose, double strength){
         location = new Pose(pose.x, pose.y, pose.angle);
-        this.strength = strength;
-        if(Math.signum(strength) == -1){
-            strength = Math.abs(strength);
+        this.strength = Math.abs(strength);
+        if(Math.signum(strength) == -1)
             location.angle = UniversalFunctions.normalizeAngleRadians(Math.PI + location.angle);
-        }
     }
     public AttractionField(Pose pose){
         location = new Pose(pose.x, pose.y, pose.angle);
@@ -27,6 +25,9 @@ public class AttractionField {
         temp.setFromPolar(getStrength(object.radius()), object.angleOfVector());
         temp.rotate(location.angle);
         return temp;
+    }
+    public Vector2 interact(Vector2 object){
+        return interact(new Pose(object.x, object.y, 0));
     }
     public double getStrength(double distance){
         return strength / distance;
