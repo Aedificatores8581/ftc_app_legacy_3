@@ -19,11 +19,10 @@ public class SolanoidalField extends AttractionField{
         Vector2 temp = new Vector2(object.x, object.y);
         temp.x -= location.x;
         temp.y -= location.y;
-        temp.rotate(location.angle + Math.PI / 2);
+        temp.rotate(location.angle - Math.PI / 2);
         double radius = (temp.y * temp.y - temp.x * temp.x) / (2 * temp.x);
-        double h = -radius;
         double theta = Math.signum(Math.cos(temp.angle())) * Math.PI / 2;
-        AttractionField attractionField = new AttractionField(new Pose(h, 0, theta), strength);
+        AttractionField attractionField = new AttractionField(new Pose(-radius, 0, theta), strength);
         temp = attractionField.interact(temp);
         temp.rotate(Math.PI / 2 - location.angle);
         return temp;
