@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.Robots.ZoidbergBot;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
+import org.firstinspires.ftc.teamcode.Components.Sensors.REVColorDistanceSensor;
 import org.firstinspires.ftc.teamcode.Robots.Robot;
 import org.firstinspires.ftc.teamcode.Universal.Vector2;
 
@@ -12,6 +15,9 @@ import org.firstinspires.ftc.teamcode.Universal.Vector2;
  */
 
 public abstract class RobitBot extends Robot {
+
+    public ColorSensor colorSensor;
+    public Servo arm;
 
     public TankDT drivetrain = new TankDT() {
         public void initMotors(HardwareMap map) {
@@ -77,5 +83,13 @@ public abstract class RobitBot extends Robot {
     public void start() {super.start();}
 
     @Override
-    public void init() {super.init();}
+    public void init() {
+        super.init();
+        drivetrain.initMotors(hardwareMap);
+
+
+        colorSensor = hardwareMap.colorSensor.get("cs");
+        arm = hardwareMap.get(Servo.class, "servo_arm");
+
+    }
 }
