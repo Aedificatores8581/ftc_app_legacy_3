@@ -7,7 +7,7 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.Universal.GyroAngles;
+import org.firstinspires.ftc.teamcode.Universal.Math.GyroAngles;
 
 import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
