@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Universal;
+package org.firstinspires.ftc.teamcode.Universal.Math;
 
 /**
  * Created by vzyrianov on 5/22/2018

@@ -4,10 +4,10 @@ import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetra
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-import org.firstinspires.ftc.teamcode.Universal.Pose;
+import org.firstinspires.ftc.teamcode.Universal.Math.Pose;
 import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
 import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
-import org.firstinspires.ftc.teamcode.Universal.Vector2;
+import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 
 /**
  * Created by Frank Portman on 5/21/2018
@@ -244,6 +244,30 @@ public abstract class TankDT extends Drivetrain {
         turnSpeed *= Math.sin(angleBetween);
         leftPow = -turnSpeed;
         rightPow = turnSpeed;
+    }
+    //assumes that the robot is at 0,0
+    //TODO: Implement variability in the units of length that the destination Pose uses
+    //TODO: Determine which implementation to use
+    public void driveToPose1(Pose destination, Direction dir){
+        double theta = Math.atan2(-destination.y, -destination.x) - Math.signum(destination.angleOfVector()) * Math.PI / 4;
+        Vector2 temp = new Vector2();
+        temp.setFromPolar(1 / destination.radius(), theta);
+        destination.x -= temp.x;
+        destination.y -= temp.y;
+        driveToPoint(destination.x, destination.y, dir);
+    }
+    public void driveToPose2(Pose destination, Direction dir){
+        double theta = Math.atan2(-destination.y, -destination.x) - Math.signum(Math.cos(destination.angleOfVector())) * Math.PI / 2;
+        Vector2 temp = new Vector2();
+        temp.setFromPolar(1, theta);
+        driveToPoint(destination.x, destination.y, dir);
+        double lp = leftPow;
+        double rp = rightPow;
+        driveToPoint(temp.x, temp.y, dir);
+        lp += (leftPow / destination.radius());
+        rp += (rightPow / destination.radius());
+        leftPow = lp;
+        rightPow = rp;
     }
     public abstract double averageLeftEncoders();
 
