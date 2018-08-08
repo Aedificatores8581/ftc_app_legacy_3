@@ -17,10 +17,10 @@ import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
  */
 
 public abstract class Robot extends OpMode {
-    GyroAngles     gyroangles ;
-    Orientation    angles     ;
-    public BNO055IMU      imu        ;
-    public double  startAngle ;
+    GyroAngles     gyroangles;
+    Orientation    angles;
+    public BNO055IMU      imu;
+    public double  startAngle;
     //Use this variable to set the angle of the robot which coresponds to zero degrees
     public double  zeroDegreeAngle = 0;
     public boolean usingIMU    = true;

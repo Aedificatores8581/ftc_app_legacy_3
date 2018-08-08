@@ -28,8 +28,13 @@ public abstract class RobitBot extends Robot {
             rightMotor.setDirection(REVERSE);
 
         }
+        public void normalizeMotors() {
+            leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        public void normalizeMotors() {}
+            leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
 
         public DcMotor leftMotor, rightMotor;
 
@@ -67,6 +72,18 @@ public abstract class RobitBot extends Robot {
         public void setRightPow(double pow) {
             rightPow = pow;
             rightMotor.setPower(rightPow);
+        }
+
+        public int getEncoders() {
+            return (getLeftEncoder() + getRightEncoder()) / 2;
+        }
+
+        public int getLeftEncoder() {
+            return leftMotor.getCurrentPosition();
+        }
+
+        public int getRightEncoder() {
+            return rightMotor.getCurrentPosition();
         }
 
         @Override
