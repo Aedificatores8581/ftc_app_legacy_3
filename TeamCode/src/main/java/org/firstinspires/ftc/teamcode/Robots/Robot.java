@@ -24,11 +24,11 @@ public abstract class Robot extends OpMode {
     //Use this variable to set the angle of the robot which coresponds to zero degrees
     public double  zeroDegreeAngle = 0;
     public boolean usingIMU    = true;
-    public Vector2 leftStick1 ,
+    public Vector2 leftStick1,
                    rightStick1,
-                   leftStick2 ,
+                   leftStick2,
                    rightStick2;
-    public Vector2 robotAngle ;
+    public Vector2 robotAngle;
     Robot.Module   module      = Module.REV;
     public Robot(Module mod, boolean isUsingIMU){
         usingIMU = isUsingIMU;
@@ -64,7 +64,7 @@ public abstract class Robot extends OpMode {
             startAngle = getGyroAngle() - zeroDegreeAngle;
         }
     }
-    //returns the Z value of the gyro sensor`
+    //returns the Z value of the gyro sensor
     public double getGyroAngle(){
         return gyroangles.refreshGyroAnglesZ(imu.getAngularOrientation(AxesReference.INTRINSIC, GyroAngles.ORDER, GyroAngles.UNIT));
     }

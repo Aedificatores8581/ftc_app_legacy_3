@@ -39,6 +39,11 @@ public class Mecanum2_4 extends MecanumDT {
         leftRear.setDirection(FORWARD);
     }
 
+    @Override
+    public void resetEncoders() {
+
+    }
+
     //sets the motor powers to the specified values
     public void refreshMotors(double I, double II, double III, double IV){
         rightFore.setPower(I);

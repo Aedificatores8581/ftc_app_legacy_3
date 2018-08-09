@@ -103,10 +103,10 @@ public class RobitAuto extends RobitBot{
     @Override
     public void init() {
         super.init();
-        drivetrain.normalizeMotors();
+        drivetrain.resetEncoders();
 
         try {
-            jsonAutonGetter = new JSONAutonGetter("RobitBot.json");
+            jsonAutonGetter = new JSONAutonGetter("RobitAuto.json");
         } catch (IOException | JSONException e) {
             telemetry.addLine(e.getMessage());
             stop();
@@ -199,6 +199,12 @@ public class RobitAuto extends RobitBot{
                 break;
         }
 
+        try {
+            prev.copy(gamepad1);
+        } catch (RobotCoreException e) {
+            telemetry.addLine(e.getMessage());
+        }
+
     }
 
     @Override
@@ -251,8 +257,8 @@ public class RobitAuto extends RobitBot{
 
     @Override
     public void loop() {
+        drivetrain.updateEncVals();
         switch (state) {
-
             case ARM_DOWN:
                 arm.setPosition(OpModeConstants.ARM_DOWN_POSITION);
                 state = State.DETECT_JEWEL;
@@ -292,11 +298,11 @@ public class RobitAuto extends RobitBot{
             case HIT_FRONT_JEWEL:
                 nextStateFromFarTurn = State.GO_FORWARD_FROM_FRONT_JEWEL;
 
-                if (Math.abs(drivetrain.getEncoders()) >= Math.abs(encoderList.get(State.HIT_FRONT_JEWEL))) {
+                if (Math.abs(drivetrain.leftEncVal) >= Math.abs(encoderList.get(State.HIT_FRONT_JEWEL))) {
                     drivetrain.setLeftPow(0.0);
                     drivetrain.setRightPow(0.0);
 
-                    drivetrain.normalizeMotors();
+                    drivetrain.resetEncoders();
 
                     switch (fieldPosition) {
 
@@ -315,11 +321,11 @@ public class RobitAuto extends RobitBot{
             case HIT_BACK_JEWEL:
                 nextStateFromFarTurn = State.GO_FORWARD_FROM_BACK_JEWEL;
 
-                if (Math.abs(drivetrain.getEncoders()) >= Math.abs(encoderList.get(State.HIT_BACK_JEWEL))) {
+                if (Math.abs(drivetrain.leftEncVal) >= Math.abs(encoderList.get(State.HIT_BACK_JEWEL))) {
                     drivetrain.setLeftPow(0.0);
                     drivetrain.setRightPow(0.0);
 
-                    drivetrain.normalizeMotors();
+                    drivetrain.resetEncoders();
 
                     switch (fieldPosition) {
 
@@ -356,11 +362,11 @@ public class RobitAuto extends RobitBot{
 
                 break;
             case FAR_TURN:
-                if (Math.abs(drivetrain.getRightEncoder()) >= Math.abs(encoderList.get(State.FAR_TURN))) {
+                if (Math.abs(drivetrain.leftEncVal) >= Math.abs(encoderList.get(State.FAR_TURN))) {
                     drivetrain.setLeftPow(0.0);
                     drivetrain.setRightPow(0.0);
 
-                    drivetrain.normalizeMotors();
+                    drivetrain.resetEncoders();
                     state = nextStateFromFarTurn;
 
                     switch (fieldPosition) {
@@ -378,21 +384,21 @@ public class RobitAuto extends RobitBot{
                 break;
 
             case GO_FORWARD_FROM_BACK_JEWEL:
-                if (Math.abs(drivetrain.getEncoders()) >= Math.abs(encoderList.get(State.GO_FORWARD_FROM_BACK_JEWEL))) {
+                if (Math.abs(drivetrain.leftEncVal) >= Math.abs(encoderList.get(State.GO_FORWARD_FROM_BACK_JEWEL))) {
                     drivetrain.setLeftPow(0.0);
                     drivetrain.setRightPow(0.0);
 
-                    drivetrain.normalizeMotors();
+                    drivetrain.resetEncoders();
                     state = State.PARK_AND_END;
                 }
                 break;
 
             case GO_FORWARD_FROM_FRONT_JEWEL:
-                if (Math.abs(drivetrain.getEncoders()) >= Math.abs(encoderList.get(State.GO_FORWARD_FROM_FRONT_JEWEL))) {
+                if (Math.abs(drivetrain.leftEncVal) >= Math.abs(encoderList.get(State.GO_FORWARD_FROM_FRONT_JEWEL))) {
                     drivetrain.setLeftPow(0.0);
                     drivetrain.setRightPow(0.0);
 
-                    drivetrain.normalizeMotors();
+                    drivetrain.resetEncoders();
                     state = State.PARK_AND_END;
                 }
                 break;
@@ -401,9 +407,10 @@ public class RobitAuto extends RobitBot{
         }
 
         telemetry.addData("State", state);
-        telemetry.addData("\nRight Encoder",drivetrain.getRightEncoder());
-        telemetry.addData("Left Encoder",drivetrain.getLeftEncoder());
-        telemetry.addData("Average of Encoders",drivetrain.getEncoders());
+        telemetry.addData("Encoder listing", encoderList.get(state));
+        telemetry.addData("\nLeft Encoder",drivetrain.leftEncVal);
+        telemetry.addData("Right Encoder",drivetrain.rightEncVal);
+        telemetry.addData("Average Encoder",(drivetrain.leftEncVal + drivetrain.rightEncVal) / 2 );
         telemetry.addData("\nRed", colorSensor.red());
         telemetry.addData("Blue", colorSensor.blue());
         telemetry.addData("\nArm",arm.getPosition());

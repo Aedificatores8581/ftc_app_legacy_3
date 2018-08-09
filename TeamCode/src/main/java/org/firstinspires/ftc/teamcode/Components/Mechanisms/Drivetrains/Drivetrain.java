@@ -17,6 +17,10 @@ public abstract class Drivetrain{
     }
     //initializes the motors
     public abstract void initMotors(HardwareMap map);
+
     //normalizes the motor values
     public abstract void normalizeMotors();
+
+    //
+    public abstract void resetEncoders();
 }

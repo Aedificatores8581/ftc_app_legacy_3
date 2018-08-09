@@ -49,10 +49,17 @@ public abstract class SensorBot extends Robot {
         public double averageLeftEncoders(){
             return 0;
         }
+
         @Override
         public double averageRightEncoders(){
             return 0;
         }
+
+        @Override
+        public void updateEncVals() {
+
+        }
+
     };
     @Override
     public void init(){

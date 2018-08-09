@@ -8,7 +8,7 @@ package org.firstinspires.ftc.teamcode.Universal.Threads;
 */
 
 import org.firstinspires.ftc.robotcore.external.Func;
-import org.firstinspires.ftc.teamcode.Universal.SensorFunction;
+
 
 public class SensorThread<T> implements Runnable {
     private boolean running           ;
