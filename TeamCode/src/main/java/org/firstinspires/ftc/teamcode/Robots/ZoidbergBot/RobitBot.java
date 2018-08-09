@@ -77,5 +77,7 @@ public abstract class RobitBot extends Robot {
     public void start() {super.start();}
 
     @Override
-    public void init() {super.init();}
+    public void init() {
+        super.init();
+    }
 }
