@@ -13,29 +13,29 @@ import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
  * Created by Frank Portman on 5/21/2018
  */
 public abstract class TankDT extends Drivetrain {
-    public double   ENC_PER_INCH;
-    public double   DISTANCE_BETWEEN_WHEELS;
-    public double   turnMult,
-                    angleBetween,
-                    directionMult = 1,
-                    cos,
-                    maxTurn = 0.75,
-                    leftPow,
-                    rightPow,
-                    totalAngle = 0;
-    public boolean  turn = false,
-                    canSwitch = false;
-    public int      leftEncVal = 0,
-                    rightEncVal = 0;
-    public Pose position;
-    public DcMotor[] leftMotors,
-                     rightMotors;
-    public Direction direction    ;
-    public ControlState controlState ;
-    public FCTurnState turnState    ;
+    public double       ENC_PER_INCH;
+    public double       DISTANCE_BETWEEN_WHEELS;
+    public double       turnMult,
+                        angleBetween,
+                        directionMult   = 1,
+                        cos,
+                        maxTurn         = 0.75,
+                        leftPow,
+                        rightPow,
+                        totalAngle      = 0;
+    public boolean      turn            = false,
+                        canSwitch       = false;
+    public int          leftEncVal      = 0,
+                        rightEncVal     = 0;
+    public Pose         position;
+    public DcMotor[]    leftMotors,
+                        rightMotors;
+    public Direction    direction;
+    public ControlState controlState;
+    public FCTurnState  turnState;
 
-    public Vector2 turnVector    = new Vector2();
-    public TankDT(){
+    public Vector2      turnVector      = new Vector2();
+    public TankDT() {
         leftPow = 0;
         rightPow = 0;
         direction = Direction.FOR;
@@ -274,6 +274,5 @@ public abstract class TankDT extends Drivetrain {
 
     public abstract double averageRightEncoders();
 
-    public abstract void updateEncVals();
-
+    public abstract double averageEncoders();
 }

@@ -56,6 +56,12 @@ public class WestCoast15 extends TankDT {
     }
     public void normalizeMotors(){
     }
+
+    @Override
+    public void resetEncoders() {
+
+    }
+
     public void updateEncoders(){
         lfEncoder.updateEncoder();
         rfEncoder.updateEncoder();
@@ -72,8 +78,8 @@ public class WestCoast15 extends TankDT {
     }
 
     @Override
-    public void updateEncVals() {
-
+    public double averageEncoders() {
+        return (averageLeftEncoders() + averageRightEncoders()) / 2;
     }
 
     public Pose updateLocation(Pose y, Pose x, double xVal, double yVal){

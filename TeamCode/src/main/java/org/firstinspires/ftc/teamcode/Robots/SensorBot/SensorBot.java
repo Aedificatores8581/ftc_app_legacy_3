@@ -45,6 +45,12 @@ public abstract class SensorBot extends Robot {
 
         public void normalizeMotors() {
         }
+
+        @Override
+        public void resetEncoders() {
+
+        }
+
         @Override
         public double averageLeftEncoders(){
             return 0;
@@ -56,10 +62,9 @@ public abstract class SensorBot extends Robot {
         }
 
         @Override
-        public void updateEncVals() {
-
+        public double averageEncoders() {
+            return (lm.getCurrentPosition() + rm.getCurrentPosition()) / 2;
         }
-
     };
     @Override
     public void init(){
