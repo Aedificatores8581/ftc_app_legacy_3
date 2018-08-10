@@ -67,11 +67,6 @@ public void setLeftPow(double pow) {
     public void normalizeMotors(){
     }
 
-    @Override
-    public void resetEncoders() {
-
-    }
-
     public void initAcceleratedMotors(){
         motorThread = new IncrementalMotorThread(10);
 

@@ -150,6 +150,11 @@ public class WestBot15IncrementalTestDrive extends WestBot15Inc {
         }
 
     }
+    @Override
+    public void stop(){
+        drivetrain.terminate();
+        super.stop();
+    }
     public void refreshStartAngle(){
         if(gamepad1.left_stick_button){
             startAngle = Math.toDegrees(leftStick1.angleBetween(robotAngle));

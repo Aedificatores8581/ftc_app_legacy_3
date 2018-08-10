@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode.Universal.Map;
 
-public class Field extends FTCMap {
+public class GameField extends FTCMap {
 
 }

@@ -22,5 +22,5 @@ public abstract class Drivetrain{
     public abstract void normalizeMotors();
 
     //
-    public abstract void resetEncoders();
+    public void resetEncoders(){}
 }
