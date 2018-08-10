@@ -35,6 +35,6 @@ public class AttractionField {
     }
 
     public double getStrength(double distance){
-        return strength * strength * Math.pow(Math.E, 1 - distance) / Math.pow(Math.E, 1 - strength)/ distance;
+        return strength * Math.pow(Math.E, 1 - distance) / Math.pow(Math.E, 1 - strength)/ distance;
     }
 }
