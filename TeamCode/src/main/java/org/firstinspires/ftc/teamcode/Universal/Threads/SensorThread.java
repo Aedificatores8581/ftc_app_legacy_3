@@ -7,17 +7,18 @@ package org.firstinspires.ftc.teamcode.Universal.Threads;
 * Author: Mister Minister Master
 */
 
-import org.firstinspires.ftc.teamcode.Universal.SensorFunction;
+import org.firstinspires.ftc.robotcore.external.Func;
+
 
 public class SensorThread<T> implements Runnable {
     private boolean running           ;
     private T value                   ;
-    private SensorFunction<T> sensFunc;
+    private Func<T> sensFunc;
 
 
     public void run() {
         while (running) {
-            value = sensFunc.sensFunc();
+            value = sensFunc.value();
         }
     }
     boolean getRunning() {
@@ -32,7 +33,7 @@ public class SensorThread<T> implements Runnable {
         return this.value;
     }
 
-    public SensorThread(SensorFunction<T> f) {
+    public SensorThread(Func<T> f) {
         running = true;
 
         this.sensFunc = f;

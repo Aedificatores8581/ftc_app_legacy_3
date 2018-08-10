@@ -13,20 +13,20 @@ import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
  * Created by Frank Portman on 5/21/2018
  */
 public abstract class TankDT extends Drivetrain {
-    public double ENC_PER_INCH;
-    public double DISTANCE_BETWEEN_WHEELS;
-    public double       turnMult     ,
-            angleBetween,
-            directionMult = 1,
-            cos,
-            maxTurn = 0.75,
-            leftPow,
-            rightPow,
-            leftEncVal = 0,
-            rightEncVal = 0,
-            totalAngle = 0;
-    public boolean turn = false,
-                   canSwitch = false;
+    public double   ENC_PER_INCH;
+    public double   DISTANCE_BETWEEN_WHEELS;
+    public double   turnMult,
+                    angleBetween,
+                    directionMult = 1,
+                    cos,
+                    maxTurn = 0.75,
+                    leftPow,
+                    rightPow,
+                    totalAngle = 0;
+    public boolean  turn = false,
+                    canSwitch = false;
+    public int      leftEncVal = 0,
+                    rightEncVal = 0;
     public Pose position;
     public DcMotor[] leftMotors,
                      rightMotors;
@@ -65,6 +65,7 @@ public abstract class TankDT extends Drivetrain {
                 leftPow = leftVect.y + turnMult * rightVect.x;
                 rightPow = leftVect.y - turnMult * rightVect.x;
                 break;
+
             case FIELD_CENTRIC:
                 angleBetween = Math.toRadians(UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(leftVect.angle()), UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(angle.angle()))));
                 if (leftVect.magnitude() < UniversalConstants.Triggered.STICK) {
@@ -272,4 +273,7 @@ public abstract class TankDT extends Drivetrain {
     public abstract double averageLeftEncoders();
 
     public abstract double averageRightEncoders();
+
+    public abstract void updateEncVals();
+
 }

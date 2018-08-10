@@ -33,7 +33,12 @@ public double averageRightEncoders() {
     return 0;
 }
 
-@Override
+    @Override
+    public void updateEncVals() {
+
+    }
+
+    @Override
 public double averageLeftEncoders() {
     return 0;
 }
@@ -61,6 +66,12 @@ public void setLeftPow(double pow) {
     }
     public void normalizeMotors(){
     }
+
+    @Override
+    public void resetEncoders() {
+
+    }
+
     public void initAcceleratedMotors(){
         motorThread = new IncrementalMotorThread(10);
 

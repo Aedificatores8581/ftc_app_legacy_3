@@ -62,12 +62,20 @@ public class WestCoast15 extends TankDT {
         rrEncoder.updateEncoder();
         lrEncoder.updateEncoder();
     }
+
+
     public double averageLeftEncoders(){
         return (lfEncoder.currentPosition + lrEncoder.currentPosition) / 2;
     }
     public double averageRightEncoders(){
         return (rfEncoder.currentPosition + rrEncoder.currentPosition) / 2;
     }
+
+    @Override
+    public void updateEncVals() {
+
+    }
+
     public Pose updateLocation(Pose y, Pose x, double xVal, double yVal){
         //xVal *= -1;
         double angle = xVal / x.radius() / Math.cos(Math.PI / 2 - x.angleOfVector());

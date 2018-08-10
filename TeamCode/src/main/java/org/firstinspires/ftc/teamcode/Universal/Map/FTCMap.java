@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode.Universal.Map;
 
-public abstract class Map {
+public abstract class FTCMap {
 
 }
