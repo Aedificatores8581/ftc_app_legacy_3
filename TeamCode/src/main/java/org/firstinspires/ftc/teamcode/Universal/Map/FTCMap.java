@@ -4,7 +4,7 @@ import org.firstinspires.ftc.teamcode.Universal.Math.Pose;
 
 import java.util.ArrayList;
 
-public abstract class FTCMap {
+public class FTCMap {
     public Pose startingPose;
     public ArrayList<Component> components = new ArrayList<Component>();
     public FTCMap(){
