@@ -67,11 +67,6 @@ public class WestCoast15Inc extends TankDT {
     public void normalizeMotors(){
     }
 
-    @Override
-    public void resetEncoders() {
-
-    }
-
     public void initAcceleratedMotors(){
         motorThread = new IncrementalMotorThread(10);
 

@@ -143,7 +143,7 @@ public class RobitAuto extends RobitBot{
 
     @Override
     public void init_loop() {
-        telemetry.addLine("Select Field Position:\n");
+        telemetry.addLine("Select GameField Position:\n");
 
         switch (fieldPosition) { // TODO: Super Inefficient use of space; Create TeleMenu Class
             case RED_NEAR:

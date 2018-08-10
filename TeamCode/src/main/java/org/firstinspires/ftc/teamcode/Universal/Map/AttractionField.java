@@ -33,7 +33,8 @@ public class AttractionField {
     protected Vector2 interact(Vector2 object){
         return interact(new Pose(object.x, object.y, 0));
     }
+
     public double getStrength(double distance){
-        return strength / distance;
+        return strength * Math.pow(Math.E, 1 - distance) / Math.pow(Math.E, 1 - strength)/ distance;
     }
 }

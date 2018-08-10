@@ -249,14 +249,6 @@ public abstract class TankDT extends Drivetrain {
     //assumes that the robot is at 0,0
     //TODO: Implement variability in the units of length that the destination Pose uses
     //TODO: Determine which implementation to use
-    public void driveToPose1(Pose destination, Direction dir){
-        double theta = Math.atan2(-destination.y, -destination.x) - Math.signum(destination.angleOfVector()) * Math.PI / 4;
-        Vector2 temp = new Vector2();
-        temp.setFromPolar(1 / destination.radius(), theta);
-        destination.x -= temp.x;
-        destination.y -= temp.y;
-        driveToPoint(destination.x, destination.y, dir);
-    }
     public void driveToPose2(Pose destination, Direction dir){
         double theta = Math.atan2(-destination.y, -destination.x) - Math.signum(Math.cos(destination.angleOfVector())) * Math.PI / 2;
         Vector2 temp = new Vector2();

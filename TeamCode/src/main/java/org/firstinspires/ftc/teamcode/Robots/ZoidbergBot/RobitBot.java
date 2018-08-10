@@ -114,6 +114,5 @@ public abstract class RobitBot extends Robot {
         rightGrabber = hardwareMap.get(Servo.class, "rg");
 
         lift = hardwareMap.dcMotor.get("lift");
-
     }
 }
