@@ -257,7 +257,6 @@ public class RobitAuto extends RobitBot{
 
     @Override
     public void loop() {
-        drivetrain.updateEncVals();
         switch (state) {
             case ARM_DOWN:
                 arm.setPosition(OpModeConstants.ARM_DOWN_POSITION);
@@ -266,30 +265,29 @@ public class RobitAuto extends RobitBot{
 
             case DETECT_JEWEL:
                 switch (fieldPosition) {
-
                     case RED_NEAR:
                     case RED_FAR:
                         if (colorSensor.red() > OpModeConstants.JEWEL_RED_THRESHOLD && colorSensor.red() > colorSensor.blue()) {
-                            state = State.HIT_FRONT_JEWEL;
-                            drivetrain.setLeftPow(OpModeConstants.MOTOR_SPEED);
-                            drivetrain.setRightPow(OpModeConstants.MOTOR_SPEED);
-                        } else if(colorSensor.blue() > OpModeConstants.JEWEL_BLUE_THRESHOLD && colorSensor.blue() > colorSensor.red()) {
                             state = State.HIT_BACK_JEWEL;
                             drivetrain.setLeftPow(-OpModeConstants.MOTOR_SPEED);
                             drivetrain.setRightPow(-OpModeConstants.MOTOR_SPEED);
+                        } else if(colorSensor.blue() > OpModeConstants.JEWEL_BLUE_THRESHOLD && colorSensor.blue() > colorSensor.red()) {
+                            state = State.HIT_FRONT_JEWEL;
+                            drivetrain.setLeftPow(OpModeConstants.MOTOR_SPEED);
+                            drivetrain.setRightPow(OpModeConstants.MOTOR_SPEED);
                         }
                         break;
 
                     case BLUE_NEAR:
                     case BLUE_FAR:
                         if (colorSensor.blue() > OpModeConstants.JEWEL_BLUE_THRESHOLD && colorSensor.blue() > colorSensor.red()) {
-                            state = State.HIT_BACK_JEWEL;
-                            drivetrain.setLeftPow(OpModeConstants.MOTOR_SPEED);
-                            drivetrain.setRightPow(OpModeConstants.MOTOR_SPEED);
-                        } else if(colorSensor.blue() > OpModeConstants.JEWEL_BLUE_THRESHOLD && colorSensor.blue() > colorSensor.red()) {
                             state = State.HIT_FRONT_JEWEL;
                             drivetrain.setLeftPow(-OpModeConstants.MOTOR_SPEED);
                             drivetrain.setRightPow(-OpModeConstants.MOTOR_SPEED);
+                        } else if(colorSensor.red() > OpModeConstants.JEWEL_RED_THRESHOLD && colorSensor.red() > colorSensor.blue()) {
+                            state = State.HIT_BACK_JEWEL;
+                            drivetrain.setLeftPow(OpModeConstants.MOTOR_SPEED);
+                            drivetrain.setRightPow(OpModeConstants.MOTOR_SPEED);
                         }
                         break;
                 }
@@ -298,7 +296,7 @@ public class RobitAuto extends RobitBot{
             case HIT_FRONT_JEWEL:
                 nextStateFromFarTurn = State.GO_FORWARD_FROM_FRONT_JEWEL;
 
-                if (Math.abs(drivetrain.leftEncVal) >= Math.abs(encoderList.get(State.HIT_FRONT_JEWEL))) {
+                if (Math.abs(drivetrain.averageLeftEncoders()) >= Math.abs(encoderList.get(State.HIT_FRONT_JEWEL))) {
                     drivetrain.setLeftPow(0.0);
                     drivetrain.setRightPow(0.0);
 
@@ -307,12 +305,31 @@ public class RobitAuto extends RobitBot{
                     switch (fieldPosition) {
 
                         case RED_NEAR:
+                            state = State.GO_FORWARD_FROM_FRONT_JEWEL;
+
+                            drivetrain.setLeftPow(OpModeConstants.MOTOR_SPEED);
+                            drivetrain.setRightPow(OpModeConstants.MOTOR_SPEED);
+                            break;
+
                         case BLUE_NEAR:
                             state = State.GO_FORWARD_FROM_FRONT_JEWEL;
+
+                            drivetrain.setLeftPow(-OpModeConstants.MOTOR_SPEED);
+                            drivetrain.setRightPow(-OpModeConstants.MOTOR_SPEED);
                             break;
+
                         case RED_FAR:
+                            state = State.FAR_TURN;
+
+                            drivetrain.setLeftPow(-OpModeConstants.MOTOR_SPEED);
+                            drivetrain.setRightPow(OpModeConstants.MOTOR_SPEED);
+                            break;
+
                         case BLUE_FAR:
                             state = State.FAR_TURN;
+
+                            drivetrain.setLeftPow(OpModeConstants.MOTOR_SPEED);
+                            drivetrain.setRightPow(-OpModeConstants.MOTOR_SPEED);
                             break;
                     }
                 }
@@ -321,7 +338,7 @@ public class RobitAuto extends RobitBot{
             case HIT_BACK_JEWEL:
                 nextStateFromFarTurn = State.GO_FORWARD_FROM_BACK_JEWEL;
 
-                if (Math.abs(drivetrain.leftEncVal) >= Math.abs(encoderList.get(State.HIT_BACK_JEWEL))) {
+                if (Math.abs(drivetrain.averageLeftEncoders()) >= Math.abs(encoderList.get(State.HIT_BACK_JEWEL))) {
                     drivetrain.setLeftPow(0.0);
                     drivetrain.setRightPow(0.0);
 
@@ -362,7 +379,7 @@ public class RobitAuto extends RobitBot{
 
                 break;
             case FAR_TURN:
-                if (Math.abs(drivetrain.leftEncVal) >= Math.abs(encoderList.get(State.FAR_TURN))) {
+                if (Math.abs(drivetrain.averageLeftEncoders()) >= Math.abs(encoderList.get(State.FAR_TURN))) {
                     drivetrain.setLeftPow(0.0);
                     drivetrain.setRightPow(0.0);
 
@@ -384,7 +401,7 @@ public class RobitAuto extends RobitBot{
                 break;
 
             case GO_FORWARD_FROM_BACK_JEWEL:
-                if (Math.abs(drivetrain.leftEncVal) >= Math.abs(encoderList.get(State.GO_FORWARD_FROM_BACK_JEWEL))) {
+                if (Math.abs(drivetrain.averageLeftEncoders()) >= Math.abs(encoderList.get(State.GO_FORWARD_FROM_BACK_JEWEL))) {
                     drivetrain.setLeftPow(0.0);
                     drivetrain.setRightPow(0.0);
 
@@ -394,7 +411,7 @@ public class RobitAuto extends RobitBot{
                 break;
 
             case GO_FORWARD_FROM_FRONT_JEWEL:
-                if (Math.abs(drivetrain.leftEncVal) >= Math.abs(encoderList.get(State.GO_FORWARD_FROM_FRONT_JEWEL))) {
+                if (Math.abs(drivetrain.averageLeftEncoders()) >= Math.abs(encoderList.get(State.GO_FORWARD_FROM_FRONT_JEWEL))) {
                     drivetrain.setLeftPow(0.0);
                     drivetrain.setRightPow(0.0);
 

@@ -84,18 +84,17 @@ public abstract class RobitBot extends Robot {
 
         @Override
         public double averageLeftEncoders() {
-            return 0;
+            return leftMotor.getCurrentPosition();
         }
 
         @Override
         public double averageRightEncoders() {
-            return 0;
+            return rightMotor.getCurrentPosition();
         }
 
         @Override
-        public void updateEncVals() {
-            leftEncVal = leftMotor.getCurrentPosition();
-            rightEncVal = rightMotor.getCurrentPosition();
+        public double averageEncoders() {
+            return (averageLeftEncoders() + averageRightEncoders()) /2;
         }
     };
 
@@ -105,7 +104,7 @@ public abstract class RobitBot extends Robot {
     @Override
     public void init() {
         super.init();
-
+        activateGamepad1();
 
         drivetrain.initMotors(hardwareMap);
 
