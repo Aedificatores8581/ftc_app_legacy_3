@@ -22,7 +22,8 @@ public class AttractionField {
         location = new Pose(pose.x, pose.y, pose.angle);
         strength = 1;
     }
-    public Vector2 interact(Pose object){
+    public Vector2 interact(Pose obj){
+        Pose object = new Pose(obj);
         object.x -= location.x;
         object.y -= location.y;
         Vector2 temp = new Vector2();
@@ -33,7 +34,6 @@ public class AttractionField {
     protected Vector2 interact(Vector2 object){
         return interact(new Pose(object.x, object.y, 0));
     }
-
     public double getStrength(double distance){
         return strength * Math.pow(Math.E, strength - distance)/ distance;
     }
