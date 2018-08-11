@@ -17,12 +17,12 @@ public class WestCoast15Inc extends TankDT {
     public DcMotor.ZeroPowerBehavior zeroPowerBehavior;
     public double maxPow, minPow, accelerationPerSec = 1.5/1000, decelerationPerSec = 2.5/1000;
     public WestCoast15Inc(){
-        zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT;
+        //zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT;
         maxSpeed = 1;
         initAcceleratedMotors();
     }
     public WestCoast15Inc(DcMotor.ZeroPowerBehavior zeroPowBehavior, double speed){
-        zeroPowerBehavior = zeroPowBehavior;
+        //zeroPowerBehavior = zeroPowBehavior;
         maxSpeed = speed;
         maxPow = speed;
         initAcceleratedMotors();
