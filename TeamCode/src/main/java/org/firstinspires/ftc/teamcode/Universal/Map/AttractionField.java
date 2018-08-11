@@ -35,7 +35,7 @@ public class AttractionField {
     }
 
     public double getStrength(double distance){
-        return strength * Math.pow(Math.E, 1 - distance) / Math.pow(Math.E, 1 - strength)/ distance;
+        return strength * Math.pow(Math.E, strength - distance)/ distance;
     }
     public Vector2 interactWithSlowdown(Pose object, double maxSpeed){
         Vector2 v2 = interact(object);
