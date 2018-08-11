@@ -38,11 +38,11 @@ public class DigitalCamera {
         pointOnImage.x -= imageSize.width / 2;
         pointOnImage.y -= imageSize.height / 2;
         Vector2 temp = new Vector2(pointOnImage.x, pointOnImage.y);
-        temp.rotate(yAng);
+        temp.rotate(yAng + Math.PI / 2);
         pointOnImage.x = temp.x + imageSize.width / 2;
         pointOnImage.y = temp.y + imageSize.height / 2;
-        double phi = Math.PI / 4 - horizontalAngleOfView(widthRatio) * (pointOnImage.x / imageSize.width - 0.5) + zAng;
-        double theta = Math.PI / 4 - verticalAngleOfView(heightRatio) * (pointOnImage.y / imageSize.height - 0.5) - xAng;
+        double phi = Math.PI / 2 - horizontalAngleOfView(widthRatio) * (pointOnImage.x / imageSize.width - 0.5) + zAng;
+        double theta = Math.PI / 2 - verticalAngleOfView(heightRatio) * (pointOnImage.y / imageSize.height - 0.5) - xAng;
         Point3 newPoint = new Point3(UniversalFunctions.sphericalToCartesian(1, theta, phi));
         double newX = newPoint.x * (z - objectHeight) / -newPoint.z + x;
         double newY = newPoint.y * (z - objectHeight) / -newPoint.z + y;
