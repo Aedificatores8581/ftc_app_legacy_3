@@ -37,4 +37,10 @@ public class AttractionField {
     public double getStrength(double distance){
         return strength * Math.pow(Math.E, 1 - distance) / Math.pow(Math.E, 1 - strength)/ distance;
     }
+    public Vector2 interactWithSlowdown(Pose object, double maxSpeed){
+        Vector2 v2 = interact(object);
+        if(v2.magnitude() > 1)
+            v2.setFromPolar(new Vector2(object.x, object.y).magnitude() / strength, v2.angle());
+        return v2;
+    }
 }
