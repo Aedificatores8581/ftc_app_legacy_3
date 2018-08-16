@@ -64,6 +64,27 @@ public class Vector3 {
         return Math.acos(this.dot(vector) / (this.magnitude() * vector.magnitude()));
     }
 
+    public void rotateX(double angle){
+        Vector2 temp = new Vector2(y, z);
+        temp.rotate(angle);
+        y = temp.x;
+        z = temp.y;
+    }
+
+    public void rotateY(double angle){
+        Vector2 temp = new Vector2(x, z);
+        temp.rotate(angle);
+        x = temp.x;
+        z = temp.y;
+    }
+
+    public void rotateZ(double angle){
+        Vector2 temp = new Vector2(x, y);
+        temp.rotate(angle);
+        x = temp.x;
+        y = temp.y;
+    }
+
     public String toString(){
         return "(" + x + ", " + y + ", " + z + ")";
     }
