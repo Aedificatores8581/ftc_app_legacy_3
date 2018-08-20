@@ -53,6 +53,10 @@ public class WestCoast15 extends TankDT {
         lrEncoder = new MotorEncoder(leftRear);
         rfEncoder = new MotorEncoder(rightFore);
         rrEncoder = new MotorEncoder(rightRear);
+        lfEncoder.initEncoder();
+        lrEncoder.initEncoder();
+        rfEncoder.initEncoder();
+        rrEncoder.initEncoder();
     }
     public void normalizeMotors(){
     }

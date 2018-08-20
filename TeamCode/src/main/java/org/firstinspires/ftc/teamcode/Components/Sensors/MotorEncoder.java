@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  */
 public class MotorEncoder {
 
-    DcMotor    motor;
+    public DcMotor    motor;
     public int resetPosition   = 0,
                currentPosition = 0;
 

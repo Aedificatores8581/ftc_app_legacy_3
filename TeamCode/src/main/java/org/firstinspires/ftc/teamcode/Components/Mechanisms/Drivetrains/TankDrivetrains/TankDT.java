@@ -120,6 +120,11 @@ public abstract class TankDT extends Drivetrain {
         setLeftPow(leftPow);
         setRightPow(rightPow);
     }
+    public void teleOpLoop(Vector2 leftVect, Vector2 rightVect, double angle){
+        Vector2 angleVect = new Vector2();
+        angleVect.setFromPolar(1, angle);
+        teleOpLoop(leftVect, rightVect, angleVect);
+    }
 
     public void driveToPoint(double x, double y, Direction dir){
         direction = dir;
@@ -178,12 +183,14 @@ public abstract class TankDT extends Drivetrain {
         
     }
     public synchronized void updateLocation(double leftChange, double rightChange){
+        leftChange = leftChange / ENC_PER_INCH;
+        rightChange = rightChange / ENC_PER_INCH;
         double angle = 0;
         if(rightChange == leftChange)
-            turnVector.setFromPolar(rightChange, 0);
+            turnVector.setFromPolar(rightChange, position.angle);
         else {
-            double radius = ENC_PER_INCH * DISTANCE_BETWEEN_WHEELS / 2 * (leftChange + rightChange) / (rightChange - leftChange);
-            angle = (rightChange - leftChange) / (DISTANCE_BETWEEN_WHEELS * ENC_PER_INCH);
+            double radius = DISTANCE_BETWEEN_WHEELS / 2 * (leftChange + rightChange) / (rightChange - leftChange);
+            angle = (rightChange - leftChange) / (DISTANCE_BETWEEN_WHEELS);
             radius = Math.abs(radius);
             turnVector.setFromPolar(radius, angle);
             turnVector.setFromPolar(radius - turnVector.x, angle);
