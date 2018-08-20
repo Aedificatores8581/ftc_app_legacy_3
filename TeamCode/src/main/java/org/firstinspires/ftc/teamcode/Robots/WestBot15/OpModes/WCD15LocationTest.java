@@ -1,0 +1,74 @@
+package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes;
+
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
+import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
+
+@TeleOp(name = "locationTestWCD", group = "WestBot15")
+public class WCD15LocationTest extends WestBot15{
+    public double oldLeftEncVal = 0, oldRightEncVal = 0;
+    public double[] times = new double[4];
+    @Override
+    public void init(){
+        super.init();
+    }
+    @Override
+    public void start(){
+        super.start();
+        double time = System.nanoTime() / 10e9;
+        times[1] = time;
+        times[0] = time;
+        times[3] = time;
+        times[2] = time;
+    }
+    @Override
+    public void loop(){
+        updateGamepad1();
+        drivetrain.leftPow = leftStick1.y + rightStick1.x;
+        drivetrain.rightPow = leftStick1.y - rightStick1.x;
+        setIncrementalPower(drivetrain.leftFore, drivetrain.leftPow, times[0]);
+        times[0] = System.nanoTime() / 10e9;
+        setIncrementalPower(drivetrain.leftRear, drivetrain.leftPow, times[1]);
+        times[1] = System.nanoTime() / 10e9;
+        setIncrementalPower(drivetrain.rightFore, drivetrain.rightPow, times[2]);
+        times[2] = System.nanoTime() / 10e9;
+        drivetrain.updateEncoders();
+        setIncrementalPower(drivetrain.rightRear, drivetrain.rightPow, times[3]);
+        times[3] = System.nanoTime() / 10e9;
+        double leftVal = drivetrain.averageLeftEncoders()- oldLeftEncVal;
+        double rightVal = drivetrain.averageRightEncoders() - oldRightEncVal;
+        drivetrain.updateLocation(leftVal, rightVal);
+        oldLeftEncVal = drivetrain.averageLeftEncoders();
+        oldRightEncVal = drivetrain.averageRightEncoders();
+
+        telemetry.addData("Position", drivetrain.position);
+    }
+
+    public void setIncrementalPower(DcMotor motor, double desiredPow, double prevTime){
+        double  currentPow = motor.getPower(),
+                newPow = 0,
+                linearIncrement = 100,
+                increaseRate = 1.5/1000 * (System.nanoTime()/10e9 - prevTime) * linearIncrement,
+                decreaseRate = 2.5/1000 * (System.nanoTime()/10e9 - prevTime) * linearIncrement;
+        if(currentPow == desiredPow)
+            newPow = currentPow;
+        if(desiredPow != 0) {
+            if (Math.signum(currentPow) * Math.signum(desiredPow) == -1)
+                desiredPow = 0;
+            if (Math.abs(desiredPow) > Math.abs(currentPow))
+                newPow = currentPow + Math.signum(currentPow) * increaseRate;
+            else if (Math.abs(desiredPow) < Math.abs(currentPow))
+                newPow = currentPow - Math.signum(currentPow) * decreaseRate;
+            if(Math.abs(newPow) < 0.003)
+                newPow = 0.003 * -Math.signum(currentPow);
+        }
+        if(UniversalFunctions.withinTolerance(newPow, desiredPow, -decreaseRate * Math.signum(desiredPow), increaseRate * Math.signum(desiredPow)))
+            newPow = desiredPow;
+        motor.setPower(newPow);
+    }
+
+}
+
