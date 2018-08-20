@@ -35,16 +35,18 @@ public class WCD15LocationTest extends WestBot15{
         times[1] = System.nanoTime() / 10e9;
         setIncrementalPower(drivetrain.rightFore, drivetrain.rightPow, times[2]);
         times[2] = System.nanoTime() / 10e9;
-        drivetrain.updateEncoders();
         setIncrementalPower(drivetrain.rightRear, drivetrain.rightPow, times[3]);
         times[3] = System.nanoTime() / 10e9;
+        drivetrain.updateEncoders();
         double leftVal = drivetrain.averageLeftEncoders()- oldLeftEncVal;
         double rightVal = drivetrain.averageRightEncoders() - oldRightEncVal;
         drivetrain.updateLocation(leftVal, rightVal);
         oldLeftEncVal = drivetrain.averageLeftEncoders();
         oldRightEncVal = drivetrain.averageRightEncoders();
 
-        telemetry.addData("Position", drivetrain.position);
+        telemetry.addData("location x", drivetrain.position.x);
+        telemetry.addData("location y", drivetrain.position.y);
+        telemetry.addData("location angle", Math.toDegrees(drivetrain.position.angle));
     }
 
     public void setIncrementalPower(DcMotor motor, double desiredPow, double prevTime){
