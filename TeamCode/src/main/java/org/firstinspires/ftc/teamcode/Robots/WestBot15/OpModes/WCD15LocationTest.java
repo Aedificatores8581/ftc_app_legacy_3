@@ -41,6 +41,7 @@ public class WCD15LocationTest extends WestBot15{
         double leftVal = drivetrain.averageLeftEncoders()- oldLeftEncVal;
         double rightVal = drivetrain.averageRightEncoders() - oldRightEncVal;
         drivetrain.updateLocation(leftVal, rightVal);
+
         oldLeftEncVal = drivetrain.averageLeftEncoders();
         oldRightEncVal = drivetrain.averageRightEncoders();
 
