@@ -4,7 +4,8 @@ import org.firstinspires.ftc.teamcode.Components.Sensors.DigitalCamera;
 
 import java.lang.Math;
 public class MotoG4{
-    //TODO: Fix the non-static import error when using the math class to define the focal length of the front camera in a way which makes sense
+    //TODO: Figure out of difference ratio of surface view height and width and the image sensor height and width needs to be accounted for
+    //image sensor ratio: approx 1.348717949, surface view ratio: approx 1.333333333
     public static RearCamera rear;
     public static FrontCamera front;
     public MotoG4(){
