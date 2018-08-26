@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Universal;
 
+import org.opencv.core.Point3;
+
 import java.util.Arrays;
 
 /**
@@ -142,5 +144,11 @@ public class UniversalFunctions {
                 rho    = Math.atan2(y, x);
         double[] spherical = {radius, theta, rho};
         return spherical;
+    }
+    public static Point3 subtract(Point3 point1, Point3 point2){
+        return new Point3(point1.x - point2.x, point1.y - point2.y, point1.z - point2.z);
+    }
+    public static Point3 add(Point3 point1, Point3 point2){
+        return new Point3(point1.x + point2.x, point1.y + point2.y, point1.z + point2.z);
     }
 }

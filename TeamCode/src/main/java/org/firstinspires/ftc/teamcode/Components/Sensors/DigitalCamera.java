@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Components.Sensors;
 
+import org.firstinspires.ftc.teamcode.Universal.Math.Pose3;
 import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 import org.opencv.core.Point;
@@ -33,6 +34,30 @@ public class DigitalCamera {
         this.focalLength = focalLength;
         cameraSensor = new CameraSensor(width, height);
     }
+    public void setLocation(Point3 location){
+        x = location.x;
+        y = location.y;
+        z = location.z;
+    }
+    public void setLocation(DigitalCamera aCamera){
+        setLocation(new Point3(aCamera.x, aCamera.y, aCamera.z));
+    }
+    public void setOrientation(Point3 orientation){
+        xAng = orientation.x;
+        yAng = orientation.y;
+        zAng = orientation.z;
+    }
+    public void setOrientation(DigitalCamera aCamera){
+        setOrientation(new Point3(aCamera.xAng, aCamera.yAng, aCamera.zAng));
+    }
+    public void setLocationAndOrientation(Point3 location, Point3 orientation){
+        setOrientation(orientation);
+        setLocation(location);
+    }
+    public void setLocationAndOrientation(DigitalCamera aCamera){
+        setLocation(aCamera);
+        setOrientation(aCamera);
+    }
     //TODO: Fix variable names
     public Point getObjectLocation(Point pointOnImage, Size imageSize, double widthRatio, double heightRatio, double objectHeight){
         pointOnImage.x -= imageSize.width / 2;
@@ -46,6 +71,23 @@ public class DigitalCamera {
         double newY = newPoint.y * (z - objectHeight) / -newPoint.z + y;
         return new Point(newX, newY);
     }
+    public void updateLocation(double xChange, double yChange, double zChange){
+        x += xChange;
+        y += yChange;
+        z += zChange;
+    }
+    public void updateLocation(Point3 differentialPosition){
+        updateLocation(differentialPosition.x, differentialPosition.y, differentialPosition.z);
+    }
+    public void updateOrientation(double xChange, double yChange, double zChange){
+        xAng += xChange;
+        yAng += yChange;
+        zAng += zChange;
+        normalizeAngles();
+    }
+    public void updateOrientation(Point3 differentialOrientation){
+        updateOrientation(differentialOrientation.x, differentialOrientation.y, differentialOrientation.z);
+    }
     public double horizontalAngleOfView(double widthRatio){
         return 2 * Math.atan2(cameraSensor.width * widthRatio, 2 * focalLength);
     }
@@ -57,5 +99,10 @@ public class DigitalCamera {
     }
     public double verticalAngleOfView(){
         return verticalAngleOfView(1);
+    }
+    public void normalizeAngles(){
+        UniversalFunctions.normalizeAngleRadians(xAng);
+        UniversalFunctions.normalizeAngleRadians(yAng);
+        UniversalFunctions.normalizeAngleRadians(zAng);
     }
 }

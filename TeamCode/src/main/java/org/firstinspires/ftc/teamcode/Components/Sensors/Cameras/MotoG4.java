@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Components.Sensors.Cameras;
 
 import org.firstinspires.ftc.teamcode.Components.Sensors.DigitalCamera;
+import org.opencv.core.Point3;
 
 import java.lang.Math;
 public class MotoG4{
@@ -12,6 +13,21 @@ public class MotoG4{
         rear = new RearCamera();
         front = new FrontCamera(3.584 / 2 / Math.tan(14 * Math.PI / 15));
     }
+    public void setLocationAndOrientation(Point3 location, Point3 orientation){
+        rear.setLocationAndOrientation(location, orientation);
+        front.setLocation(rear);
+        front.updateOrientation(Math.PI, Math.PI, Math.PI);
+    }
+    public void setLocation(Point3 location){
+        front.setLocation(location);
+        rear.setLocation(location);
+    }
+    public Point3 getLocation(){
+        return new Point3(rear.x, rear.y, rear.z);
+    }
+    /*public void setOrientation(Point3 orientation){
+        rear.xAng
+    }*/
 }
 
 class RearCamera extends DigitalCamera{
@@ -23,6 +39,7 @@ class RearCamera extends DigitalCamera{
     RearCamera() {
         super(FOCAL_LENGTH, PIXEL_SIZE, NUM_PIXELS_WIDTH, NUM_PIXELS_HEIGHT);
     }
+
 }
 class FrontCamera extends DigitalCamera{
     static final double FOCAL_LENGTH = 0,
