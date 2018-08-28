@@ -20,6 +20,23 @@ public class Vector3 {
         this.y = y;
         this.z = z;
     }
+
+    public Vector3(double i, double j, double k, double magnitude){
+        x = magnitude / Math.sqrt(i * i + k * k + j * j) * i;
+        y = magnitude / Math.sqrt(i * i + k * k + j * j) * j;
+        z = magnitude / Math.sqrt(i * i + k * k + j * j) * k;
+    }
+
+    public Vector3(Vector3 componentForm, double magnitude){
+        x = magnitude / componentForm.magnitude() * componentForm.x;
+        y = magnitude / componentForm.magnitude() * componentForm.y;
+        z = magnitude / componentForm.magnitude() * componentForm.z;
+    }
+
+    public void setFromComponentForm(Vector3 componentForm, double magnitude){
+        componentForm.scalarMultiply(magnitude / componentForm.magnitude());
+        componentForm.copyTo(this);
+    }
     //Adds the components of a given Vector3 to this Vector3
     public void add(Vector3 vector) {
         x += vector.x;
@@ -84,7 +101,11 @@ public class Vector3 {
         x = temp.x;
         y = temp.y;
     }
-
+    public void copyTo(Vector3 intendedVector){
+        intendedVector.x = x;
+        intendedVector.y = y;
+        intendedVector.z = z;
+    }
     public String toString(){
         return "(" + x + ", " + y + ", " + z + ")";
     }
