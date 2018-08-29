@@ -25,6 +25,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':openCVLibrary320')
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api project(':openCVLibrary320')
 }
