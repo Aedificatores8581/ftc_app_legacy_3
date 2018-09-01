@@ -104,15 +104,9 @@ public class WestBot15TestDrive extends WestBot15 {
         }
         telemetry.addData("control State", drivetrain.controlState);
         telemetry.addData("fcTurnState", drivetrain.turnState);
-        telemetry.addData("leftvect1", leftStick1);
         telemetry.addData("leftPower", drivetrain.leftPow);
         telemetry.addData("rightPower", drivetrain.rightPow);
         telemetry.addData("angle", Math.toDegrees(robotAngle.angle()));
-        telemetry.addData("direction", drivetrain.direction);
-        telemetry.addData("turn", drivetrain.turn);
-        telemetry.addData("sin", Math.sin(drivetrain.angleBetween));
-        telemetry.addData("angleBetween", drivetrain.angleBetween);
-        telemetry.addData("angleBetween", Math.toDegrees(leftStick1.angleBetween(robotAngle)));
     }
     public void refreshStartAngle(){
         if(gamepad1.left_stick_button){

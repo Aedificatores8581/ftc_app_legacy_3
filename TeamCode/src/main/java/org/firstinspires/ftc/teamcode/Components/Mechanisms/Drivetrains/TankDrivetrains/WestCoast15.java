@@ -14,6 +14,8 @@ public class WestCoast15 extends TankDT {
     public DcMotor rightFore, leftFore, leftRear, rightRear;
     public MotorEncoder rfEncoder, lfEncoder, lrEncoder, rrEncoder;
     public DcMotor.ZeroPowerBehavior zeroPowerBehavior;
+    //TODO: Find this value
+    public final double MAX_ENC_VAL = 3036;
     public WestCoast15(){
         ENC_PER_INCH = 140 / Math.PI;
         DISTANCE_BETWEEN_WHEELS = 390.9515 / 25.4;
