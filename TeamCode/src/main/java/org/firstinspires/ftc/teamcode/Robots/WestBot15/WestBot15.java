@@ -4,9 +4,11 @@ import android.provider.ContactsContract;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.WestCoast15;
 import org.firstinspires.ftc.teamcode.Components.Sensors.Cameras.MotoG4;
 import org.firstinspires.ftc.teamcode.Robots.Robot;
+import org.firstinspires.ftc.teamcode.Universal.Math.Pose;
 import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 import org.opencv.core.Point3;
 
@@ -28,9 +30,9 @@ public abstract class WestBot15 extends Robot {
         super.init();
         drivetrain.maxSpeed = 0.5;
         drivetrain.initMotors(hardwareMap);
-        thetaAdjustor = hardwareMap.servo.get("theta");
+        //thetaAdjustor = hardwareMap.servo.get("theta");
         msStuckDetectInit = 50000;
-
+        drivetrain.position = new Pose();
     }
     @Override
     public void start(){

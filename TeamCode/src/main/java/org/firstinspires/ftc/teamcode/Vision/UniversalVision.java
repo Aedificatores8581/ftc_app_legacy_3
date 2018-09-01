@@ -11,7 +11,19 @@ import org.opencv.imgproc.Imgproc;
 import java.util.ArrayList;
 import java.util.List;
 
+import ftc.vision.Detector;
+
 public class UniversalVision {
+
+    public Mat combinedDetection(Mat image, Detector detector1, Detector detector2){
+        detector1.detect(image.clone());
+        detector2.detect(image.clone());
+        Mat output = new Mat();
+        Mat temp = new Mat();
+        Core.bitwise_or(detector1.result(), detector2.result(), temp);
+        Core.add(detector1.result(), detector2.result(), temp, output);
+        return output;
+    }
 
     public static void rgb2hsvThresh(Mat rgb, Mat threshold, Scalar min, Scalar max){
         Mat hsv = new Mat();
@@ -111,9 +123,4 @@ public class UniversalVision {
         drawContours(rgb.clone(), rgb, 9);
     }
 
-    //TODO: Finish implementing this method
-    public static double distanceFromPoint(Point p, double x, double y, double z, double zAng, double xAng, double yAng, double height){
-        double distanceAway = 0;
-        return distanceAway;
-    }
 }
