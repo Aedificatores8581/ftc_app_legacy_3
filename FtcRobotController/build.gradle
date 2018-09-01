@@ -49,5 +49,5 @@ apply from: 'build.release.gradle'
 
 dependencies {
     implementation project(':openCVLibrary320')
-    compile project(path: ':openCVLibrary320')
+    api project(path: ':openCVLibrary320')
 }
