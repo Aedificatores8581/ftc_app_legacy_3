@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 
 /**
  * Created by Frank Portman on 6/1/2018
@@ -29,6 +30,10 @@ public class WestBot15TestDrive extends WestBot15 {
     }
     @Override
     public void loop(){
+        if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER)
+            drivetrain.maxSpeed = 0.98;
+        else
+            drivetrain.maxSpeed = 0.5;
         updateGamepad1();
         refreshStartAngle();
         setRobotAngle();
@@ -50,30 +55,10 @@ public class WestBot15TestDrive extends WestBot15 {
             case FIELD_CENTRIC:
                 switch(drivetrain.turnState){
                     case FAST:
-                        if(switchTurnState){
-                            drivetrain.turnState = TankDT.FCTurnState.SMOOTH;
-                            switchTurnState = false;
-                            canSwitchTurnState = false;
-                        }
-                        else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER){
-                            switchTurnState = false;
-                            canSwitchTurnState = true;
-                        }
-                        else if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
-                            switchTurnState = true;
+
                         break;
                     case SMOOTH:
-                        if(switchTurnState){
-                            drivetrain.turnState = TankDT.FCTurnState.FAST;
-                            switchTurnState = false;
-                            canSwitchTurnState = false;
-                        }
-                        else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER){
-                            switchTurnState = false;
-                            canSwitchTurnState = true;
-                        }
-                        else if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
-                            switchTurnState = true;
+
                         break;
                 }
                 if(switchControlState){

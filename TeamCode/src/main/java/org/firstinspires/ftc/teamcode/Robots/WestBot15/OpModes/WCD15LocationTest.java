@@ -31,14 +31,20 @@ public class WCD15LocationTest extends WestBot15{
         updateGamepad1();
         drivetrain.leftPow = leftStick1.y + rightStick1.x;
         drivetrain.rightPow = leftStick1.y - rightStick1.x;
-        setIncrementalPower(drivetrain.leftFore, drivetrain.leftPow, times[0]);
-        times[0] = System.nanoTime() / 10e9;
-        setIncrementalPower(drivetrain.leftRear, drivetrain.leftPow, times[1]);
-        times[1] = System.nanoTime() / 10e9;
-        setIncrementalPower(drivetrain.rightFore, drivetrain.rightPow, times[2]);
-        times[2] = System.nanoTime() / 10e9;
-        setIncrementalPower(drivetrain.rightRear, drivetrain.rightPow, times[3]);
-        times[3] = System.nanoTime() / 10e9;
+        if(true) {
+            setIncrementalPower(drivetrain.leftFore, drivetrain.leftPow, times[0]);
+            times[0] = System.nanoTime() / 10e9;
+            setIncrementalPower(drivetrain.leftRear, drivetrain.leftPow, times[1]);
+            times[1] = System.nanoTime() / 10e9;
+            setIncrementalPower(drivetrain.rightFore, drivetrain.rightPow, times[2]);
+            times[2] = System.nanoTime() / 10e9;
+            setIncrementalPower(drivetrain.rightRear, drivetrain.rightPow, times[3]);
+            times[3] = System.nanoTime() / 10e9;
+        }
+        else {
+            drivetrain.setLeftPow(drivetrain.leftPow);
+            drivetrain.setRightPow(drivetrain.rightPow);
+        }
         drivetrain.updateEncoders();
         double leftVal = drivetrain.averageLeftEncoders()- oldLeftEncVal;
         double rightVal = drivetrain.averageRightEncoders() - oldRightEncVal;
