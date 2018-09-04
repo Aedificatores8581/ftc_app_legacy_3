@@ -37,7 +37,6 @@ public class SensorBotTestSensors extends SensorBot {
 
 	@Override
 	public void init() {
-
 		super.init();
 		updateGamepad1();
 		setRobotAngle();

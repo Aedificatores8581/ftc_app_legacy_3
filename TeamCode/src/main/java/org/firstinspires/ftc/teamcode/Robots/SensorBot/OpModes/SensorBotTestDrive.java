@@ -17,6 +17,7 @@ public class SensorBotTestDrive extends SensorBot {
             canSwitchControlState = false,
             switchTurnState       = false,
             canSwitchTurnState    = false;
+
     @Override
     public void init(){
         super.init();
@@ -30,6 +31,7 @@ public class SensorBotTestDrive extends SensorBot {
     public void start(){
         super.start();
     }
+
     @Override
     public void loop(){
         updateGamepad1();
@@ -37,6 +39,7 @@ public class SensorBotTestDrive extends SensorBot {
         drivetrain.teleOpLoop(leftStick1, rightStick1, robotAngle);
         rm.setPower(drivetrain.rightPow);
         lm.setPower(drivetrain.leftPow);
+
         switch(drivetrain.controlState){
             case ARCADE:
                 if (switchControlState) {
@@ -88,6 +91,7 @@ public class SensorBotTestDrive extends SensorBot {
                 } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                     switchControlState = true;
                 break;
+
             case TANK:
                 if (switchControlState) {
                     drivetrain.controlState = TankDT.ControlState.ARCADE;
@@ -101,6 +105,7 @@ public class SensorBotTestDrive extends SensorBot {
                     switchControlState = true;
                 break;
         }
+
         telemetry.addData("control State", drivetrain.controlState);
         telemetry.addData("fcTurnState", drivetrain.turnState);
         telemetry.addData("leftvect1", leftStick1);
