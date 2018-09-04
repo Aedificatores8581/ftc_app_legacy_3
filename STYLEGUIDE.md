@@ -15,8 +15,8 @@ Also, feel free to propose changes to the styleguide.
 if (bar == 30) {
 	System.out.println("bat");
 }
-``
-**Don't** use:
+```
+**Do not** use:
 ```java
 if (bar == 30)
 {

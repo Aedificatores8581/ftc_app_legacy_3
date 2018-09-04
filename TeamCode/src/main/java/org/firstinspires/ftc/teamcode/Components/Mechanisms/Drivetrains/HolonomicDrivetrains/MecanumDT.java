@@ -7,12 +7,9 @@ import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 /**
  * Created by Frank Portman on 5/21/2018
  */
+
 public abstract class MecanumDT extends HolonomicDT {
-    public double       leftForePow        ,
-                        rightForePow       ,
-                        leftAftPow         ,
-                        rightAftPow        ,
-                        angleBetween       ;
+    public double leftForePow, rightForePow, leftAftPow, rightAftPow, angleBetween;
     public Pose pos = new Pose(0, 0, 0);
     public final double FRONT_TO_BACK_RATIO;
 
