@@ -66,6 +66,7 @@ public abstract class MecanumDT extends HolonomicDT {
         rightAftPow /= max;
         leftAftPow /= max;
     }
+
     //Updates the power variables to account for turning
     public void setTurnPow(){
         leftForePow += turnPow * FRONT_TO_BACK_RATIO;
@@ -73,6 +74,7 @@ public abstract class MecanumDT extends HolonomicDT {
         rightForePow -= turnPow * FRONT_TO_BACK_RATIO;
         rightAftPow -= turnPow / FRONT_TO_BACK_RATIO;
     }
+
     //Provides basic teleOp functionality
     public void teleOpLoop(Vector2 velocity, Vector2 turnVector, Vector2 angle) {
         angleBetween = velocity.angleBetween(angle);
@@ -82,6 +84,7 @@ public abstract class MecanumDT extends HolonomicDT {
         normalizeMotors();
         refreshMotors();
     }
+
     //Provides basic Autonomous functionality
     public void autonomousLoop1(Vector2 destination, Vector2 angle, double tolerance){
         angleBetween = destination.angleBetween(angle);
