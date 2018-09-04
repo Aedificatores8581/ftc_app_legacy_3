@@ -11,15 +11,18 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 @TeleOp(name = "encoder wrap test", group = "WestBot15")
 public class WCD15EncoderWrapTest extends WestBot15{
     public double maxEncVal = 0;
+
     @Override
     public void init(){
         usingIMU = false;
         super.init();
     }
+
     @Override
     public void start(){
         super.start();
     }
+
     @Override
     public void loop(){
         updateGamepad1();
