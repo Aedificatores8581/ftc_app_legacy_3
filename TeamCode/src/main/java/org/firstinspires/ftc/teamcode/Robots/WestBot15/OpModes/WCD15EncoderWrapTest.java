@@ -10,11 +10,12 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 
 @TeleOp(name = "encoder wrap test", group = "WestBot15")
 public class WCD15EncoderWrapTest extends WestBot15{
-    public double maxEncVal = 0;
+    double maxEncVal = 0, minEncVal = 0;
     @Override
     public void init(){
         usingIMU = false;
         super.init();
+        activateGamepad1();
     }
     @Override
     public void start(){
@@ -26,8 +27,10 @@ public class WCD15EncoderWrapTest extends WestBot15{
         drivetrain.leftPow = leftStick1.y + rightStick1.x;
         drivetrain.rightPow = leftStick1.y - rightStick1.x;
         drivetrain.updateEncoders();
+        minEncVal = UniversalFunctions.min(drivetrain.lfEncoder.currentPosition, drivetrain.rfEncoder.currentPosition, drivetrain.lrEncoder.currentPosition, drivetrain.rrEncoder.currentPosition, minEncVal);
         maxEncVal = UniversalFunctions.max(drivetrain.lfEncoder.currentPosition, drivetrain.rfEncoder.currentPosition, drivetrain.lrEncoder.currentPosition, drivetrain.rrEncoder.currentPosition, maxEncVal);
         telemetry.addData("Max enc val", maxEncVal);
+        telemetry.addData("Min enc val", minEncVal);
     }
 }
 

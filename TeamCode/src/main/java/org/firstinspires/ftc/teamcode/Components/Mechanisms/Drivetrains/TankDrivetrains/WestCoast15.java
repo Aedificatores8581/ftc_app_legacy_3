@@ -50,7 +50,6 @@ public class WestCoast15 extends TankDT {
         rightRear.setDirection(REVERSE);
         leftFore.setDirection(FORWARD);
         leftRear.setDirection(FORWARD);
-
         lfEncoder = new MotorEncoder(leftFore);
         lrEncoder = new MotorEncoder(leftRear);
         rfEncoder = new MotorEncoder(rightFore);

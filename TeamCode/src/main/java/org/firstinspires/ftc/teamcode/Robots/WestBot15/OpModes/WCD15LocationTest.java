@@ -16,6 +16,7 @@ public class WCD15LocationTest extends WestBot15{
     public void init(){
         usingIMU = false;
         super.init();
+        activateGamepad1();
     }
     @Override
     public void start(){
@@ -31,7 +32,7 @@ public class WCD15LocationTest extends WestBot15{
         updateGamepad1();
         drivetrain.leftPow = leftStick1.y + rightStick1.x;
         drivetrain.rightPow = leftStick1.y - rightStick1.x;
-        if(true) {
+        if(false) {
             setIncrementalPower(drivetrain.leftFore, drivetrain.leftPow, times[0]);
             times[0] = System.nanoTime() / 10e9;
             setIncrementalPower(drivetrain.leftRear, drivetrain.leftPow, times[1]);
@@ -55,7 +56,7 @@ public class WCD15LocationTest extends WestBot15{
 
         telemetry.addData("location x", drivetrain.position.x);
         telemetry.addData("location y", drivetrain.position.y);
-        telemetry.addData("location angle", Math.toDegrees(drivetrain.position.angle));
+        telemetry.addData("location angle", UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(drivetrain.position.angle)));
     }
 
     public void setIncrementalPower(DcMotor motor, double desiredPow, double prevTime){

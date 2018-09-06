@@ -28,7 +28,6 @@ public class WestBot15TestDrive extends WestBot15 {
     public void start(){
         super.start();
     }
-    @Override
     public void loop(){
         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER)
             drivetrain.maxSpeed = 0.98;
