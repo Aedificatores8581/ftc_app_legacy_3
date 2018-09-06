@@ -15,25 +15,36 @@ import org.opencv.core.Point3;
 /**
  * Created by Frank Portman on 6/1/2018
  */
+
 public abstract class WestBot15 extends Robot {
     //IMPORTANT: phone locations should be taken in relation to the robot, not the field
     //:TODO: Add an encoder to the servo
+
     protected WestCoast15 drivetrain = new WestCoast15();
+
     MotoG4 motoG4 = new MotoG4();
+
     Servo thetaAdjustor;
+
     protected double currentAngle = 0;
+
     PhoneCoordinateSystem phoneCoordinateSystem = PhoneCoordinateSystem.ROBOT;
+
     private final double MOTO_ZERO_POSITION_THETA = 0,
                          MOTO_ONE_POSITION_THETA = Math.PI * 2;
+
     @Override
     public void init(){
         super.init();
+
         drivetrain.maxSpeed = 0.5;
         drivetrain.initMotors(hardwareMap);
+
         //thetaAdjustor = hardwareMap.servo.get("theta");
         msStuckDetectInit = 50000;
         drivetrain.position = new Pose();
     }
+
     @Override
     public void start(){
         super.start();
@@ -41,6 +52,7 @@ public abstract class WestBot15 extends Robot {
     public void setPhoneTheta(double theta){
         thetaAdjustor.setPosition(0);
     }
+
     public synchronized void updateLocation(double leftChange, double rightChange){
         double oldX = drivetrain.position.x, oldY = drivetrain.position.y;
         drivetrain.updateLocation(leftChange, rightChange);
@@ -51,8 +63,6 @@ public abstract class WestBot15 extends Robot {
                 break;
         }
     }
-    public enum PhoneCoordinateSystem{
-        ROBOT,
-        FIELD
-    }
+
+    public enum PhoneCoordinateSystem{ROBOT, FIELD}
 }

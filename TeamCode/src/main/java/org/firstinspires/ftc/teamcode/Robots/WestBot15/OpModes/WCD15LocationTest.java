@@ -12,12 +12,14 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 public class WCD15LocationTest extends WestBot15{
     public double oldLeftEncVal = 0, oldRightEncVal = 0;
     public double[] times = new double[4];
+
     @Override
     public void init(){
         usingIMU = false;
         super.init();
         activateGamepad1();
     }
+
     @Override
     public void start(){
         super.start();
@@ -27,6 +29,7 @@ public class WCD15LocationTest extends WestBot15{
         times[3] = time;
         times[2] = time;
     }
+
     @Override
     public void loop(){
         updateGamepad1();
@@ -41,14 +44,16 @@ public class WCD15LocationTest extends WestBot15{
             times[2] = System.nanoTime() / 10e9;
             setIncrementalPower(drivetrain.rightRear, drivetrain.rightPow, times[3]);
             times[3] = System.nanoTime() / 10e9;
-        }
-        else {
+        } else {
             drivetrain.setLeftPow(drivetrain.leftPow);
             drivetrain.setRightPow(drivetrain.rightPow);
         }
+
         drivetrain.updateEncoders();
+
         double leftVal = drivetrain.averageLeftEncoders()- oldLeftEncVal;
         double rightVal = drivetrain.averageRightEncoders() - oldRightEncVal;
+
         drivetrain.updateLocation(leftVal, rightVal);
 
         oldLeftEncVal = drivetrain.averageLeftEncoders();
@@ -65,7 +70,7 @@ public class WCD15LocationTest extends WestBot15{
                 linearIncrement = 100,
                 increaseRate = 1.5/1000 * (System.nanoTime()/10e9 - prevTime) * linearIncrement,
                 decreaseRate = 2.5/1000 * (System.nanoTime()/10e9 - prevTime) * linearIncrement;
-        if(currentPow == desiredPow)
+        if (currentPow == desiredPow)
             newPow = currentPow;
         if(desiredPow != 0) {
             if (Math.signum(currentPow) * Math.signum(desiredPow) == -1)
@@ -74,11 +79,13 @@ public class WCD15LocationTest extends WestBot15{
                 newPow = currentPow + Math.signum(currentPow) * increaseRate;
             else if (Math.abs(desiredPow) < Math.abs(currentPow))
                 newPow = currentPow - Math.signum(currentPow) * decreaseRate;
-            if(Math.abs(newPow) < 0.003)
+            if (Math.abs(newPow) < 0.003)
                 newPow = 0.003 * -Math.signum(currentPow);
         }
+
         if(UniversalFunctions.withinTolerance(newPow, desiredPow, -decreaseRate * Math.signum(desiredPow), increaseRate * Math.signum(desiredPow)))
             newPow = desiredPow;
+
         motor.setPower(newPow);
     }
 }

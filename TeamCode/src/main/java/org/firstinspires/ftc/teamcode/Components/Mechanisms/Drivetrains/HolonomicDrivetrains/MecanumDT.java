@@ -7,12 +7,9 @@ import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 /**
  * Created by Frank Portman on 5/21/2018
  */
+
 public abstract class MecanumDT extends HolonomicDT {
-    public double       leftForePow        ,
-                        rightForePow       ,
-                        leftAftPow         ,
-                        rightAftPow        ,
-                        angleBetween       ;
+    public double leftForePow, rightForePow, leftAftPow, rightAftPow, angleBetween;
     public Pose pos = new Pose(0, 0, 0);
     public final double FRONT_TO_BACK_RATIO;
 
@@ -69,6 +66,7 @@ public abstract class MecanumDT extends HolonomicDT {
         rightAftPow /= max;
         leftAftPow /= max;
     }
+
     //Updates the power variables to account for turning
     public void setTurnPow(){
         leftForePow += turnPow * FRONT_TO_BACK_RATIO;
@@ -76,6 +74,7 @@ public abstract class MecanumDT extends HolonomicDT {
         rightForePow -= turnPow * FRONT_TO_BACK_RATIO;
         rightAftPow -= turnPow / FRONT_TO_BACK_RATIO;
     }
+
     //Provides basic teleOp functionality
     public void teleOpLoop(Vector2 velocity, Vector2 turnVector, Vector2 angle) {
         angleBetween = velocity.angleBetween(angle);
@@ -85,6 +84,7 @@ public abstract class MecanumDT extends HolonomicDT {
         normalizeMotors();
         refreshMotors();
     }
+
     //Provides basic Autonomous functionality
     public void autonomousLoop1(Vector2 destination, Vector2 angle, double tolerance){
         angleBetween = destination.angleBetween(angle);

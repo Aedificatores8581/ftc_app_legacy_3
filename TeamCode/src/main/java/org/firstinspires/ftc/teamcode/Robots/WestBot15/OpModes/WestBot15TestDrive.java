@@ -10,24 +10,30 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 /**
  * Created by Frank Portman on 6/1/2018
  */
+
 @TeleOp(name = "West Coast 15 Test Drive", group = "West Coast 15")
 public class WestBot15TestDrive extends WestBot15 {
     boolean switchControlState    = false,
             canSwitchControlState = false,
             switchTurnState       = false,
             canSwitchTurnState    = false;
+
     @Override
     public void init(){
         super.init();
         activateGamepad1();
+
         drivetrain.controlState = TankDT.ControlState.ARCADE;
         drivetrain.turnState = TankDT.FCTurnState.FAST;
         drivetrain.direction = TankDT.Direction.FOR;
     }
+
     @Override
     public void start(){
         super.start();
     }
+
+    @Override
     public void loop(){
         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER)
             drivetrain.maxSpeed = 0.98;
@@ -37,22 +43,22 @@ public class WestBot15TestDrive extends WestBot15 {
         refreshStartAngle();
         setRobotAngle();
         drivetrain.teleOpLoop(leftStick1, rightStick1, robotAngle);
-        switch(drivetrain.controlState){
+        switch(drivetrain.controlState) {
             case ARCADE:
-                if(switchControlState){
+                if (switchControlState) {
                     drivetrain.controlState = drivetrain.controlState.FIELD_CENTRIC;
                     switchControlState = false;
                     canSwitchControlState = false;
-                }
-                else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER){
+                } else if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {
                     switchControlState = false;
                     canSwitchControlState = true;
-                }
-                else if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
+                } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                     switchControlState = true;
                 break;
+
+            // TODO: \/\/\/
             case FIELD_CENTRIC:
-                switch(drivetrain.turnState){
+                switch (drivetrain.turnState) {
                     case FAST:
 
                         break;
@@ -60,32 +66,31 @@ public class WestBot15TestDrive extends WestBot15 {
 
                         break;
                 }
-                if(switchControlState){
+
+                if (switchControlState) {
                     drivetrain.controlState = TankDT.ControlState.TANK;
                     switchControlState = false;
                     canSwitchControlState = false;
-                }
-                else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER){
+                } else if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {
                     switchControlState = false;
                     canSwitchControlState = true;
-                }
-                else if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
+                } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                     switchControlState = true;
                 break;
+
             case TANK:
-                if(switchControlState){
+                if (switchControlState) {
                     drivetrain.controlState = TankDT.ControlState.ARCADE;
                     switchControlState = false;
                     canSwitchControlState = false;
-                }
-                else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER){
+                } else if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {
                     switchControlState = false;
                     canSwitchControlState = true;
-                }
-                else if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
+                } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                     switchControlState = true;
                 break;
         }
+
         telemetry.addData("control State", drivetrain.controlState);
         telemetry.addData("fcTurnState", drivetrain.turnState);
         telemetry.addData("leftPower", drivetrain.leftPow);
@@ -93,9 +98,11 @@ public class WestBot15TestDrive extends WestBot15 {
         telemetry.addData("angle1", Math.toDegrees(robotAngle.angle()));
         telemetry.addData("angle2", (drivetrain.averageRightEncoders() - drivetrain.averageLeftEncoders()) / (drivetrain.ENC_PER_INCH * drivetrain.DISTANCE_BETWEEN_WHEELS));
     }
+
     public void refreshStartAngle(){
         if(gamepad1.left_stick_button){
             startAngle = Math.toDegrees(leftStick1.angleBetween(robotAngle));
+
             leftStick1.x = 0;
             leftStick1.y = 0;
         }

@@ -8,15 +8,18 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
 /**
  * Created by Frank Portman on 6/1/2018
  */
+
 @TeleOp(name = "Mecanum 2.4 Test Drive", group = "Mecanum 2.4")
 public class MecBot2_4TestDrive extends MecBot2_4 {
     boolean switchMode = false,
             canSwitch  = false;
+
     @Override
     public void init(){
         super.init();
         activateGamepad1();
     }
+
     @Override
     public void start(){
         super.start();
@@ -37,6 +40,7 @@ public class MecBot2_4TestDrive extends MecBot2_4 {
                 } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch)
                     switchMode = true;
                 break;
+
             case FIELD_CENTRIC:
                 if (switchMode) {
                     drivetrain.turnState = drivetrain.turnState.ARCADE;

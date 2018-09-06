@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 /**
  * Created by Frank Portman on 5/21/2018
  */
+
 public class Mecanum2_4 extends MecanumDT {
     public DcMotor leftFore, leftRear, rightFore, rightRear;
 
@@ -17,6 +18,7 @@ public class Mecanum2_4 extends MecanumDT {
         rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         maxSpeed = 1;
     }
+
     public Mecanum2_4(DcMotor.ZeroPowerBehavior zeroPowerBehavior, double speed) {
         super(1);
         leftFore.setZeroPowerBehavior(zeroPowerBehavior);
@@ -40,9 +42,7 @@ public class Mecanum2_4 extends MecanumDT {
     }
 
     @Override
-    public void resetEncoders() {
-
-    }
+    public void resetEncoders() {}
 
     //sets the motor powers to the specified values
     public void refreshMotors(double I, double II, double III, double IV){

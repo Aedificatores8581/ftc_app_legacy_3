@@ -8,19 +8,25 @@ import org.firstinspires.ftc.teamcode.Universal.Threads.IncrementalMotorThread;
 
 /**
  * Created by Frank Portman on 6/13/2018
+ *
+ * This is a version of WestCoast15 with incremental motors.
+ *
  */
-//This is a version of WestCoast15 with incremental motors
+
 public class WestCoast15Inc extends TankDT {
     public DcMotor rf, lf, lr, rr;
     public IncrementalMotor rightFore, leftFore, leftRear, rightRear;
     public IncrementalMotorThread motorThread;
     public DcMotor.ZeroPowerBehavior zeroPowerBehavior;
+
     public double maxPow, minPow, accelerationPerSec = 1.5/1000, decelerationPerSec = 2.5/1000;
+
     public WestCoast15Inc(){
-        //zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT;
+        // zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT; !dead_code
         maxSpeed = 1;
         initAcceleratedMotors();
     }
+
     public WestCoast15Inc(DcMotor.ZeroPowerBehavior zeroPowBehavior, double speed){
         //zeroPowerBehavior = zeroPowBehavior;
         maxSpeed = speed;
@@ -29,31 +35,25 @@ public class WestCoast15Inc extends TankDT {
     }
 
     @Override
-    public double averageRightEncoders() {
-    return 0;
-}
-
+    public double averageRightEncoders() { return 0; }
     @Override
-    public double averageEncoders() {
-        return 0;
-    }
-
+    public double averageEncoders() { return 0; }
     @Override
-    public double averageLeftEncoders() {
-    return 0;
-}
+    public double averageLeftEncoders() { return 0; }
 
     public void setLeftPow(double pow) {
         leftFore.setPower(pow * maxSpeed);
         leftRear.setPower(pow * maxSpeed);
         leftPow = pow;
     }
-    public void setRightPow(double pow){
+
+    public void setRightPow(double pow) {
         rightFore.setPower(pow * maxSpeed);
         rightRear.setPower(pow * maxSpeed);
         rightPow = pow;
     }
-    public void initMotors(HardwareMap map){
+
+    public void initMotors(HardwareMap map) {
         rf = map.dcMotor.get("rf");
         lf = map.dcMotor.get("lf");
         lr = map.dcMotor.get("la");
@@ -64,10 +64,10 @@ public class WestCoast15Inc extends TankDT {
         lf.setDirection(FORWARD);
         lr.setDirection(FORWARD);
     }
-    public void normalizeMotors(){
-    }
 
-    public void initAcceleratedMotors(){
+    public void normalizeMotors() {}
+
+    public void initAcceleratedMotors() {
         motorThread = new IncrementalMotorThread(10);
 
         rightFore = new IncrementalMotor(rf, accelerationPerSec, decelerationPerSec, minPow);
@@ -84,7 +84,6 @@ public class WestCoast15Inc extends TankDT {
 
         motorThread.start();
     }
-    public void terminate(){
-        motorThread.terminate();
-    }
+
+    public void terminate() { motorThread.terminate(); }
 }
