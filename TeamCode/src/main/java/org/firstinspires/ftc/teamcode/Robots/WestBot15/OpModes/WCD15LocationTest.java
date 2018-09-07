@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 
 @TeleOp(name = "locationTestWCD", group = "WestBot15")
 public class WCD15LocationTest extends WestBot15{
-    public double oldLeftEncVal = 0, oldRightEncVal = 0;
+    public double oldLeftEncVal = 0, oldRightEncVal = 0, maxLeftError = 0, maxRightError = 0;
     public double[] times = new double[4];
 
     @Override
@@ -61,7 +61,16 @@ public class WCD15LocationTest extends WestBot15{
 
         telemetry.addData("location x", drivetrain.position.x);
         telemetry.addData("location y", drivetrain.position.y);
-        telemetry.addData("location angle", UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(drivetrain.position.angle)));
+        if (false) {
+            telemetry.addData("location angle", UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(drivetrain.position.angle)));
+            maxLeftError = UniversalFunctions.maxAbs(drivetrain.lfEncoder.currentPosition - drivetrain.lrEncoder.currentPosition, maxLeftError);
+            maxRightError = UniversalFunctions.maxAbs(drivetrain.rfEncoder.currentPosition - drivetrain.rrEncoder.currentPosition, maxRightError);
+
+            telemetry.addData("max left error", maxLeftError);
+            telemetry.addData("max right error", maxRightError);
+            telemetry.addData("current Left Error", Math.abs(drivetrain.lfEncoder.currentPosition - drivetrain.lrEncoder.currentPosition));
+            telemetry.addData("current right Error", Math.abs(drivetrain.rfEncoder.currentPosition - drivetrain.rrEncoder.currentPosition));
+        }
     }
 
     public void setIncrementalPower(DcMotor motor, double desiredPow, double prevTime){
