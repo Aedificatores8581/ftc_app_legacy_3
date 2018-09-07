@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robots.SensorBot.OpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
@@ -10,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
 /**
  * Created by Frank Portman on 6/1/2018
  */
-
+@Disabled
 @TeleOp(name = "Sensor Bot Test Drive", group = "SensorBot")
 public class SensorBotTestDrive extends SensorBot {
     boolean switchControlState    = false,

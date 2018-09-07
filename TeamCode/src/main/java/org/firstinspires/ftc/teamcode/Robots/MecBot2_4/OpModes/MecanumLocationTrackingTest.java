@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robots.MecBot2_4.OpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -10,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Components.Sensors.MotorEncoder;
 /**
  * Created  by Frank Portman on 6/24/2018
  */
-
+@Disabled
 @TeleOp(name = "MecanumLocationTrackingTest", group = "Mecanum 2.4")
 public class MecanumLocationTrackingTest extends MecBot2_4 {
     double prevTheta;

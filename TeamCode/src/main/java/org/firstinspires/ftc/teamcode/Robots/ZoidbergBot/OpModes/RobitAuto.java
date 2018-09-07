@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Robots.ZoidbergBot.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -11,7 +12,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.HashMap;
-
+@Disabled
 @Autonomous(name = "Robit Autonomous", group = "robit")
 public class RobitAuto extends RobitBot{
     //region Classes and Enums

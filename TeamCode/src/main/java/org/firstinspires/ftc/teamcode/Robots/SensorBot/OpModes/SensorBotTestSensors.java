@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robots.SensorBot.OpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
@@ -18,7 +19,7 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
  * fulfill its title. (Note: has much fewer control states.)
  *
  */
-
+@Disabled
 @TeleOp(name = "SensorBot Sensor Tests", group = "SensorBot")
 public class SensorBotTestSensors extends SensorBot {
 	private TouchSensor localTouchSensor = new TouchSensor();

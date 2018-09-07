@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robots.ZoidbergBot.OpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
@@ -9,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
 
 import static org.firstinspires.ftc.teamcode.Universal.UniversalConstants.*;
 import static org.firstinspires.ftc.teamcode.Universal.UniversalFunctions.clamp;
-
+@Disabled
 @TeleOp(name = "Robit TeleOp", group = "robit")
 public class RobitTeleOp extends RobitBot {
 

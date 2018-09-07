@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robots.MecBot2_4.OpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Robots.MecBot2_4.MecBot2_4;
@@ -8,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
 /**
  * Created by Frank Portman on 6/1/2018
  */
-
+@Disabled
 @TeleOp(name = "Mecanum 2.4 Test Drive", group = "Mecanum 2.4")
 public class MecBot2_4TestDrive extends MecBot2_4 {
     boolean switchMode = false,

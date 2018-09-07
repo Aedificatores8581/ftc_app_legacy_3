@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.Robots.ZoidbergBot.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.R;
 import org.firstinspires.ftc.teamcode.Robots.ZoidbergBot.RobitBot;
-
+@Disabled
 @Autonomous(name = "Jewel Thing")
 public class DetectJewel extends RobitBot {
 
