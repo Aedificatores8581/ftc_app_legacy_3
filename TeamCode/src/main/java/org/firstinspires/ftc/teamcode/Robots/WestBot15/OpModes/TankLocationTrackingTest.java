@@ -21,15 +21,7 @@ public class TankLocationTrackingTest extends WestBot15 {
     public void init(){
         totalAngle = 90;
         super.init();
-
-        drivetrain.leftFore.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        drivetrain.rightFore.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        drivetrain.leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        drivetrain.rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        drivetrain.leftFore.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        drivetrain.rightFore.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        drivetrain.leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        drivetrain.rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        drivetrain.hardResetEncoders();
     }
 
     @Override

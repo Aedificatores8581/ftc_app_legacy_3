@@ -39,6 +39,7 @@ public class MotorEncoder {
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         currentPosition = 0;
         resetPosition = 0;
+        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
 }
