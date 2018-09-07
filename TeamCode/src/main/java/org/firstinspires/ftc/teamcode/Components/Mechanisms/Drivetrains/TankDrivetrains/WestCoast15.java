@@ -15,7 +15,6 @@ public class WestCoast15 extends TankDT {
     public DcMotor rightFore, leftFore, leftRear, rightRear;
     public MotorEncoder rfEncoder, lfEncoder, lrEncoder, rrEncoder;
     public DcMotor.ZeroPowerBehavior zeroPowerBehavior;
-
     //TODO: Find this value
     public final double MAX_ENC_VAL = 3036;
 
@@ -96,18 +95,4 @@ public class WestCoast15 extends TankDT {
         return (averageLeftEncoders() + averageRightEncoders()) / 2;
     }
 
-    public Pose updateLocation(Pose y, Pose x, double xVal, double yVal){
-        //xVal *= -1;
-        double angle = xVal / x.radius() / Math.cos(Math.PI / 2 - x.angleOfVector());
-
-        yVal += angle * y.radius() * Math.sin(Math.PI / 2 - y.angleOfVector());
-        Vector2 velocity = new Vector2();
-
-        double radius = yVal / angle;
-        velocity.setFromPolar(radius, angle);
-        velocity.x -= radius;
-        position.add(velocity);
-
-        return position;
-    }
 }
