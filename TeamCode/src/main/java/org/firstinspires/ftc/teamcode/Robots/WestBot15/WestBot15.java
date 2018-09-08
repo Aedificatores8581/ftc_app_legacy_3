@@ -46,6 +46,12 @@ public abstract class WestBot15 extends Robot {
     public void start(){
         super.start();
     }
+    @Override
+    public double getGyroAngle(){
+        if(!usingIMU)
+            return startAngle + (drivetrain.averageRightEncoders() -  drivetrain.averageLeftEncoders()) / drivetrain.ENC_PER_INCH / drivetrain.DISTANCE_BETWEEN_WHEELS;
+        return super.getGyroAngle();
+    }
 
     public enum PhoneCoordinateSystem{ROBOT, FIELD}
 }
