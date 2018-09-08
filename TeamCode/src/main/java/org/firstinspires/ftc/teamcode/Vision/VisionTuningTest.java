@@ -57,6 +57,14 @@ public class VisionTuningTest extends OpMode {
             case HLS:
                 if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchColorSpace){
                     canSwitchColorSpace = false;
+                    colorspace = Colorspace.YUv;
+                }
+                else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER)
+                    canSwitchColorSpace = true;
+                break;
+            case YUv:
+                if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchColorSpace){
+                    canSwitchColorSpace = false;
                     colorspace = Colorspace.HSV;
                 }
                 else if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER)
@@ -90,6 +98,10 @@ public class VisionTuningTest extends OpMode {
                                     detector.h_MIN -= addition;
                                     detecting = "hls H min";
                                     break;
+                                case YUv:
+                                    detector.Y_MIN -= addition;
+                                    detecting = "yuv Y min";
+                                    break;
 
                             }
                         }
@@ -118,6 +130,11 @@ public class VisionTuningTest extends OpMode {
                                 case HLS:
                                     detector.l_MIN -= addition;
                                     detecting = "hls L min";
+                                    break;
+
+                                case YUv:
+                                    detector.U_MIN -= addition;
+                                    detecting = "yuv U min";
                                     break;
 
                             }
@@ -149,6 +166,11 @@ public class VisionTuningTest extends OpMode {
                                     detector.s_MIN -= addition;
                                     detecting = "hls S min";
                                     break;
+
+                                case YUv:
+                                    detector.v_MIN -= addition;
+                                    detecting = "yuv v min";
+                                    break;
                             }
                         }
                         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch){
@@ -178,6 +200,10 @@ public class VisionTuningTest extends OpMode {
                                     detecting = "hls H max";
                                     break;
 
+                                case YUv:
+                                    detector.Y_MAX -= addition;
+                                    detecting = "yuv Y max";
+                                    break;
                             }
 
                         }
@@ -207,6 +233,11 @@ public class VisionTuningTest extends OpMode {
                                     detector.l_MAX -= addition;
                                     detecting = "hls L max";
                                     break;
+
+                                case YUv:
+                                    detector.U_MAX -= addition;
+                                    detecting = "yuv U max";
+                                    break;
                             }
                         }
                         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch){
@@ -234,6 +265,11 @@ public class VisionTuningTest extends OpMode {
                                 case HLS:
                                     detector.s_MAX -= addition;
                                     detecting = "hls S max";
+                                    break;
+
+                                case YUv:
+                                    detector.v_MAX -= addition;
+                                    detecting = "yuv v max";
                                     break;
                             }
                         }
@@ -279,6 +315,13 @@ public class VisionTuningTest extends OpMode {
         detector.s_MAX = (int)UniversalFunctions.clamp(1, detector.s_MAX, 255);
         detector.l_MAX = (int)UniversalFunctions.clamp(1, detector.l_MAX, 255);
 
+        detector.Y_MIN = (int)UniversalFunctions.clamp(0, detector.Y_MIN, 254);
+        detector.U_MIN = (int)UniversalFunctions.clamp(0, detector.U_MIN, 254);
+        detector.v_MIN = (int)UniversalFunctions.clamp(0, detector.v_MIN, 254);
+        detector.Y_MAX = (int)UniversalFunctions.clamp(1, detector.Y_MAX, 255);
+        detector.U_MAX = (int)UniversalFunctions.clamp(1, detector.U_MAX, 255);
+        detector.v_MAX = (int)UniversalFunctions.clamp(1, detector.v_MAX, 255);
+
         telemetry.addData(detecting, adjust);
 
         telemetry.addData("h Min", detector.h_MIN);
@@ -310,6 +353,13 @@ public class VisionTuningTest extends OpMode {
         telemetry.addData("h Max", detector.H_MAX);
         telemetry.addData("s Max", detector.S_MAX);
         telemetry.addData("v Max", detector.V_MAX);
+
+        telemetry.addData("y Min", detector.Y_MIN);
+        telemetry.addData("u Min", detector.U_MIN);
+        telemetry.addData("v Min", detector.v_MIN);
+        telemetry.addData("y Max", detector.Y_MAX);
+        telemetry.addData("u Max", detector.U_MAX);
+        telemetry.addData("v Max", detector.v_MAX);
     }
 
     public void stop(){
@@ -332,7 +382,8 @@ public class VisionTuningTest extends OpMode {
         RGB,
         HSV,
         Lab,
-        HLS
+        HLS,
+        YUv
     }
 
 }

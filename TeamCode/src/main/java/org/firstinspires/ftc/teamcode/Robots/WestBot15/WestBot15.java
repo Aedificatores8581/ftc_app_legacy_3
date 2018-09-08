@@ -29,7 +29,6 @@ public abstract class WestBot15 extends Robot {
 
     protected double currentAngle = 0;
 
-    PhoneCoordinateSystem phoneCoordinateSystem = PhoneCoordinateSystem.ROBOT;
 
     @Override
     public void init(){
@@ -52,6 +51,4 @@ public abstract class WestBot15 extends Robot {
             return startAngle + (drivetrain.averageRightEncoders() -  drivetrain.averageLeftEncoders()) / drivetrain.ENC_PER_INCH / drivetrain.DISTANCE_BETWEEN_WHEELS;
         return super.getGyroAngle();
     }
-
-    public enum PhoneCoordinateSystem{ROBOT, FIELD}
 }
