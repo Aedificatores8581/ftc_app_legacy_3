@@ -13,10 +13,7 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 
 @TeleOp(name = "West Coast 15 Test Drive", group = "West Coast 15")
 public class WestBot15TestDrive extends WestBot15 {
-    boolean switchControlState    = false,
-            canSwitchControlState = false,
-            switchTurnState       = false,
-            canSwitchTurnState    = false;
+    boolean canSwitchControlState = false;
 
     @Override
     public void init(){
@@ -24,7 +21,6 @@ public class WestBot15TestDrive extends WestBot15 {
         activateGamepad1();
 
         drivetrain.controlState = TankDT.ControlState.ARCADE;
-        drivetrain.turnState = TankDT.FCTurnState.FAST;
         drivetrain.direction = TankDT.Direction.FOR;
     }
 
@@ -35,64 +31,57 @@ public class WestBot15TestDrive extends WestBot15 {
 
     @Override
     public void loop(){
-        if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER)
-            drivetrain.maxSpeed = 0.98;
-        else
-            drivetrain.maxSpeed = 0.5;
+        leftIntake.setPower(0.95 * ((gamepad1.left_trigger - gamepad1.right_trigger) / 2 + 0.5));
+        rightIntake.setPower(0.95 * ((gamepad1.left_trigger - gamepad1.right_trigger) / 2 + 0.5));
+        drivetrain.maxSpeed = gamepad1.left_stick_button || gamepad1.right_stick_button ? 0.98: 0.5;
         updateGamepad1();
         refreshStartAngle();
         setRobotAngle();
         drivetrain.teleOpLoop(leftStick1, rightStick1, robotAngle);
         switch(drivetrain.controlState) {
             case ARCADE:
-                if (switchControlState) {
-                    drivetrain.controlState = drivetrain.controlState.FIELD_CENTRIC;
-                    switchControlState = false;
-                    canSwitchControlState = false;
-                } else if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {
-                    switchControlState = false;
+                if (!gamepad1.dpad_up && gamepad1.dpad_down)
                     canSwitchControlState = true;
-                } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
-                    switchControlState = true;
+                else if (gamepad1.dpad_up && canSwitchControlState) {
+                    drivetrain.controlState = drivetrain.controlState.FIELD_CENTRIC;
+                    canSwitchControlState = false;
+                }
+                else if (gamepad1.dpad_down && canSwitchControlState) {
+                    drivetrain.controlState = drivetrain.controlState.TANK;
+                    canSwitchControlState = false;
+                }
                 break;
 
             // TODO: \/\/\/
+            //what?
             case FIELD_CENTRIC:
-                switch (drivetrain.turnState) {
-                    case FAST:
-
-                        break;
-                    case SMOOTH:
-
-                        break;
-                }
-
-                if (switchControlState) {
-                    drivetrain.controlState = TankDT.ControlState.TANK;
-                    switchControlState = false;
-                    canSwitchControlState = false;
-                } else if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {
-                    switchControlState = false;
+                if (!gamepad1.dpad_up && !gamepad1.dpad_down)
                     canSwitchControlState = true;
-                } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
-                    switchControlState = true;
+                else if (gamepad1.dpad_up && canSwitchControlState){
+                    drivetrain.controlState = TankDT.ControlState.TANK;
+                    canSwitchControlState = false;
+                }
+                else if (gamepad1.dpad_down && canSwitchControlState){
+                    drivetrain.controlState = TankDT.ControlState.ARCADE;
+                    canSwitchControlState = false;
+                }
                 break;
 
             case TANK:
-                if (switchControlState) {
-                    drivetrain.controlState = TankDT.ControlState.ARCADE;
-                    switchControlState = false;
-                    canSwitchControlState = false;
-                } else if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {
-                    switchControlState = false;
+                if (!gamepad1.dpad_up && !gamepad1.dpad_down)
                     canSwitchControlState = true;
-                } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
-                    switchControlState = true;
+                else if (gamepad1.dpad_up && canSwitchControlState) {
+                    drivetrain.controlState = TankDT.ControlState.ARCADE;
+                    canSwitchControlState = false;
+                }
+                else if (gamepad1.dpad_down && canSwitchControlState) {
+                    drivetrain.controlState = TankDT.ControlState.TANK;
+                    canSwitchControlState = false;
+                }
                 break;
         }
 
         telemetry.addData("control State", drivetrain.controlState);
-        telemetry.addData("fcTurnState", drivetrain.turnState);
         telemetry.addData("leftPower", drivetrain.leftPow);
         telemetry.addData("rightPower", drivetrain.rightPow);
         telemetry.addData("angle1", Math.toDegrees(robotAngle.angle()));
