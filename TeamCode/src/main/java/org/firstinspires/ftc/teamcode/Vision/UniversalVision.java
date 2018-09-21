@@ -109,6 +109,18 @@ public class UniversalVision {
         }
         gray.release();
     }
+    public static List<MatOfPoint> drawContoursREEEELEASEMATSPLEASE(Mat rgb, Mat dst, double gausianSize){
+        Mat gray = new Mat();
+        Imgproc.cvtColor(rgb, gray, Imgproc.COLOR_RGB2GRAY);
+        List<MatOfPoint> contours = new ArrayList<>();
+        Imgproc.GaussianBlur(gray, gray, new Size(gausianSize, gausianSize), 2, 2);
+        Imgproc.findContours(gray ,contours,new Mat(),Imgproc.RETR_TREE,Imgproc.CHAIN_APPROX_SIMPLE);
+
+        Imgproc.drawContours(dst,contours,-1,new Scalar(230,70,70),2);
+        //TODO: Make sure this line does not cause a runtime exception
+        gray.release();
+        return contours;
+    }
 
     public static void drawContours(Mat rgb, Mat dst){
         drawContours(rgb, dst, 9);
@@ -122,5 +134,4 @@ public class UniversalVision {
     public static void drawContours(Mat rgb){
         drawContours(rgb.clone(), rgb, 9);
     }
-
 }

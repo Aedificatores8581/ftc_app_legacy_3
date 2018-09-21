@@ -67,8 +67,6 @@ public class BlockDetector extends Detector {
                 Core.reduce(threshold, colSum, 0, Core.REDUCE_SUM, 4);
 
 
-                //TODO: Add approximate location of images on the screen
-                //TODO: Add contour detection
                 break;
         }
 
