@@ -40,7 +40,7 @@ public abstract class WestBot15 extends Robot {
         drivetrain.maxSpeed = 0.9775;
         drivetrain.initMotors(hardwareMap);
 
-        msStuckDetectInit = 50000;
+        msStuckDetectInit = 50000000;
         drivetrain.position = new Pose();
     }
 

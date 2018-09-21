@@ -89,7 +89,7 @@ public class WestBot15TestDrive extends WestBot15 {
     }
 
     public void refreshStartAngle(){
-        if(gamepad1.left_stick_button){
+        if(gamepad1.y){
             startAngle = Math.toDegrees(leftStick1.angleBetween(robotAngle));
 
             leftStick1.x = 0;
