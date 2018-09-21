@@ -21,10 +21,8 @@ public abstract class TankDT extends Drivetrain {
                         cos,
                         maxTurn = 0.75,
                         leftPow,
-                        rightPow,
-                        totalAngle = 0;
-    public boolean      turn = false,
-                        canSwitch = false;
+                        rightPow;
+    public boolean      turn = false;
     public int          leftEncVal = 0,
                         rightEncVal = 0;
     public Pose         position;
@@ -48,8 +46,7 @@ public abstract class TankDT extends Drivetrain {
     public enum ControlState{
         ARCADE,
         TANK,
-        FIELD_CENTRIC,
-        FIELD_CENTRIC_VECTOR
+        FIELD_CENTRIC;
     }
 
     //Two algorithms for turning in field-centric mode
