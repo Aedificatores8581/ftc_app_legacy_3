@@ -46,7 +46,8 @@ public abstract class TankDT extends Drivetrain {
     public enum ControlState{
         ARCADE,
         TANK,
-        FIELD_CENTRIC;
+        FIELD_CENTRIC,
+        CHEESY;
     }
 
     //Two algorithms for turning in field-centric mode
@@ -65,7 +66,7 @@ public abstract class TankDT extends Drivetrain {
                 break;
 
             case FIELD_CENTRIC:
-                angleBetween = Math.toRadians(UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(leftVect.angle()), UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(angle.angle()))));
+                angleBetween = UniversalFunctions.normalizeAngleRadians(leftVect.angle(), angle.angle());
                 if (leftVect.magnitude() < UniversalConstants.Triggered.STICK) {
                     leftPow = 0;
                     rightPow = 0;
@@ -114,6 +115,9 @@ public abstract class TankDT extends Drivetrain {
             case TANK:
                 leftPow = rightVect.y;
                 rightPow = leftVect.y;
+                break;
+            case CHEESY:
+
                 break;
         }
         setLeftPow(leftPow);

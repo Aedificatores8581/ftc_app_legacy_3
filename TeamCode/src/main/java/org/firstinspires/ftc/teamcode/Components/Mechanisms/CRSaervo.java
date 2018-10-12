@@ -9,6 +9,7 @@ maximum velocity in either respective direction. When at 0, the speed of the CRS
 public class CRSaervo {
     public CRServo crServo;
     public final double ZERO_POWER_POSITION;
+    public double threshold;
     public CRSaervo(CRServo crServo, double zeroPowerPosition){
         this.crServo = crServo;
         ZERO_POWER_POSITION = zeroPowerPosition;

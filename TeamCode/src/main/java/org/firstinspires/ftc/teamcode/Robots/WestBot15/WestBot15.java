@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDriv
 import org.firstinspires.ftc.teamcode.Components.Sensors.Cameras.MotoG4;
 import org.firstinspires.ftc.teamcode.Components.Sensors.REVToFSensor;
 import org.firstinspires.ftc.teamcode.Robots.Robot;
+import org.firstinspires.ftc.teamcode.Universal.Map.Map2;
 import org.firstinspires.ftc.teamcode.Universal.Math.Pose;
 import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 import org.opencv.core.Point3;
@@ -26,6 +27,7 @@ public abstract class WestBot15 extends Robot {
     protected WestCoast15 drivetrain = new WestCoast15();
 
     public REVToFSensor xTof, yTof;
+    public Map2 robotMap, fieldMap;
 
     MotoG4 motoG4 = new MotoG4();
 
