@@ -31,7 +31,7 @@ public abstract class TankDT extends Drivetrain {
     public Direction    direction;
     public ControlState controlState;
     public FCTurnState  turnState;
-
+    public Vector2 destination;
     public Vector2 turnVector = new Vector2();
 
     public TankDT() {
@@ -132,7 +132,7 @@ public abstract class TankDT extends Drivetrain {
 
     public void driveToPoint(double x, double y, Direction dir){
         direction = dir;
-        Vector2 destination = new Vector2(x + position.x, y + position.y);
+        destination = new Vector2(x - position.x, y - position.y);
         angleBetween = UniversalFunctions.normalizeAngleRadians(destination.angle(), position.angle);
             switch (direction) {
                 case FOR:
@@ -143,11 +143,10 @@ public abstract class TankDT extends Drivetrain {
                     directionMult = -1;
                     break;
             }
-
-            cos = Math.cos(angleBetween);
-            turnMult = Math.abs(cos) + 1;
-            leftPow = directionMult * (UniversalFunctions.clamp(0, destination.magnitude(), 1) - turnMult * cos);
-            rightPow = directionMult * (UniversalFunctions.clamp(0, destination.magnitude(), 1) + turnMult * cos);
+            double sin = Math.sin(angleBetween);
+            turnMult = Math.abs(sin) + 1;
+            leftPow = directionMult * (UniversalFunctions.clamp(0, destination.magnitude(), 1) - turnMult * sin);
+            rightPow = directionMult * (UniversalFunctions.clamp(0, destination.magnitude(), 1) + turnMult * sin);
         switch (direction) {
             case FOR:
                 if (Math.sin(angleBetween) < 0) {
