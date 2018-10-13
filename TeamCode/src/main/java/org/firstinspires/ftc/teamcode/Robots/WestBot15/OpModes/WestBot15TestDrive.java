@@ -31,8 +31,8 @@ public class WestBot15TestDrive extends WestBot15 {
 
     @Override
     public void loop(){
-        //leftIntake.setPower(0.95 * ((gamepad1.left_trigger - gamepad1.right_trigger) / 2 + 0.5));
-        //rightIntake.setPower(0.95 * ((gamepad1.left_trigger - gamepad1.right_trigger) / 2 + 0.5));
+        leftIntake.setPower(0.95 * ((gamepad1.left_trigger - gamepad1.right_trigger) / 2 + 0.5));
+        rightIntake.setPower(0.95 * ((gamepad1.left_trigger - gamepad1.right_trigger) / 2 + 0.5));
         drivetrain.maxSpeed = gamepad1.left_stick_button || gamepad1.right_stick_button ? 0.98: 0.5;
         updateGamepad1();
         refreshStartAngle();
