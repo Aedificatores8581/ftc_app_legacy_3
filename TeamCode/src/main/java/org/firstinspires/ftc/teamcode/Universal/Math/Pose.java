@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robotUniversal;
+package org.firstinspires.ftc.teamcode.Universal.Math;
 
 public class Pose {
     public double x, y, angle;
@@ -8,7 +8,9 @@ public class Pose {
         y = 0;
         angle = 0;
     }
-
+    public Pose(Pose pose){
+        this(pose.x, pose.y, pose.angle);
+    }
     public Pose(double x, double y, double angle){
         this.x = x;
         this.y = y;

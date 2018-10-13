@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode.Components.Sensors;
 
-import org.firstinspires.ftc.teamcode.robotUniversal.Pose;
-import org.firstinspires.ftc.teamcode.robotUniversal.Pose3;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
-import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
-import org.firstinspires.ftc.teamcode.robotUniversal.Vector3;
+import org.firstinspires.ftc.teamcode.Universal.Math.Pose3;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
+import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 import org.opencv.core.Point;
 import org.opencv.core.Point3;
 import org.opencv.core.Size;
@@ -36,20 +34,59 @@ public class DigitalCamera {
         this.focalLength = focalLength;
         cameraSensor = new CameraSensor(width, height);
     }
+    public void setLocation(Point3 location){
+        x = location.x;
+        y = location.y;
+        z = location.z;
+    }
+    public void setLocation(DigitalCamera aCamera){
+        setLocation(new Point3(aCamera.x, aCamera.y, aCamera.z));
+    }
+    public void setOrientation(Point3 orientation){
+        xAng = orientation.x;
+        yAng = orientation.y;
+        zAng = orientation.z;
+    }
+    public void setOrientation(DigitalCamera aCamera){
+        setOrientation(new Point3(aCamera.xAng, aCamera.yAng, aCamera.zAng));
+    }
+    public void setLocationAndOrientation(Point3 location, Point3 orientation){
+        setOrientation(orientation);
+        setLocation(location);
+    }
+    public void setLocationAndOrientation(DigitalCamera aCamera){
+        setLocation(aCamera);
+        setOrientation(aCamera);
+    }
     //TODO: Fix variable names
     public Point getObjectLocation(Point pointOnImage, Size imageSize, double widthRatio, double heightRatio, double objectHeight){
         pointOnImage.x -= imageSize.width / 2;
         pointOnImage.y -= imageSize.height / 2;
         Vector2 temp = new Vector2(pointOnImage.x, pointOnImage.y);
-        temp.rotate(yAng);
-        pointOnImage.x = temp.x + imageSize.width / 2;
-        pointOnImage.y = temp.y + imageSize.height / 2;
-        double phi = Math.PI / 4 - horizontalAngleOfView(widthRatio) * (pointOnImage.x / imageSize.width - 0.5) + zAng;
-        double theta = Math.PI / 4 - verticalAngleOfView(heightRatio) * (pointOnImage.y / imageSize.height - 0.5) - xAng;
-        Point3 newPoint = new Point3(UniversalFunctions.sphericalToCartesian(1, theta, phi));
+        temp.rotate(Math.PI / 2 + yAng);
+        double theta = Math.PI / 2 + temp.y / imageSize.height * verticalAngleOfView() + xAng;
+        double rho = Math.PI / 2 + -temp.x / imageSize.width * horizontalAngleOfView() - zAng;
+        Point3 newPoint = new Point3(UniversalFunctions.sphericalToCartesian(1, theta, rho));
         double newX = newPoint.x * (z - objectHeight) / -newPoint.z + x;
         double newY = newPoint.y * (z - objectHeight) / -newPoint.z + y;
         return new Point(newX, newY);
+    }
+    public void updateLocation(double xChange, double yChange, double zChange){
+        x += xChange;
+        y += yChange;
+        z += zChange;
+    }
+    public void updateLocation(Point3 differentialPosition){
+        updateLocation(differentialPosition.x, differentialPosition.y, differentialPosition.z);
+    }
+    public void updateOrientation(double xChange, double yChange, double zChange){
+        xAng += xChange;
+        yAng += yChange;
+        zAng += zChange;
+        normalizeAngles();
+    }
+    public void updateOrientation(Point3 differentialOrientation){
+        updateOrientation(differentialOrientation.x, differentialOrientation.y, differentialOrientation.z);
     }
     public double horizontalAngleOfView(double widthRatio){
         return 2 * Math.atan2(cameraSensor.width * widthRatio, 2 * focalLength);
@@ -62,5 +99,10 @@ public class DigitalCamera {
     }
     public double verticalAngleOfView(){
         return verticalAngleOfView(1);
+    }
+    public void normalizeAngles(){
+        UniversalFunctions.normalizeAngleRadians(xAng);
+        UniversalFunctions.normalizeAngleRadians(yAng);
+        UniversalFunctions.normalizeAngleRadians(zAng);
     }
 }

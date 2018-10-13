@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode.robotUniversal.Threads;
+package org.firstinspires.ftc.teamcode.Universal.Threads;
 
-import org.firstinspires.ftc.teamcode.robotUniversal.TelemetryLogger;
+import org.firstinspires.ftc.teamcode.Universal.TelemetryLogger;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class TelemetryLoggerThread extends Thread {
         telemetryValues = new ArrayList<>();
         exceptionMessage = new ExceptionMessage();
 
-        logger.writeToLogInCSV(labels);
+        logger.writeToLogInCSV((Object[]) labels);
         running = true;
     }
 

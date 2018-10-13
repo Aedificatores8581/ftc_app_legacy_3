@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.Robots.ZoidbergBot.OpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Components.Sensors.REVColorDistanceSensor;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
 import org.firstinspires.ftc.teamcode.Robots.ZoidbergBot.RobitBot;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
-
+import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
+@Disabled
 @TeleOp(name = "RobitBotTestDrive", group = "Zoidberg")
 public class RobitBotTestDrive extends RobitBot {
     boolean switchControlState    = false,

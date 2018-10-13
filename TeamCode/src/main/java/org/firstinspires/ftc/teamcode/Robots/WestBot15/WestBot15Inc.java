@@ -6,6 +6,7 @@ import org.firstinspires.ftc.teamcode.Robots.Robot;
 /**
  * Created by Frank Portman on 6/13/2018
  */
+
 //This is a version of WestBot15 with incremental motors
 public abstract class WestBot15Inc extends Robot {
     public WestCoast15Inc drivetrain = new WestCoast15Inc();
@@ -18,10 +19,12 @@ public abstract class WestBot15Inc extends Robot {
         drivetrain.initMotors(hardwareMap);
         drivetrain.initAcceleratedMotors();
     }
+
     @Override
     public void start(){
         super.start();
     }
+
     @Override
     public void stop() {
         drivetrain.motorThread.terminate();

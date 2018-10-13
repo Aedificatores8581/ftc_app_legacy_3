@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.Robots.SensorBot.OpModes;
+package org.firstinspires.ftc.teamcode.Universal.Testers;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.Robots.SensorBot.SensorBot;
-import org.firstinspires.ftc.teamcode.robotUniversal.Threads.TelemetryLoggerThread;
+import org.firstinspires.ftc.teamcode.Universal.Threads.TelemetryLoggerThread;
 
 import java.io.IOException;
 
@@ -17,14 +17,13 @@ import java.io.IOException;
  * */
 
 @Autonomous(name = "Telemetry Logger Tester: Threaded", group = "Tele Test")
-public class TelemetryLoggerThreadTester extends SensorBot {
+public class TelemetryLoggerThreadTester extends OpMode {
     private TelemetryLoggerThread loggerThread;
     long baseTimeMillis; // Current System time when the loop starts
     private int x, y; // The MacGuffins
 
     @Override
     public void init () {
-        super.init();
 
         x = 0;
         y = 0;

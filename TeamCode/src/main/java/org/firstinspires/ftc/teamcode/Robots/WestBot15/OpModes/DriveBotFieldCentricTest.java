@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
+import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 
 /**
  * Created by Frank Portman on 6/17/2018
@@ -17,6 +17,7 @@ public class DriveBotFieldCentricTest extends WestBot15 {
             canSwitchControlState = false,
             switchTurnState       = false,
             canSwitchTurnState    = false;
+
     @Override
     public void init(){
         super.init();
@@ -25,10 +26,12 @@ public class DriveBotFieldCentricTest extends WestBot15 {
         drivetrain.turnState = TankDT.FCTurnState.FAST;
         drivetrain.direction = TankDT.Direction.FOR;
     }
+
     @Override
     public void start(){
         super.start();
     }
+
     @Override
     public void loop(){
         double y = gamepad1.left_stick_y;
@@ -39,8 +42,7 @@ public class DriveBotFieldCentricTest extends WestBot15 {
         if(rad < UniversalConstants.Triggered.STICK) {
             drivetrain.setLeftPow(0.001);
             drivetrain.setRightPow(0.001);
-        }
-        else {
+        } else {
             switch (drivetrain.direction) {
                 case FOR:
                     double sin = Math.sin(angleBetween);
@@ -61,26 +63,29 @@ public class DriveBotFieldCentricTest extends WestBot15 {
                         drivetrain.turn = true;
                     break;
             }
+
             double cos = Math.cos(angleBetween);
+
             switch(drivetrain.turnState){
                 case FAST:
                     double fsTurn = Math.abs(cos) + 1;
                     double lp = -rad * drivetrain.directionMult - drivetrain.directionMult* fsTurn * cos;
                     double rp = -rad * drivetrain.directionMult + drivetrain.directionMult * fsTurn * cos;
+
                     drivetrain.setLeftPow(lp);
                     drivetrain.setRightPow(rp);
+
                     if(switchTurnState){
                         drivetrain.turnState = TankDT.FCTurnState.SMOOTH;
                         switchTurnState = false;
                         canSwitchTurnState = false;
-                    }
-                    else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER){
+                    } else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER){
                         switchTurnState = false;
                         canSwitchTurnState = true;
-                    }
-                    else if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
+                    } else if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                         switchTurnState = true;
                     break;
+
                 case SMOOTH:
                     if (cos > 0) {
                         lp = drivetrain.directionMult * rad;
@@ -94,22 +99,22 @@ public class DriveBotFieldCentricTest extends WestBot15 {
                         drivetrain.turnState = TankDT.FCTurnState.FAST;
                         switchTurnState = false;
                         canSwitchTurnState = false;
-                    }
-                    else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER){
+                    } else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER){
                         switchTurnState = false;
                         canSwitchTurnState = true;
-                    }
-                    else if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
+                    } else if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
                         switchTurnState = true;
                     break;
             }
+
             double fsTurn = Math.abs(cos) + 1;
             double lp = -rad * drivetrain.directionMult - drivetrain.directionMult* fsTurn * cos;
             double rp = -rad * drivetrain.directionMult + drivetrain.directionMult * fsTurn * cos;
+
             drivetrain.setLeftPow(lp);
             drivetrain.setRightPow(rp);
-
         }
+
         telemetry.addData("leftvect1", x + " " + y);
         telemetry.addData("leftPower", drivetrain.leftPow);
         telemetry.addData("rightPower", drivetrain.rightPow);
@@ -118,8 +123,9 @@ public class DriveBotFieldCentricTest extends WestBot15 {
         telemetry.addData("sin", Math.sin(angleBetween));
         telemetry.addData("angleBetween", angleBetween);
     }
-    public void refreshStartAngle(){
-        if(gamepad1.left_stick_button){
+
+    public void refreshStartAngle() {
+        if (gamepad1.left_stick_button) {
             startAngle = Math.toDegrees(leftStick1.angleBetween(robotAngle));
             leftStick1.x = 0;
             leftStick1.y = 0;

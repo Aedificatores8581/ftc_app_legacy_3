@@ -4,38 +4,37 @@ import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetra
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-import org.firstinspires.ftc.teamcode.robotUniversal.Pose;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalConstants;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
-import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
+import org.firstinspires.ftc.teamcode.Universal.Math.Pose;
+import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
+import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 
 /**
  * Created by Frank Portman on 5/21/2018
  */
 public abstract class TankDT extends Drivetrain {
-    public double ENC_PER_INCH;
-    public double DISTANCE_BETWEEN_WHEELS;
-    public double       turnMult     ,
-            angleBetween,
-            directionMult = 1,
-            cos,
-            maxTurn = 0.75,
-            leftPow,
-            rightPow,
-            leftEncVal = 0,
-            rightEncVal = 0,
-            totalAngle = 0;
-    public boolean turn = false,
-                   canSwitch = false;
-    public Pose position;
-    public DcMotor[] leftMotors,
-                     rightMotors;
-    public Direction direction    ;
-    public ControlState controlState ;
-    public FCTurnState turnState    ;
+    public double       ENC_PER_INCH;
+    public double       DISTANCE_BETWEEN_WHEELS;
+    public double       turnMult,
+                        angleBetween,
+                        directionMult = 1,
+                        cos,
+                        maxTurn = 0.75,
+                        leftPow,
+                        rightPow;
+    public boolean      turn = false;
+    public int          leftEncVal = 0,
+                        rightEncVal = 0;
+    public Pose         position;
+    public DcMotor[]    leftMotors,
+                        rightMotors;
+    public Direction    direction;
+    public ControlState controlState;
+    public FCTurnState  turnState;
+    public Vector2 destination;
+    public Vector2 turnVector = new Vector2();
 
-    public Vector2 turnVector    = new Vector2();
-    public TankDT(){
+    public TankDT() {
         leftPow = 0;
         rightPow = 0;
         direction = Direction.FOR;
@@ -48,7 +47,7 @@ public abstract class TankDT extends Drivetrain {
         ARCADE,
         TANK,
         FIELD_CENTRIC,
-        FIELD_CENTRIC_VECTOR
+        CHEESY;
     }
 
     //Two algorithms for turning in field-centric mode
@@ -65,13 +64,13 @@ public abstract class TankDT extends Drivetrain {
                 leftPow = leftVect.y + turnMult * rightVect.x;
                 rightPow = leftVect.y - turnMult * rightVect.x;
                 break;
+
             case FIELD_CENTRIC:
-                angleBetween = Math.toRadians(UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(leftVect.angle()), UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(angle.angle()))));
+                angleBetween = UniversalFunctions.normalizeAngleRadians(leftVect.angle(), angle.angle());
                 if (leftVect.magnitude() < UniversalConstants.Triggered.STICK) {
                     leftPow = 0;
                     rightPow = 0;
-                }
-                else {
+                } else {
                     switch (direction) {
                         case FOR:
                             if (Math.sin(angleBetween) < 0 && turn) {
@@ -91,6 +90,7 @@ public abstract class TankDT extends Drivetrain {
                                 turn = true;
                             break;
                     }
+
                     cos = Math.cos(angleBetween);
                     switch (turnState) {
                         case FAST:
@@ -111,31 +111,42 @@ public abstract class TankDT extends Drivetrain {
                     }
                 }
                 break;
+
             case TANK:
                 leftPow = rightVect.y;
                 rightPow = leftVect.y;
+                break;
+            case CHEESY:
+
                 break;
         }
         setLeftPow(leftPow);
         setRightPow(rightPow);
     }
 
+    public void teleOpLoop(Vector2 leftVect, Vector2 rightVect, double angle){
+        Vector2 angleVect = new Vector2();
+        angleVect.setFromPolar(1, angle);
+        teleOpLoop(leftVect, rightVect, angleVect);
+    }
+
     public void driveToPoint(double x, double y, Direction dir){
         direction = dir;
-        Vector2 destination = new Vector2(x + position.x, y + position.y);
+        destination = new Vector2(x - position.x, y - position.y);
         angleBetween = UniversalFunctions.normalizeAngleRadians(destination.angle(), position.angle);
             switch (direction) {
                 case FOR:
                     directionMult = 1;
                     break;
+
                 case BACK:
                     directionMult = -1;
                     break;
             }
-            cos = Math.cos(angleBetween);
-            turnMult = Math.abs(cos) + 1;
-            leftPow = directionMult * (UniversalFunctions.clamp(0, destination.magnitude(), 1) - turnMult * cos);
-            rightPow = directionMult * (UniversalFunctions.clamp(0, destination.magnitude(), 1) + turnMult * cos);
+            double sin = Math.sin(angleBetween);
+            turnMult = Math.abs(sin) + 1;
+            leftPow = directionMult * (UniversalFunctions.clamp(0, destination.magnitude(), 1) - turnMult * sin);
+            rightPow = directionMult * (UniversalFunctions.clamp(0, destination.magnitude(), 1) + turnMult * sin);
         switch (direction) {
             case FOR:
                 if (Math.sin(angleBetween) < 0) {
@@ -172,17 +183,21 @@ public abstract class TankDT extends Drivetrain {
         setRightPow(r / max);
         setLeftPow(l / max);
     }
+
     public synchronized void driveToPointCircular(double x, double y, Direction dir, double maxSpeed){
         this.maxSpeed = maxSpeed;
         
     }
+
     public synchronized void updateLocation(double leftChange, double rightChange){
+        leftChange = leftChange / ENC_PER_INCH;
+        rightChange = rightChange / ENC_PER_INCH;
         double angle = 0;
         if(rightChange == leftChange)
-            turnVector.setFromPolar(rightChange, 0);
+            turnVector.setFromPolar(rightChange, position.angle);
         else {
-            double radius = ENC_PER_INCH * DISTANCE_BETWEEN_WHEELS / 2 * (leftChange + rightChange) / (rightChange - leftChange);
-            angle = (rightChange - leftChange) / (DISTANCE_BETWEEN_WHEELS * ENC_PER_INCH);
+            double radius = DISTANCE_BETWEEN_WHEELS / 2 * (leftChange + rightChange) / (rightChange - leftChange);
+            angle = (rightChange - leftChange) / (DISTANCE_BETWEEN_WHEELS);
             radius = Math.abs(radius);
             turnVector.setFromPolar(radius, angle);
             turnVector.setFromPolar(radius - turnVector.x, angle);
@@ -193,7 +208,6 @@ public abstract class TankDT extends Drivetrain {
         position.add(turnVector);
         position.angle += angle;
     }
-
     
     //Sets the power of the left motor(s)
     public abstract void setLeftPow(double pow);
@@ -215,6 +229,7 @@ public abstract class TankDT extends Drivetrain {
     public void setSpeed(double speed){
         maxSpeed = speed;
     }
+
     //turns the front of the robot to the specified direction
     public void turnToFace(Vector2 currentAngle, Vector2 desiredAngle, double tolerance, double turnSpeed){
         angleBetween = currentAngle.angleBetween(desiredAngle);
@@ -223,14 +238,17 @@ public abstract class TankDT extends Drivetrain {
             rightPow = angleBetween > 0 ? turnSpeed : -turnSpeed;
         }
     }
+
     //returns a boolean representing whether the drivetrain is facing a given direction
     public boolean isFacing(Vector2 currentAngle, Vector2 desiredAngle, double tolerance){
         return UniversalFunctions.withinTolerance(-tolerance, currentAngle.angleBetween(desiredAngle), tolerance);
     }
+
     //returns a boolean representing whether the drivetrain is facing a given direction
     public boolean isFacingBack(Vector2 currentAngle, Vector2 desiredAngle, double tolerance){
         return UniversalFunctions.withinTolerance(-tolerance, UniversalFunctions.normalizeAngleRadians(currentAngle.angleBetween(desiredAngle) + Math.PI), tolerance);
     }
+
     //turns the front of the robot to the specified direction
     public void turnToFace(Vector2 currentAngle, Vector2 desiredAngle, double turnSpeed){
         angleBetween = currentAngle.angleBetween(desiredAngle);
@@ -238,6 +256,7 @@ public abstract class TankDT extends Drivetrain {
         leftPow = -turnSpeed;
         rightPow = turnSpeed;
     }
+
     //Turns the back of the robot to the specified direction
     public void turnToFaceBack(Vector2 currentAngle, Vector2 desiredAngle, double turnSpeed){
         angleBetween = UniversalFunctions.normalizeAngleRadians(currentAngle.angleBetween(desiredAngle) + Math.PI);
@@ -245,7 +264,25 @@ public abstract class TankDT extends Drivetrain {
         leftPow = -turnSpeed;
         rightPow = turnSpeed;
     }
-    public abstract double averageLeftEncoders();
 
+    //assumes that the robot is at 0,0
+    //TODO: Implement variability in the units of length that the destination Pose uses
+    //TODO: Determine which implementation to use
+    public void driveToPose2(Pose destination, Direction dir){
+        double theta = Math.atan2(-destination.y, -destination.x) - Math.signum(Math.cos(destination.angleOfVector())) * Math.PI / 2;
+        Vector2 temp = new Vector2();
+        temp.setFromPolar(1, theta);
+        driveToPoint(destination.x, destination.y, dir);
+        double lp = leftPow;
+        double rp = rightPow;
+        driveToPoint(temp.x, temp.y, dir);
+        lp += (leftPow / destination.radius());
+        rp += (rightPow / destination.radius());
+        leftPow = lp;
+        rightPow = rp;
+    }
+
+    public abstract double averageLeftEncoders();
     public abstract double averageRightEncoders();
+    public abstract double averageEncoders();
 }

@@ -133,6 +133,7 @@ repositories {
     flatDir {
         dirs rootProject.file('libs')
     }
+    jcenter()
 }
 
 apply from: "$rootProject.projectDir/OpenRC/openrc-tasks.gradle"

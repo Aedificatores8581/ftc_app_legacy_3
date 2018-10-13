@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.teamcode.Vision.Detectors;
 
 
-import org.firstinspires.ftc.teamcode.Vision.Detectors.BlockDetector;
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;

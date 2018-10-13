@@ -39,6 +39,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    lintOptions {
+        disable 'MissingTranslation'
+    }
 }
 repositories {
     flatDir {
@@ -49,5 +52,5 @@ apply from: 'build.release.gradle'
 
 dependencies {
     implementation project(':openCVLibrary320')
-    compile project(path: ':openCVLibrary320')
+    api project(path: ':openCVLibrary320')
 }

@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.Robots.ZoidbergBot;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
+import org.firstinspires.ftc.teamcode.Components.Sensors.REVColorDistanceSensor;
 import org.firstinspires.ftc.teamcode.Robots.Robot;
-import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
+import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 
 /**
  * Writ by Theodore Lovinski on 06/24/2018.
@@ -13,17 +16,33 @@ import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
 
 public abstract class RobitBot extends Robot {
 
+    public ColorSensor colorSensor;
+    public Servo arm, leftGrabber, rightGrabber;
+    public DcMotor lift;
+
     public TankDT drivetrain = new TankDT() {
         public void initMotors(HardwareMap map) {
-            leftMotor = map.dcMotor.get("left");
-            rightMotor = map.dcMotor.get("right");
+            leftMotor = map.dcMotor.get("lm");
+            rightMotor = map.dcMotor.get("rm");
 
             leftMotor.setDirection(FORWARD);
             rightMotor.setDirection(REVERSE);
 
         }
 
-        public void normalizeMotors() {}
+        @Override
+        public void normalizeMotors() {
+
+        }
+
+        @Override
+        public void resetEncoders() {
+            leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
 
         public DcMotor leftMotor, rightMotor;
 
@@ -65,11 +84,17 @@ public abstract class RobitBot extends Robot {
 
         @Override
         public double averageLeftEncoders() {
-            return 0;
+            return leftMotor.getCurrentPosition();
         }
+
         @Override
         public double averageRightEncoders() {
-            return 0;
+            return rightMotor.getCurrentPosition();
+        }
+
+        @Override
+        public double averageEncoders() {
+            return (averageLeftEncoders() + averageRightEncoders()) /2;
         }
     };
 
@@ -77,5 +102,17 @@ public abstract class RobitBot extends Robot {
     public void start() {super.start();}
 
     @Override
-    public void init() {super.init();}
+    public void init() {
+        super.init();
+        activateGamepad1();
+
+        drivetrain.initMotors(hardwareMap);
+
+        colorSensor = hardwareMap.colorSensor.get("cs");
+        arm = hardwareMap.get(Servo.class, "arm");
+        leftGrabber = hardwareMap.get(Servo.class, "lg");
+        rightGrabber = hardwareMap.get(Servo.class, "rg");
+
+        lift = hardwareMap.dcMotor.get("lift");
+    }
 }

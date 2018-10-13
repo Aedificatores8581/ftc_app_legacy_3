@@ -7,28 +7,28 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.robotUniversal.GyroAngles;
+import org.firstinspires.ftc.teamcode.Universal.Math.GyroAngles;
 
-import org.firstinspires.ftc.teamcode.robotUniversal.UniversalFunctions;
-import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
+import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 
 /**
  * Created by Frank Portman on 5/21/2018
  */
 
 public abstract class Robot extends OpMode {
-    GyroAngles     gyroangles ;
-    Orientation    angles     ;
-    public BNO055IMU      imu        ;
-    public double  startAngle ;
+    GyroAngles     gyroangles;
+    Orientation    angles;
+    public BNO055IMU      imu;
+    public double  startAngle;
     //Use this variable to set the angle of the robot which coresponds to zero degrees
     public double  zeroDegreeAngle = 0;
     public boolean usingIMU    = true;
-    public Vector2 leftStick1 ,
+    public Vector2 leftStick1,
                    rightStick1,
-                   leftStick2 ,
+                   leftStick2,
                    rightStick2;
-    public Vector2 robotAngle ;
+    public Vector2 robotAngle;
     Robot.Module   module      = Module.REV;
     public Robot(Module mod, boolean isUsingIMU){
         usingIMU = isUsingIMU;
@@ -64,7 +64,7 @@ public abstract class Robot extends OpMode {
             startAngle = getGyroAngle() - zeroDegreeAngle;
         }
     }
-    //returns the Z value of the gyro sensor`
+    //returns the Z value of the gyro sensor
     public double getGyroAngle(){
         return gyroangles.refreshGyroAnglesZ(imu.getAngularOrientation(AxesReference.INTRINSIC, GyroAngles.ORDER, GyroAngles.UNIT));
     }

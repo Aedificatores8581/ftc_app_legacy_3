@@ -5,18 +5,19 @@ import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetra
 /**
  * Created by Frank Portman on 5/29/2018
  */
-import org.firstinspires.ftc.teamcode.robotUniversal.Vector2;
+import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 
 public abstract class HolonomicDT extends Drivetrain {
-    public double    turnPow  ,
-                     turnMult ;
+    public double turnPow, turnMult;
     public TurnState turnState;
-    //sets the power of the motors in order to drive at a given angle at a given speed
+
+    // Sets the velocity based on angle and speed.
     public abstract void setVelocity(double ang, double speed);
-    //sets the power of the motors in order to drive at a given velocity
+
+    // Sets motor power to drive at a given velocity.
     public abstract void setVelocity(Vector2 vel);
 
-    //sets the power of the left fore and right rear motors
+    // Sets motor power in relation the turn multiplier.
     public void setTurn(double pow){
         pow *= turnMult;
         turnPow = pow;
@@ -35,6 +36,7 @@ public abstract class HolonomicDT extends Drivetrain {
             case ARCADE:
                 setTurn(turnVector.x);
                 break;
+
             case FIELD_CENTRIC:
                 setTurn(Math.sin(velocity.angleBetween(angle)));
                 break;
@@ -46,6 +48,7 @@ public abstract class HolonomicDT extends Drivetrain {
             case ARCADE:
                 setTurn(turnVector);
                 break;
+
             case FIELD_CENTRIC:
                 setTurn(Math.sin(velocity.angleBetween(angle)));
                 break;

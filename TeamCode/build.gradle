@@ -20,7 +20,8 @@ android {
     }
 }
 dependencies {
-    compile project(':FtcRobotController')
-    compile project(':openCVLibrary320')
-    compile project(':DogeCV')
+    api project(':FtcRobotController')
+    api project(':openCVLibrary320')
+    api project(':DogeCV')
+    api 'org.openftc:rev-extensions-2:1.0'
 }

@@ -11,7 +11,19 @@ import org.opencv.imgproc.Imgproc;
 import java.util.ArrayList;
 import java.util.List;
 
+import ftc.vision.Detector;
+
 public class UniversalVision {
+
+    public Mat combinedDetection(Mat image, Detector detector1, Detector detector2){
+        detector1.detect(image.clone());
+        detector2.detect(image.clone());
+        Mat output = new Mat();
+        Mat temp = new Mat();
+        Core.bitwise_or(detector1.result(), detector2.result(), temp);
+        Core.add(detector1.result(), detector2.result(), temp, output);
+        return output;
+    }
 
     public static void rgb2hsvThresh(Mat rgb, Mat threshold, Scalar min, Scalar max){
         Mat hsv = new Mat();
@@ -97,6 +109,18 @@ public class UniversalVision {
         }
         gray.release();
     }
+    public static List<MatOfPoint> drawContoursREEEELEASEMATSPLEASE(Mat rgb, Mat dst, double gausianSize){
+        Mat gray = new Mat();
+        Imgproc.cvtColor(rgb, gray, Imgproc.COLOR_RGB2GRAY);
+        List<MatOfPoint> contours = new ArrayList<>();
+        Imgproc.GaussianBlur(gray, gray, new Size(gausianSize, gausianSize), 2, 2);
+        Imgproc.findContours(gray ,contours,new Mat(),Imgproc.RETR_TREE,Imgproc.CHAIN_APPROX_SIMPLE);
+
+        Imgproc.drawContours(dst,contours,-1,new Scalar(230,70,70),2);
+        //TODO: Make sure this line does not cause a runtime exception
+        gray.release();
+        return contours;
+    }
 
     public static void drawContours(Mat rgb, Mat dst){
         drawContours(rgb, dst, 9);
@@ -109,11 +133,5 @@ public class UniversalVision {
 
     public static void drawContours(Mat rgb){
         drawContours(rgb.clone(), rgb, 9);
-    }
-
-    //TODO: Finish implementing this method
-    public static double distanceFromPoint(Point p, double x, double y, double z, double zAng, double xAng, double yAng, double height){
-        double distanceAway = 0;
-        return distanceAway;
     }
 }

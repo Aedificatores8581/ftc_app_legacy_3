@@ -37,6 +37,12 @@ public class GenericDetector extends Detector {
     G_MAX = 255,
     B_MIN = 0,
     B_MAX = 255;
+    public int Y_MIN = 0,
+    U_MIN = 0,
+    v_MIN = 0,
+            Y_MAX = 255,
+            U_MAX = 255,
+            v_MAX = 255;
 
     Mat hlsH = new Mat();
     Mat hlsL = new Mat();
@@ -58,6 +64,7 @@ public class GenericDetector extends Detector {
     Mat yuvV = new Mat();
     Mat temp = new Mat();
     Mat temp2 = new Mat();
+    Mat yuvImage = new Mat();
     Mat i2 = new Mat();
     Mat labImage = new Mat();
     Mat hsvImage = new Mat();
@@ -125,10 +132,12 @@ public class GenericDetector extends Detector {
             labImage = new Mat();
             hsvImage = new Mat(image.size(), 0);
             hlsImage = new Mat(image.size(), 0);
+            yuvImage = new Mat(image.size(), 0);
             Mat gray = new Mat(image.size(), 0);
             Imgproc.cvtColor(image, labImage, Imgproc.COLOR_RGB2Lab);
             Imgproc.cvtColor(image, hsvImage, Imgproc.COLOR_RGB2HSV_FULL);
             Imgproc.cvtColor(image, hlsImage, Imgproc.COLOR_RGB2HLS_FULL);
+            Imgproc.cvtColor(image, yuvImage, Imgproc.COLOR_RGB2YUV);
             Imgproc.cvtColor(image, image, Imgproc.COLOR_RGBA2RGB);
             Imgproc.cvtColor(image, gray, Imgproc.COLOR_RGB2GRAY);
             temp = new Mat();
@@ -142,6 +151,29 @@ public class GenericDetector extends Detector {
             //image.copyTo(workingImage, mask);
 
             temp = new Mat();
+
+
+
+
+            Core.inRange(yuvImage, new Scalar(Y_MIN, U_MIN, v_MIN), new Scalar(Y_MAX, U_MAX, V_MAX), temp);
+            //mask = new Mat(image.size(), 0);
+            //temp.copyTo(mask);
+            //Core.add(mask, temp, mask);
+            i = new Mat(image.size(), 0);
+            //image.copyTo(i, mask);
+            //i.copyTo(image, mask);
+            workingImage.release();
+            workingImage = new Mat();
+            image.copyTo(workingImage, mask);
+
+            workingImage.copyTo(i, temp);
+
+            i.copyTo(workingImage);
+
+            temp = new Mat();
+
+
+
             Core.inRange(hsvImage, new Scalar(h_MIN, s_MIN, l_MIN), new Scalar(h_MAX, s_MAX, l_MAX), temp);
             //mask = new Mat(image.size(), 0);
             //temp.copyTo(mask);

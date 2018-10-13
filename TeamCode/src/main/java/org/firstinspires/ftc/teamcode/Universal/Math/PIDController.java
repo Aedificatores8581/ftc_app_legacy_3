@@ -1,21 +1,23 @@
-package org.firstinspires.ftc.teamcode.robotUniversal;
+package org.firstinspires.ftc.teamcode.Universal.Math;
+
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 
 /**
  * Created by Frank Portman on 6/2/2018
  */
 public class PIDController {
-    public double error        ,
-                  setpoint     ,
-                  processVar   ,
+    public double error,
+                  setpoint,
+                  processVar,
                   integral      = 0,
-                  deltaTime    ,
-                  derivative   ,
-                  prevError    ,
+                  deltaTime,
+                  derivative,
+                  prevError,
                   currentOutput,
-                  time         ,
+                  time,
                   TI            = 0,
                   TD            = 0,
-                  currentTime  ,
+                  currentTime,
                   integralMax   = Double.POSITIVE_INFINITY,
                   sse           = 0,
                   prevTime      = 0;

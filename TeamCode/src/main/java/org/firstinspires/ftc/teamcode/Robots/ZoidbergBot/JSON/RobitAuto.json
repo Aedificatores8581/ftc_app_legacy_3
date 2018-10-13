@@ -1,0 +1,33 @@
+{
+  "ARM_DOWN_POSITION":                        1.0,
+  "ARM_UP_POSITION":                          0.0,
+
+  "JEWEL_RED_THRESHOLD":                      300,
+  "JEWEL_BLUE_THRESHOLD":                     300,
+
+  "MOTOR_SPEED":                              0.05,
+
+  "RED_NEAR_HIT_FRONT_JEWEL":                 -50,
+  "RED_NEAR_HIT_BACK_JEWEL":                  50,
+  "RED_NEAR_FAR_TURN":                        0,
+  "RED_NEAR_GO_FORWARD_FROM_BACK_JEWEL":      200,
+  "RED_NEAR_GO_FORWARD_FROM_FRONT_JEWEL":     100,
+
+  "BLUE_NEAR_HIT_FRONT_JEWEL":                -50,
+  "BLUE_NEAR_HIT_BACK_JEWEL":                 50,
+  "BLUE_NEAR_FAR_TURN":                       0,
+  "BLUE_NEAR_GO_FORWARD_FROM_BACK_JEWEL":     -200,
+  "BLUE_NEAR_GO_FORWARD_FROM_FRONT_JEWEL":    -100,
+
+  "RED_FAR_HIT_FRONT_JEWEL":                  50,
+  "RED_FAR_HIT_BACK_JEWEL":                   -50,
+  "RED_FAR_FAR_TURN":                         50,
+  "RED_FAR_GO_FORWARD_FROM_BACK_JEWEL":       150,
+  "RED_FAR_GO_FORWARD_FROM_FRONT_JEWEL":      75,
+
+  "BLUE_FAR_HIT_FRONT_JEWEL":                 -50,
+  "BLUE_FAR_HIT_BACK_JEWEL":                   50,
+  "BLUE_FAR_FAR_TURN":                        -250,
+  "BLUE_FAR_GO_FORWARD_FROM_BACK_JEWEL":      -500,
+  "BLUE_FAR_GO_FORWARD_FROM_FRONT_JEWEL":     -360
+}

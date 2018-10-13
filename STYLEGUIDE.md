@@ -15,8 +15,8 @@ Also, feel free to propose changes to the styleguide.
 if (bar == 30) {
 	System.out.println("bat");
 }
-``
-**Don't** use:
+```
+**Do not** use:
 ```java
 if (bar == 30)
 {
@@ -381,3 +381,25 @@ public void loop() {
 
 }
 ```
+
+## Some other conventions:
+Motors will always be named:
+```java
+public DcMotor rf, lf, ra, la;
+```
+
+Divide your imports based on the domains of the URLs.
+Example:
+```java
+import android.os.Environment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+```
+
+Please be consistent.

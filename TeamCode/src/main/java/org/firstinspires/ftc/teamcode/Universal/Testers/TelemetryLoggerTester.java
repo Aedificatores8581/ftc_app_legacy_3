@@ -1,11 +1,12 @@
-package org.firstinspires.ftc.teamcode.Robots.SensorBot.OpModes;
+package org.firstinspires.ftc.teamcode.Universal.Testers;
 
 import android.os.Environment;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.Robots.SensorBot.SensorBot;
-import org.firstinspires.ftc.teamcode.robotUniversal.TelemetryLogger;
+import org.firstinspires.ftc.teamcode.Universal.TelemetryLogger;
 
 import java.io.IOException;
 
@@ -15,7 +16,7 @@ import java.io.IOException;
  * */
 
 @Autonomous(name = "Telemetry Logger Tester: Non-Threaded", group = "Tele Test")
-public class TelemetryLoggerTester extends SensorBot {
+public class TelemetryLoggerTester extends OpMode {
 
     private TelemetryLogger logger;
     private int x, y;
@@ -24,7 +25,6 @@ public class TelemetryLoggerTester extends SensorBot {
 
     @Override
     public void init () {
-        super.init();
         telemetry.addLine(Environment.getExternalStorageDirectory().getName());
         x = 0;
         y = 0;
