@@ -23,7 +23,7 @@ public class WestBot15IncrementalTestDrive extends WestBot15Inc {
         super.init();
 
         activateGamepad1();
-        drivetrain.controlState = TankDT.ControlState.FIELD_CENTRIC;
+        drivetrain.controlState = TankDT.ControlState.TANK;
         drivetrain.turnState = TankDT.FCTurnState.FAST;
         drivetrain.direction = Drivetrain.Direction.FOR;
     }

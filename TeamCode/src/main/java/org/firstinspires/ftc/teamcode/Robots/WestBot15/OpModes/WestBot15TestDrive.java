@@ -20,7 +20,7 @@ public class WestBot15TestDrive extends WestBot15 {
         super.init();
         activateGamepad1();
 
-        drivetrain.controlState = TankDT.ControlState.ARCADE;
+        drivetrain.controlState = TankDT.ControlState.TANK;
         drivetrain.direction = TankDT.Direction.FOR;
     }
 
