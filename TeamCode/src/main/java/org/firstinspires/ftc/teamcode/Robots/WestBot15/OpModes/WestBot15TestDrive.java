@@ -85,7 +85,13 @@ public class WestBot15TestDrive extends WestBot15 {
         telemetry.addData("leftPower", drivetrain.leftPow);
         telemetry.addData("rightPower", drivetrain.rightPow);
         telemetry.addData("angle1", Math.toDegrees(robotAngle.angle()));
-        telemetry.addData("angle2", (drivetrain.averageRightEncoders() - drivetrain.averageLeftEncoders()) / (drivetrain.ENC_PER_INCH * drivetrain.DISTANCE_BETWEEN_WHEELS));
+        telemetry.addData("angle2",
+                (drivetrain.averageRightEncoders() - drivetrain.averageLeftEncoders()) /
+                (drivetrain.ENC_PER_INCH * drivetrain.DISTANCE_BETWEEN_WHEELS));
+        telemetry.addData("averageRightEncoders", drivetrain.averageRightEncoders());
+        telemetry.addData("averageLeftEncoders", drivetrain.averageLeftEncoders());
+        telemetry.addData("encoderAggregate",
+                drivetrain.averageRightEncoders() - drivetrain.averageLeftEncoders());
     }
 
     public void refreshStartAngle(){
