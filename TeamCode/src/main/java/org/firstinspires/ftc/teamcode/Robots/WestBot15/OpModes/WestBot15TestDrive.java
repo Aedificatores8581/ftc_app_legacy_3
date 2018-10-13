@@ -39,6 +39,7 @@ public class WestBot15TestDrive extends WestBot15 {
         updateGamepad1();
         refreshStartAngle();
         setRobotAngle();
+        drivetrain.updateEncoders();
 
         drivetrain.teleOpLoop(leftStick1, rightStick1, robotAngle);
 

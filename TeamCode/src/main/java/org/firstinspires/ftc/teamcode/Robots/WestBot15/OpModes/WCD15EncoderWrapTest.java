@@ -27,11 +27,14 @@ public class WCD15EncoderWrapTest extends WestBot15{
         updateGamepad1();
         drivetrain.leftPow = leftStick1.y + rightStick1.x;
         drivetrain.rightPow = leftStick1.y - rightStick1.x;
+
         drivetrain.setLeftPow();
         drivetrain.setRightPow();
         drivetrain.updateEncoders();
+
         minEncVal = UniversalFunctions.min(drivetrain.lfEncoder.currentPosition, drivetrain.rfEncoder.currentPosition, drivetrain.lrEncoder.currentPosition, drivetrain.rrEncoder.currentPosition, minEncVal);
         maxEncVal = UniversalFunctions.max(drivetrain.lfEncoder.currentPosition, drivetrain.rfEncoder.currentPosition, drivetrain.lrEncoder.currentPosition, drivetrain.rrEncoder.currentPosition, maxEncVal);
+
         telemetry.addData("Max enc val", maxEncVal);
         telemetry.addData("Min enc val", minEncVal);
     }
