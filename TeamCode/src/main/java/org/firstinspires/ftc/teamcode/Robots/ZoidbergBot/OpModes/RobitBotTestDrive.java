@@ -87,45 +87,7 @@ public class RobitBotTestDrive extends RobitBot {
 
             case TANK:
                 if (switchControlState) {
-                    drivetrain.controlState = TankDT.ControlState.FIELD_CENTRIC_VECTOR;
-                    switchControlState = false;
-                    canSwitchControlState = false;
-                } else if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {
-                    switchControlState = false;
-                    canSwitchControlState = true;
-                } else if (gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
-                    switchControlState = true;
-                break;
-
-            case FIELD_CENTRIC_VECTOR:
-                switch(drivetrain.turnState) {
-                    case FAST:
-                        if (switchTurnState) {
-                            drivetrain.turnState = TankDT.FCTurnState.SMOOTH;
-                            switchTurnState = false;
-                            canSwitchTurnState = false;
-                        } else if (gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER) {
-                            switchTurnState = false;
-                            canSwitchTurnState = true;
-                        } else if (gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
-                            switchTurnState = true;
-                        break;
-
-                    case SMOOTH:
-                        if (switchTurnState) {
-                            drivetrain.turnState = TankDT.FCTurnState.FAST;
-                            switchTurnState = false;
-                            canSwitchTurnState = false;
-                        } else if (gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER) {
-                            switchTurnState = false;
-                            canSwitchTurnState = true;
-                        } else if (gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
-                            switchTurnState = true;
-                        break;
-                }
-
-                if (switchControlState) {
-                    drivetrain.controlState = TankDT.ControlState.ARCADE;
+                    drivetrain.controlState = TankDT.ControlState.FIELD_CENTRIC;
                     switchControlState = false;
                     canSwitchControlState = false;
                 } else if (gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {

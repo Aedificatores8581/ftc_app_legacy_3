@@ -47,7 +47,7 @@ public abstract class TankDT extends Drivetrain {
         ARCADE,
         TANK,
         FIELD_CENTRIC,
-        CHEESY;
+        CHEESY
     }
 
     //Two algorithms for turning in field-centric mode
