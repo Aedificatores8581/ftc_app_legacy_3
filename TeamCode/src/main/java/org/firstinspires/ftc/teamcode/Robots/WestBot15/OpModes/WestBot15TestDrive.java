@@ -31,10 +31,18 @@ public class WestBot15TestDrive extends WestBot15 {
 
     @Override
     public void loop(){
+        //leftIntake.setPower(0.95 * ((gamepad1.left_trigger - gamepad1.right_trigger) / 2 + 0.5));
+        //rightIntake.setPower(0.95 * ((gamepad1.left_trigger - gamepad1.right_trigger) / 2 + 0.5));
+
+        drivetrain.maxSpeed = gamepad1.left_stick_button || gamepad1.right_stick_button ? 0.98: 0.5;
+
         updateGamepad1();
         refreshStartAngle();
         setRobotAngle();
+        drivetrain.updateEncoders();
+
         drivetrain.teleOpLoop(leftStick1, rightStick1, robotAngle);
+
         switch(drivetrain.controlState) {
             case ARCADE:
                 if (!gamepad1.dpad_up && gamepad1.dpad_down)
@@ -49,6 +57,7 @@ public class WestBot15TestDrive extends WestBot15 {
                 }
                 break;
 
+            // TODO: Fix bad TODO.
             // TODO: \/\/\/
             //what?
             case FIELD_CENTRIC:
@@ -82,7 +91,13 @@ public class WestBot15TestDrive extends WestBot15 {
         telemetry.addData("leftPower", drivetrain.leftPow);
         telemetry.addData("rightPower", drivetrain.rightPow);
         telemetry.addData("angle1", Math.toDegrees(robotAngle.angle()));
-        telemetry.addData("angle2", (drivetrain.averageRightEncoders() - drivetrain.averageLeftEncoders()) / (drivetrain.ENC_PER_INCH * drivetrain.DISTANCE_BETWEEN_WHEELS));
+        telemetry.addData("angle2",
+                (drivetrain.averageRightEncoders() - drivetrain.averageLeftEncoders()) /
+                (drivetrain.ENC_PER_INCH * drivetrain.DISTANCE_BETWEEN_WHEELS));
+        telemetry.addData("averageRightEncoders", drivetrain.averageRightEncoders());
+        telemetry.addData("averageLeftEncoders", drivetrain.averageLeftEncoders());
+        telemetry.addData("encoderAggregate",
+                drivetrain.averageRightEncoders() - drivetrain.averageLeftEncoders());
     }
 
     public void refreshStartAngle(){

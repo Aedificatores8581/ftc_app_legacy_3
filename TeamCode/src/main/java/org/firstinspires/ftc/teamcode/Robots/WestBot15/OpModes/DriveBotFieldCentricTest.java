@@ -22,7 +22,7 @@ public class DriveBotFieldCentricTest extends WestBot15 {
     public void init(){
         super.init();
         activateGamepad1();
-        drivetrain.controlState = TankDT.ControlState.ARCADE;
+        drivetrain.controlState = TankDT.ControlState.TANK;
         drivetrain.turnState = TankDT.FCTurnState.FAST;
         drivetrain.direction = TankDT.Direction.FOR;
     }

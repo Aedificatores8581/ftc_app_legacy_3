@@ -37,8 +37,10 @@ public abstract class WestBot15 extends Robot {
     @Override
     public void init(){
         super.init();
-        leftIntake = hardwareMap.crservo.get("lin");
-        rightIntake = hardwareMap.crservo.get("rin");
+        // TODO: ?
+        // leftIntake = hardwareMap.crservo.get("lin");
+        // rightIntake = hardwareMap.crservo.get("rin");
+
         drivetrain.maxSpeed = 0.9775;
         drivetrain.initMotors(hardwareMap);
 
