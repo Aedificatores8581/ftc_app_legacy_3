@@ -2,25 +2,31 @@ package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 
-@TeleOp(name = "Cheesy Test Drive", group = "wcd")
-public class CheesyTest extends WestBot15 {
+//@TeleOp(name = "teleop")
+public class RoverRuckusTeleOp extends WestBot15 {
+    boolean canSwitch = false;
+    boolean markerDropped = false;
     @Override
     public void init(){
         super.init();
         activateGamepad1();
+        activateGamepad2();
     }
-
     @Override
     public void start(){
         super.start();
     }
 
+    int intakeDirection = 1;
+
     @Override
     public void loop(){
         updateGamepad1();
+        updateGamepad2();
+
+        //driving
         if(gamepad1.left_stick_button)
             drivetrain.maxSpeed = 1;
         else{
@@ -38,5 +44,33 @@ public class CheesyTest extends WestBot15 {
         drivetrain.rightPow = leftStick1.y - turnMult * rightStick1.x;
         drivetrain.setRightPow();
         drivetrain.setLeftPow();
+
+        if(gamepad2.right_trigger > 0){
+            if(gamepad2.right_trigger < 0.1)
+                canSwitch = true;
+            if(canSwitch) {
+                //intake.goldMode();
+            }
+            if(gamepad2.left_bumper) {
+                //intake.silverMode();
+                canSwitch = false;
+            }
+            //intake.setPower(gamepad2.right_trigger);
+        }
+        //intake.open(gamepad2.b);
+
+        // insert has marker been dropped code
+        if(/*markerDropper.isDropper()*/ true) {
+            if (gamepad2.a) {
+                //markerDropper.drop();
+            }
+        }
+        if(gamepad2.y){
+            //intake.rotate(intake.currentPositionOrdinal + 1);
+        }
+        if(gamepad2.x){
+            //intake.rotate(intake.currentPositionOrdinal - 1);
+        }
+
     }
 }
