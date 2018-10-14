@@ -24,7 +24,7 @@ public abstract class WestBot15 extends Robot {
     //IMPORTANT: phone locations should be taken in relation to the robot, not the field
     //:TODO: Add an encoder to the servo
     public CRServo leftIntake, rightIntake;
-    protected WestCoast15 drivetrain = new WestCoast15();
+    protected WestCoast15 drivetrain = new WestCoast15(DcMotor.ZeroPowerBehavior.BRAKE, 1.0);
 
     public REVToFSensor xTof, yTof;
     public Map2 robotMap, fieldMap;

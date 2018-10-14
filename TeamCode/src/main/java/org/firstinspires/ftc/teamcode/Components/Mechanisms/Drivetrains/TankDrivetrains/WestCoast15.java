@@ -30,6 +30,12 @@ public class WestCoast15 extends TankDT {
     public WestCoast15(DcMotor.ZeroPowerBehavior zeroPowBehavior, double speed) {
         zeroPowerBehavior = zeroPowBehavior;
         maxSpeed = speed;
+
+        leftFore.setZeroPowerBehavior(zeroPowerBehavior);
+        leftRear.setZeroPowerBehavior(zeroPowerBehavior);
+        rightFore.setZeroPowerBehavior(zeroPowerBehavior);
+        rightRear.setZeroPowerBehavior(zeroPowerBehavior);
+
         leftMotors = new DcMotor[]{leftFore, leftRear};
         rightMotors = new DcMotor[]{rightFore, rightRear};
     }
