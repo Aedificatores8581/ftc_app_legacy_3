@@ -31,11 +31,6 @@ public class WestCoast15 extends TankDT {
         zeroPowerBehavior = zeroPowBehavior;
         maxSpeed = speed;
 
-        leftFore.setZeroPowerBehavior(zeroPowerBehavior);
-        leftRear.setZeroPowerBehavior(zeroPowerBehavior);
-        rightFore.setZeroPowerBehavior(zeroPowerBehavior);
-        rightRear.setZeroPowerBehavior(zeroPowerBehavior);
-
         leftMotors = new DcMotor[]{leftFore, leftRear};
         rightMotors = new DcMotor[]{rightFore, rightRear};
     }
@@ -57,6 +52,11 @@ public class WestCoast15 extends TankDT {
         leftFore = map.dcMotor.get("lf");
         leftRear = map.dcMotor.get("la");
         rightRear = map.dcMotor.get("ra");
+
+        leftFore.setZeroPowerBehavior(zeroPowerBehavior);
+        leftRear.setZeroPowerBehavior(zeroPowerBehavior);
+        rightFore.setZeroPowerBehavior(zeroPowerBehavior);
+        rightRear.setZeroPowerBehavior(zeroPowerBehavior);
 
         rightFore.setDirection(REVERSE);
         rightRear.setDirection(REVERSE);
