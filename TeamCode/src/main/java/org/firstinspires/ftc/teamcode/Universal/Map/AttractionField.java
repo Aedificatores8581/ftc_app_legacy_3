@@ -12,6 +12,10 @@ public class AttractionField {
         location = new Pose(0,0,0);
         strength = 1;
     }
+
+    /*
+     * Constuctors
+     * */
     public AttractionField(Pose pose, double strength){
         location = new Pose(pose.x, pose.y, pose.angle);
         this.strength = Math.abs(strength);
@@ -22,6 +26,10 @@ public class AttractionField {
         location = new Pose(pose.x, pose.y, pose.angle);
         strength = 1;
     }
+
+    /** Finds the distance between an object and the attraction field and returns a vector based
+    * on the strength of the attraction field on the object and the angle of the object
+    * */
     public Vector2 interact(Pose obj){
         Pose object = new Pose(obj);
         object.x -= location.x;
@@ -31,12 +39,22 @@ public class AttractionField {
         temp.rotate(location.angle);
         return temp;
     }
+
+    /** Finds the distance between an object and the attraction field and returns a vector based
+     * on the strength of the attraction field on the object and the angle of the object
+     * */
     protected Vector2 interact(Vector2 object){
         return interact(new Pose(object.x, object.y, 0));
     }
+
+    /** Returns the strength of an attraction field on an object based on the distance between the
+     * field and the object
+     * */
     public double getStrength(double distance){
         return strength * Math.pow(Math.E, strength - distance)/ distance;
     }
+
+
     public Vector2 interactWithSlowdown(Pose object, double maxSpeed){
         Vector2 v2 = interact(object);
         if(v2.magnitude() > 1)
