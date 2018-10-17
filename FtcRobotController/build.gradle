@@ -32,7 +32,7 @@ android {
         }
     }
 
-    compileSdkVersion 23
+    compileSdkVersion 27
     buildToolsVersion '28.0.3'
 
     compileOptions {
