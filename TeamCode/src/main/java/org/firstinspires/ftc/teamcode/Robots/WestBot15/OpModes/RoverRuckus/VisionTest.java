@@ -29,8 +29,7 @@ public class VisionTest extends OpMode {
         FtcRobotControllerActivity.frameGrabber.detector = this.detector;
     }
     public void initLoop(){
-        telemetry.addData("location 1", motoG4.getObjectLocationRear(detector.elements.get(0), detector.result().size(), 2));
-        telemetry.addData("location 2", motoG4.getObjectLocationRear2(detector.elements.get(0), detector.result().size(), 2));
+        telemetry.addData("location 1", motoG4.rearCamera.getObjectLocation(detector.elements.get(0), detector.result().size(), 2));
     }
     @Override
     public void start(){
@@ -44,8 +43,8 @@ public class VisionTest extends OpMode {
         temp.x -= 480/ 2;
         temp.y += 640 / 2;
 
-        double vertAng = temp.y / 640 * motoG4.verticalAngleOfViewRear();
-        double horiAng = temp.x / 480 * motoG4.horizontalAngleOfViewRear();
+        double vertAng = temp.y / 640 * motoG4.rearCamera.verticalAngleOfView();
+        double horiAng = temp.x / 480 * motoG4.rearCamera.horizontalAngleOfView();
 
         double newY = (12 - 2 / 2) / Math.tan(vertAng);
         double newX = newY * Math.tan(horiAng);

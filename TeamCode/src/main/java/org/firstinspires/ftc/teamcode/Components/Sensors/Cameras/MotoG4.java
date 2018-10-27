@@ -7,60 +7,25 @@ import org.opencv.core.Size;
 
 import java.lang.Math;
 public class MotoG4{
-    public RearCamera rear;
-    public FrontCamera front;
+    public DigitalCamera rearCamera;
+    public DigitalCamera frontCamera;
     public MotoG4(){
-        rear = new RearCamera();
-        front = new FrontCamera(3.584 / 2 / Math.tan(14 * Math.PI / 15));
+        frontCamera = new DigitalCamera(3.584 / 2 / Math.tan(14 * Math.PI / 15), 1.4 * 10E-3, 1920, 2560);
+        rearCamera = new DigitalCamera(3.6, 1.2E-3, 3120, 4208);
     }
     public void setLocationAndOrientation(Point3 location, Point3 orientation){
-        rear.setLocationAndOrientation(location, orientation);
-        front.setLocation(rear);
-        front.updateOrientation(Math.PI, Math.PI, Math.PI);
+        rearCamera.setLocationAndOrientation(location, orientation);
+        frontCamera.setLocation(rearCamera);
+        frontCamera.updateOrientation(Math.PI, Math.PI, Math.PI);
     }
     public void setLocation(Point3 location){
-        front.setLocation(location);
-        rear.setLocation(location);
+        frontCamera.setLocation(location);
+        rearCamera.setLocation(location);
     }
     public Point3 getLocation(){
-        return new Point3(rear.x, rear.y, rear.z);
+        return new Point3(rearCamera.x, rearCamera.y, rearCamera.z);
     }
     /*public void setOrientation(Point3 orientation){
         rear.xAng
     }*/
-    public Point getObjectLocationRear(Point pointOnImage, Size imageSize, double objectHeight){
-        return rear.getObjectLocation(pointOnImage, imageSize, objectHeight);
-    }
-    public double verticalAngleOfViewRear(){
-        return rear.verticalAngleOfView();
-    }
-    public double horizontalAngleOfViewRear(){
-        return rear.horizontalAngleOfView();
-    }
-}
-
-class RearCamera extends DigitalCamera{
-    static final double FOCAL_LENGTH = 3.6,
-            PIXEL_SIZE = 1.12 * Math.pow(10, -3),
-            NUM_PIXELS_WIDTH = 3120,
-            NUM_PIXELS_HEIGHT = 4208;
-
-    RearCamera() {
-        super(FOCAL_LENGTH, PIXEL_SIZE, NUM_PIXELS_WIDTH, NUM_PIXELS_HEIGHT);
-    }
-
-}
-class FrontCamera extends DigitalCamera{
-    static final double FOCAL_LENGTH = 0,
-            PIXEL_SIZE = 1.4 * Math.pow(10, -3),
-            NUM_PIXELS_WIDTH = 2560,
-            NUM_PIXELS_HEIGHT = 1920;/*
-        public static final double FOCAL_LENGTH = 3.584 / 2 / Math.tan(14 * Math.PI / 15),
-                PIXEL_SIZE = 1.4 * Math.pow(10, -3),
-                NUM_PIXELS_WIDTH = 2560,
-                NUM_PIXELS_HEIGHT = 1920;
-*/
-    FrontCamera(double focalLength) {
-        super(focalLength, PIXEL_SIZE, NUM_PIXELS_WIDTH, NUM_PIXELS_HEIGHT);
-    }
 }
