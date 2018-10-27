@@ -156,8 +156,8 @@ public class GenericDetector extends Detector {
 
 
             Core.inRange(yuvImage, new Scalar(Y_MIN, U_MIN, v_MIN), new Scalar(Y_MAX, U_MAX, V_MAX), temp);
-            //mask = new Mat(image.size(), 0);
-            //temp.copyTo(mask);
+            mask = new Mat(image.size(), 0);
+            temp.copyTo(mask);
             //Core.add(mask, temp, mask);
             i = new Mat(image.size(), 0);
             //image.copyTo(i, mask);
