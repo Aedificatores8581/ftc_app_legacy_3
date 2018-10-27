@@ -71,7 +71,10 @@ public class VisionTuningTest extends OpMode {
                     canSwitchColorSpace = true;
                 break;
         }
-        int addition = (int) Math.signum(gamepad1.left_stick_y);
+        int addition = 0;
+        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK) {
+            addition = (int) Math.signum(gamepad1.left_stick_y);
+        }
         switch(adjust){
             case CANT:
                 if(System.currentTimeMillis() > prevTime + 125)
@@ -80,7 +83,6 @@ public class VisionTuningTest extends OpMode {
             case CAN:
                 switch(dRange){
                     case MIN1:
-                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK) {
                             switch(colorspace){
                                 case RGB:
                                     detector.R_MIN -= addition;
@@ -104,7 +106,6 @@ public class VisionTuningTest extends OpMode {
                                     break;
 
                             }
-                        }
                         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch){
                             canSwitch = false;
                             dRange = DetectorRange.MIN2;
@@ -113,7 +114,6 @@ public class VisionTuningTest extends OpMode {
                             canSwitch = true;
                         break;
                     case MIN2:
-                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK){
                             switch(colorspace){
                                 case RGB:
                                     detector.G_MIN -= addition;
@@ -137,7 +137,6 @@ public class VisionTuningTest extends OpMode {
                                     detecting = "yuv U min";
                                     break;
 
-                            }
 
                         }
                         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch){
@@ -148,7 +147,6 @@ public class VisionTuningTest extends OpMode {
                             canSwitch = true;
                         break;
                     case MIN3:
-                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK){
                             switch(colorspace){
                                 case RGB:
                                     detector.B_MIN -= addition;
@@ -171,7 +169,6 @@ public class VisionTuningTest extends OpMode {
                                     detector.v_MIN -= addition;
                                     detecting = "yuv v min";
                                     break;
-                            }
                         }
                         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch){
                             canSwitch = false;
@@ -181,7 +178,6 @@ public class VisionTuningTest extends OpMode {
                             canSwitch = true;
                         break;
                     case MAX1:
-                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK){
                             switch(colorspace){
                                 case RGB:
                                     detector.R_MAX -= addition;
@@ -204,7 +200,6 @@ public class VisionTuningTest extends OpMode {
                                     detector.Y_MAX -= addition;
                                     detecting = "yuv Y max";
                                     break;
-                            }
 
                         }
                         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch){
@@ -215,7 +210,6 @@ public class VisionTuningTest extends OpMode {
                             canSwitch = true;
                         break;
                     case MAX2:
-                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK){
                             switch(colorspace){
                                 case RGB:
                                     detector.G_MAX -= addition;
@@ -238,7 +232,6 @@ public class VisionTuningTest extends OpMode {
                                     detector.U_MAX -= addition;
                                     detecting = "yuv U max";
                                     break;
-                            }
                         }
                         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch){
                             canSwitch = false;
@@ -248,7 +241,6 @@ public class VisionTuningTest extends OpMode {
                             canSwitch = true;
                         break;
                     case MAX3:
-                        if(Math.abs(gamepad1.left_stick_y) > UniversalConstants.Triggered.STICK){
                             switch(colorspace){
                                 case RGB:
                                     detector.B_MAX -= addition;
@@ -271,7 +263,6 @@ public class VisionTuningTest extends OpMode {
                                     detector.v_MAX -= addition;
                                     detecting = "yuv v max";
                                     break;
-                            }
                         }
                         if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitch){
                             canSwitch = false;
@@ -300,6 +291,7 @@ public class VisionTuningTest extends OpMode {
         detector.H_MAX = (int)UniversalFunctions.clamp(1, detector.H_MAX, 255);
         detector.S_MAX = (int)UniversalFunctions.clamp(1, detector.S_MAX, 255);
         detector.V_MAX = (int)UniversalFunctions.clamp(1, detector.V_MAX, 255);
+
 
         detector.L_MIN = (int)UniversalFunctions.clamp(0, detector.L_MIN, 254);
         detector.a_MIN = (int)UniversalFunctions.clamp(0, detector.a_MIN, 254);
