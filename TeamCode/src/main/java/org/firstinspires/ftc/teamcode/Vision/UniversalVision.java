@@ -108,7 +108,6 @@ public class UniversalVision {
         }
         gray.release();
     }
-    //TODO: Frank needs to rename this method eventually
     public static List<MatOfPoint> drawContoursREEEELEASEMATSPLEASE(Mat rgb, Mat dst, double gausianSize){
         Mat gray = new Mat();
         Imgproc.cvtColor(rgb, gray, Imgproc.COLOR_RGB2GRAY);
