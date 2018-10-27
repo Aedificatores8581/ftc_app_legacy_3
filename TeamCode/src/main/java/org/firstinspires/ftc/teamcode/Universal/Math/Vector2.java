@@ -78,7 +78,7 @@ public class Vector2 {
     public void rotate(double angle){
         double tempX = x, tempY = y;
         x = Math.cos(angle) * tempX - Math.sin(angle) * tempY;
-        y = Math.sin(angle) * tempY + Math.cos(angle) * tempY;
+        y = Math.sin(angle) * tempX + Math.cos(angle) * tempY;
     }
 
     public String toString(){
