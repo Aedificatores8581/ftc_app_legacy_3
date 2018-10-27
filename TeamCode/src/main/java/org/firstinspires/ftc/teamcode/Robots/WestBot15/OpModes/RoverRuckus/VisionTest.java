@@ -52,7 +52,6 @@ public class VisionTest extends OpMode {
         Point newPoint = new Point(newX, newY);
 
         telemetry.addData("location 1", (int)(100 * newPoint.x) / 100.0 + ", " + (int)(100 * newPoint.y) / 100.0);
-        telemetry.addData("location 2", motoG4.getObjectLocationRear2(detector.element.clone(), detector.workingImage.size(), 2));
         telemetry.addData("center", (float)detector.element.x + ", " + (float)detector.element.y);
         telemetry.addData("size", detector.workingImage.size());
         telemetry.addData("temp", temp);

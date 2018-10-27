@@ -31,9 +31,6 @@ public class MotoG4{
     public Point getObjectLocationRear(Point pointOnImage, Size imageSize, double objectHeight){
         return rear.getObjectLocation(pointOnImage, imageSize, objectHeight);
     }
-    public Point getObjectLocationRear2(Point pointOnImage, Size imageSize, double objectHeight){
-        return rear.getObjectLocation2(pointOnImage, imageSize, objectHeight);
-    }
     public double verticalAngleOfViewRear(){
         return rear.verticalAngleOfView();
     }
