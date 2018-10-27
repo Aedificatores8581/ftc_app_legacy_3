@@ -26,7 +26,7 @@ public class VisionTest extends OpMode {
         motoG4.setLocationAndOrientation(new Point3(0, 0, 12), new Point3(0, 0, 0));
         detector = new BlockDetector();
         detector.opState = Detector.OperatingState.TUNING;
-        FtcRobotControllerActivity.frameGrabber.detector = this.detector;
+        FtcRobotControllerActivity.frameGrabber.detector = detector;
     }
     public void initLoop(){
         telemetry.addData("location 1", motoG4.rearCamera.getObjectLocation(detector.elements.get(0), detector.result().size(), 2));

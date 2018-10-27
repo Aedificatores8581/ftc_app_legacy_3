@@ -67,7 +67,6 @@ public class DigitalCamera {
         yAng = pose.phi;
         zAng = pose.theta;
     }
-    //TODO: Fix variable names
     public Point getObjectLocation(Point pointOnImage, Size imageSize, double objectHeight){
         Vector2 temp = new Vector2(pointOnImage.y, -pointOnImage.x);
         temp.x -= imageSize.height/ 2;
@@ -77,7 +76,8 @@ public class DigitalCamera {
         double horiAng = temp.x / imageSize.height * horizontalAngleOfView() + zAng;
 
         double newY = (z - objectHeight / 2) / Math.tan(vertAng);
-        double newX = newY * Math.tan(horiAng);
+        double newX = newY * Math.tan(horiAng) + x;
+        newY += y;
         return new Point(newX, newY);
     }
     public void updateLocation(double xChange, double yChange, double zChange){

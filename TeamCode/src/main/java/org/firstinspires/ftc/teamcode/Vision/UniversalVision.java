@@ -116,10 +116,6 @@ public class UniversalVision {
         Imgproc.findContours(gray ,contours,new Mat(),Imgproc.RETR_TREE,Imgproc.CHAIN_APPROX_SIMPLE);
 
         Imgproc.drawContours(dst,contours,-1,new Scalar(230,70,70),2);
-        //TODO: Make sure this line does not cause a runtime exception
-        for(MatOfPoint m : contours){
-            m.release();
-        }
         gray.release();
         return contours;
     }
