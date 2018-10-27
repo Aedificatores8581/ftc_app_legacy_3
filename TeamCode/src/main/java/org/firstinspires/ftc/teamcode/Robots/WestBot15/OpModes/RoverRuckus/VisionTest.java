@@ -42,7 +42,7 @@ public class VisionTest extends OpMode {
 
         Vector2 temp = new Vector2(detector.element.y, -detector.element.x);
         temp.x -= 480/ 2;
-        temp.y -= 640 / 2;
+        temp.y += 640 / 2;
 
         double vertAng = temp.y / 640 * motoG4.verticalAngleOfViewRear();
         double horiAng = temp.x / 480 * motoG4.horizontalAngleOfViewRear();
