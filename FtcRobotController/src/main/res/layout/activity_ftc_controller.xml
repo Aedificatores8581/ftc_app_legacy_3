@@ -71,15 +71,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <TextView
             android:id="@+id/openrc_version"
             android:layout_width="wrap_content"
-            android:layout_height="39dp"
-            android:layout_below="@id/textDeviceName"
-            android:layout_marginStart="1dp"
+            android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/robotIcon"
-            android:padding="8dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_below="@id/textDeviceName"
             android:textColor="?attr/textWhite"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:padding="8dp"
             android:textStyle="bold"
-            tools:text="OpenRC v1.0" />
+            tools:text="OpenRC v1.0"/>
 
         <ImageButton
             android:id="@+id/menu_buttons"
@@ -102,7 +101,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         layout="@layout/header"
         android:id="@+id/included_header"/>
 
-
     <RelativeLayout
         android:id="@+id/RelativeLayout"
         android:layout_width="match_parent"
@@ -111,8 +109,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:background="#000000">
+        android:paddingTop="@dimen/activity_vertical_margin">
 
         <TextView
             android:id="@+id/textNetworkConnectionStatus"
@@ -199,8 +196,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             android:layout_height="350dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:id="@+id/frameLayout"
-            android:background = "6d207e">
+            android:id="@+id/frameLayout">
             <org.opencv.android.JavaCameraView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -221,10 +217,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="[REAR CAMERA]"
+                android:text="[RESULT]"
                 android:id="@+id/resultText"
                 android:layout_gravity="end|top"
-                android:textColor="#6d207e" />
+                android:textColor="#ff0000" />
 
         </FrameLayout>
 
