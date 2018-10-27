@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.teamcode.Components.Sensors.Cameras;
 
 import org.firstinspires.ftc.teamcode.Components.Sensors.DigitalCamera;
+import org.opencv.core.Point;
 import org.opencv.core.Point3;
+import org.opencv.core.Size;
 
 import java.lang.Math;
 public class MotoG4{
-    //TODO: Figure out of difference ratio of surface view height and width and the image sensor height and width needs to be accounted for
-    //image sensor ratio: approx 1.348717949, surface view ratio: approx 1.333333333
-    public static RearCamera rear;
-    public static FrontCamera front;
+    public RearCamera rear;
+    public FrontCamera front;
     public MotoG4(){
         rear = new RearCamera();
         front = new FrontCamera(3.584 / 2 / Math.tan(14 * Math.PI / 15));
@@ -28,13 +28,25 @@ public class MotoG4{
     /*public void setOrientation(Point3 orientation){
         rear.xAng
     }*/
+    public Point getObjectLocationRear(Point pointOnImage, Size imageSize, double objectHeight){
+        return rear.getObjectLocation(pointOnImage, imageSize, objectHeight);
+    }
+    public Point getObjectLocationRear2(Point pointOnImage, Size imageSize, double objectHeight){
+        return rear.getObjectLocation2(pointOnImage, imageSize, objectHeight);
+    }
+    public double verticalAngleOfViewRear(){
+        return rear.verticalAngleOfView();
+    }
+    public double horizontalAngleOfViewRear(){
+        return rear.horizontalAngleOfView();
+    }
 }
 
 class RearCamera extends DigitalCamera{
     static final double FOCAL_LENGTH = 3.6,
             PIXEL_SIZE = 1.12 * Math.pow(10, -3),
-            NUM_PIXELS_WIDTH = 4208,
-            NUM_PIXELS_HEIGHT = 3120;
+            NUM_PIXELS_WIDTH = 3120,
+            NUM_PIXELS_HEIGHT = 4208;
 
     RearCamera() {
         super(FOCAL_LENGTH, PIXEL_SIZE, NUM_PIXELS_WIDTH, NUM_PIXELS_HEIGHT);
