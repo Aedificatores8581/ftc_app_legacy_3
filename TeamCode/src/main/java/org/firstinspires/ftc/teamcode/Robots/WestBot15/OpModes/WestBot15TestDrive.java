@@ -19,7 +19,7 @@ public class WestBot15TestDrive extends WestBot15 {
     public void init(){
         super.init();
         activateGamepad1();
-
+        drivetrain.maxSpeed = 0.4;
         drivetrain.controlState = TankDT.ControlState.ARCADE;
         drivetrain.direction = TankDT.Direction.FOR;
     }
@@ -42,7 +42,10 @@ public class WestBot15TestDrive extends WestBot15 {
         drivetrain.updateEncoders();
 
         drivetrain.teleOpLoop(leftStick1, rightStick1, robotAngle);
-
+        if(gamepad1.left_trigger > 0.2)
+            drivetrain.maxSpeed = 1;
+        else
+            drivetrain.maxSpeed = 0.4;
         switch(drivetrain.controlState) {
             case ARCADE:
                 if (!gamepad1.dpad_up && gamepad1.dpad_down)

@@ -11,6 +11,7 @@ public class CheesyTest extends WestBot15 {
     public void init(){
         super.init();
         activateGamepad1();
+        drivetrain.direction = TankDT.Direction.FOR;
     }
 
     @Override
@@ -33,6 +34,8 @@ public class CheesyTest extends WestBot15 {
         double maxTurn = 1;
         if(!gamepad1.right_bumper)
             maxTurn = 2.0/3;
+        else
+            maxTurn = 1;
         drivetrain.turnMult = (1 - leftStick1.magnitude() * maxTurn) * gamepad1.right_trigger + leftStick1.magnitude() * (1 - gamepad1.right_trigger);
         drivetrain.leftPow = leftStick1.y + drivetrain.turnMult * rightStick1.x;
         drivetrain.rightPow = leftStick1.y - drivetrain.turnMult * rightStick1.x;

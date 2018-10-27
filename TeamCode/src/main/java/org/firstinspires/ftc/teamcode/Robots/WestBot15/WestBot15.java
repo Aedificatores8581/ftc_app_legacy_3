@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.Components.Sensors.REVToFSensor;
 import org.firstinspires.ftc.teamcode.Robots.Robot;
 import org.firstinspires.ftc.teamcode.Universal.Map.Map2;
 import org.firstinspires.ftc.teamcode.Universal.Math.Pose;
+import org.firstinspires.ftc.teamcode.Universal.Math.Pose3;
 import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 import org.opencv.core.Point3;
 
@@ -29,7 +30,7 @@ public abstract class WestBot15 extends Robot {
     public REVToFSensor xTof, yTof;
     public Map2 robotMap, fieldMap;
 
-    MotoG4 motoG4 = new MotoG4();
+    public MotoG4 motoG4 = new MotoG4();
 
     protected double currentAngle = 0;
 
@@ -37,15 +38,14 @@ public abstract class WestBot15 extends Robot {
     @Override
     public void init(){
         super.init();
-        // TODO: ?
-        // leftIntake = hardwareMap.crservo.get("lin");
-        // rightIntake = hardwareMap.crservo.get("rin");
 
         drivetrain.maxSpeed = 0.9775;
         drivetrain.initMotors(hardwareMap);
 
         msStuckDetectInit = 50000000;
         drivetrain.position = new Pose();
+        motoG4 = new MotoG4();
+        motoG4.setLocationAndOrientation(new Point3(0, 0, 0), new Point3(0, 0, 0));
     }
 
     @Override
@@ -57,5 +57,13 @@ public abstract class WestBot15 extends Robot {
         if(!usingIMU)
             return startAngle + (drivetrain.averageRightEncoders() -  drivetrain.averageLeftEncoders()) / drivetrain.ENC_PER_INCH / drivetrain.DISTANCE_BETWEEN_WHEELS;
         return super.getGyroAngle();
+    }
+    public enum AutoState{
+        HANG,
+        LOWER,
+        SAMPLE,
+        CYCLE,
+        CLAIM,
+        PARK
     }
 }
