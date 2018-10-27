@@ -124,6 +124,12 @@ public class UniversalVision {
         gray.release();
         return contours;
     }
+/*
+    public static List<MatOfPoint> drawContours(Mat rgb, Mat dst, double gausianSize, Detector detector){
+        Mat gray = new Mat();
+        detector.detect(rgb);
+        gray.release();
+    }*/
 
     public static void drawContours(Mat rgb, Mat dst){
         drawContours(rgb, dst, 9);
@@ -136,5 +142,17 @@ public class UniversalVision {
 
     public static void drawContours(Mat rgb){
         drawContours(rgb.clone(), rgb, 9);
+    }
+
+    /*
+    to re-instantiate a mat, use
+        UniversalVision.newMat(mat);
+    not
+        mat = new Mat();
+    or remember to release the mat before reinstantiating it
+     */
+    public static void newMat(Mat mat){
+        mat.release();
+        mat = new Mat(new Size(), 0);
     }
 }
