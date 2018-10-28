@@ -25,6 +25,12 @@ public class JSONAutonGetter {
     private String jsonBuffer;
     public JSONObject jsonObject;
 
+    /**
+     * Note: The path name entered put into the "path" parameter of this constructor
+     * must just be the file name and it's extension. So if your json file is "VisionTuningTest.json",
+     * then the String entered into the path parameter should be "VisionTuningTest.json", not
+     * "VisionTuningTest", not "FIRST/JSON/VisionTuningTest.json", just "VisionTuningTest.json"
+     * */
     public JSONAutonGetter(String path) throws IOException, JSONException {
         File f = new File(BASE_DIR + path);
         jsonBuffer = "";
