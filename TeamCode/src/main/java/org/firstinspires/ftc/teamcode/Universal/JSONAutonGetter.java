@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /*
@@ -20,6 +21,7 @@ import java.io.IOException;
 * */
 public class JSONAutonGetter {
     private static final String BASE_DIR = Environment.getExternalStorageDirectory().getPath() + "/FIRST/JSON/";
+    private String path;
 
     private BufferedReader br;
     private String jsonBuffer;
@@ -32,7 +34,9 @@ public class JSONAutonGetter {
      * "VisionTuningTest", not "FIRST/JSON/VisionTuningTest.json", just "VisionTuningTest.json"
      * */
     public JSONAutonGetter(String path) throws IOException, JSONException {
-        File f = new File(BASE_DIR + path);
+        this.path = path;
+
+        File f = new File(BASE_DIR + this.path);
         jsonBuffer = "";
 
         if(!f.exists())
@@ -46,6 +50,18 @@ public class JSONAutonGetter {
         }
 
         jsonObject = new JSONObject(jsonBuffer);
+
+    }
+
+    public void saveToFile() throws IOException {
+        File f = new File(BASE_DIR + path);
+        FileWriter writer = new FileWriter(f);
+        writer.write(jsonObject.toString());
+        writer.close();
+    }
+
+    public String getPath() {
+        return path;
     }
 
     public void close() throws IOException {
