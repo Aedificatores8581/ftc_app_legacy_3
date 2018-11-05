@@ -72,7 +72,7 @@ public class JSONVisionInfoSaverTester extends OpMode {
             }
         }
 
-        
+
 
         try {
             telemetry.addData("Index",currentLocationIndex);
