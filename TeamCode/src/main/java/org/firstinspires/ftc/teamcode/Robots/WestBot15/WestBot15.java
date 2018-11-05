@@ -23,7 +23,8 @@ import org.opencv.core.Point3;
 
 public abstract class WestBot15 extends Robot {
     //IMPORTANT: phone locations should be taken in relation to the robot, not the field
-    //:TODO: Add an encoder to the servo
+    // TODO: Add an encoder to the servo
+
     public CRServo leftIntake, rightIntake;
     protected WestCoast15 drivetrain = new WestCoast15(DcMotor.ZeroPowerBehavior.BRAKE, 1.0);
 
@@ -43,7 +44,9 @@ public abstract class WestBot15 extends Robot {
         drivetrain.initMotors(hardwareMap);
 
         msStuckDetectInit = 50000000;
+
         drivetrain.position = new Pose();
+
         motoG4 = new MotoG4();
         motoG4.setLocationAndOrientation(new Point3(0, 0, 0), new Point3(0, 0, 0));
     }
@@ -52,13 +55,17 @@ public abstract class WestBot15 extends Robot {
     public void start(){
         super.start();
     }
+
     @Override
-    public double getGyroAngle(){
-        if(!usingIMU)
-            return startAngle + (drivetrain.averageRightEncoders() -  drivetrain.averageLeftEncoders()) / drivetrain.ENC_PER_INCH / drivetrain.DISTANCE_BETWEEN_WHEELS;
-        return super.getGyroAngle();
+    public double getGyroAngle() {
+        if(!usingIMU) {
+			return startAngle + (drivetrain.averageRightEncoders() - drivetrain.averageLeftEncoders())
+					/ drivetrain.ENC_PER_INCH / drivetrain.DISTANCE_BETWEEN_WHEELS;
+		}
+
+		return super.getGyroAngle();
     }
-    public enum AutoState{
+    public enum AutoState {
         HANG,
         LOWER,
         SAMPLE,

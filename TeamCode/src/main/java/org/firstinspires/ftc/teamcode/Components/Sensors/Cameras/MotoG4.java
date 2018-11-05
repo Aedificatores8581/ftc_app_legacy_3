@@ -9,10 +9,12 @@ import java.lang.Math;
 public class MotoG4{
     public RearCamera rear;
     public FrontCamera front;
+
     public MotoG4(){
         rear = new RearCamera();
         front = new FrontCamera(3.584 / 2 / Math.tan(14 * Math.PI / 15));
     }
+
     public void setLocationAndOrientation(Point3 location, Point3 orientation){
         rear.setLocationAndOrientation(location, orientation);
         front.setLocation(rear);
