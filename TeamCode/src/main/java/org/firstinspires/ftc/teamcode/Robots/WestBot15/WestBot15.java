@@ -24,12 +24,13 @@ import org.opencv.core.Point3;
 public abstract class WestBot15 extends Robot {
     //IMPORTANT: phone locations should be taken in relation to the robot, not the field
     //:TODO: Add an encoder to the servo
-    public CRServo leftIntake, rightIntake;
+    public CRServo frontIntake, backIntake;
+    public Servo dispensor;
+    public DcMotor hang, leftLift, rightLift, extension;
     protected WestCoast15 drivetrain = new WestCoast15(DcMotor.ZeroPowerBehavior.BRAKE, 1.0);
 
-    public REVToFSensor xTof, yTof;
     public Map2 robotMap, fieldMap;
-
+    public boolean hadleyOnSchedule = false;
     public MotoG4 motoG4 = new MotoG4();
 
     protected double currentAngle = 0;
@@ -37,12 +38,20 @@ public abstract class WestBot15 extends Robot {
 
     @Override
     public void init(){
+        msStuckDetectInit = 50000000;
         super.init();
-
-        drivetrain.maxSpeed = 0.9775;
+        if(hadleyOnSchedule) {
+            frontIntake = hardwareMap.crservo.get("inF");
+            backIntake = hardwareMap.crservo.get("inB");
+            hang = hardwareMap.dcMotor.get("hang");
+            leftLift = hardwareMap.dcMotor.get("liL");
+            rightLift = hardwareMap.dcMotor.get("liR");
+            extension = hardwareMap.dcMotor.get("ex");
+            dispensor = hardwareMap.servo.get("tm");
+        }
+        drivetrain.maxSpeed = 0.6;
         drivetrain.initMotors(hardwareMap);
 
-        msStuckDetectInit = 50000000;
         drivetrain.position = new Pose();
         motoG4 = new MotoG4();
         motoG4.setLocationAndOrientation(new Point3(0, 0, 0), new Point3(0, 0, 0));

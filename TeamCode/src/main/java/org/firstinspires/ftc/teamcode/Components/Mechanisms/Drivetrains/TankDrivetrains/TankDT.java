@@ -186,7 +186,7 @@ public abstract class TankDT extends Drivetrain {
 
     public synchronized void driveToPointCircular(double x, double y, Direction dir, double maxSpeed){
         this.maxSpeed = maxSpeed;
-        
+
     }
 
     public synchronized void updateLocation(double leftChange, double rightChange){

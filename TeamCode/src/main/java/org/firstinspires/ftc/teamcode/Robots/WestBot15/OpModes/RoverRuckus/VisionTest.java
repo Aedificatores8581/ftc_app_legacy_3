@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.teamcode.Components.Sensors.Cameras.MotoG4;
+import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 import org.firstinspires.ftc.teamcode.Vision.Detectors.BlockDetector;
 import org.firstinspires.ftc.teamcode.Vision.Detectors.GenericDetector;
@@ -15,13 +16,15 @@ import org.opencv.core.Size;
 import ftc.vision.Detector;
 
 @Autonomous(name = "block detector test", group = "none")
-public class VisionTest extends OpMode {
+public class VisionTest extends WestBot15 {
     BlockDetector detector;
     Point sampleLocation;
     MotoG4 motoG4;
 
     public void init(){
         msStuckDetectInit = 500000;
+        super.init();
+        activateGamepad1();
         motoG4 = new MotoG4();
         motoG4.setLocationAndOrientation(new Point3(0, 0, 12), new Point3(0, 0, 0));
         detector = new BlockDetector();
