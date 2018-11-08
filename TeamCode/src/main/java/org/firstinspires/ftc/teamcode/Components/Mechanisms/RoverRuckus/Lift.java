@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Lift {
     public DcMotor liftMotor;
     public Servo topRatchetServo, sideRatchetServo;
+    //TODO: find these values
     public final double  TOP_RATCHET_ZERO_POSITION  = 0 ,
                          TOP_RATCHET_ONE_POSITION   = 1 ,
                          SIDE_RATCHET_ZERO_POSITION = 0 ,

@@ -23,7 +23,7 @@ import org.opencv.core.Point3;
 
 public abstract class WestBot15 extends Robot {
     //IMPORTANT: phone locations should be taken in relation to the robot, not the field
-    //:TODO: Add an encoder to the servo
+
     public CRServo frontIntake, backIntake;
     public Servo dispensor;
     public DcMotor hang, leftLift, rightLift, extension;

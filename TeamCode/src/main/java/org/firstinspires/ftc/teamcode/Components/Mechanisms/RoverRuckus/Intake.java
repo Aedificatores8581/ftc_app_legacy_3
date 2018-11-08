@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Intake {
     public CRServo frontRoller, backRoller;
     public Servo dispensor;
+    //TODO: find these values
     public final double CLOSED_DISPENSOR_POSITION = 0, OPEN_DISPENSOR_POSITION = 1;
     public IntakeMode intakeMode;
 
