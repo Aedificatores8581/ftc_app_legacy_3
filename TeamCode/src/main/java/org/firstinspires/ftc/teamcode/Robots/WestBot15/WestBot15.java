@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.WestCoast15;
+import org.firstinspires.ftc.teamcode.Components.Mechanisms.RoverRuckus.Intake;
+import org.firstinspires.ftc.teamcode.Components.Mechanisms.RoverRuckus.Lift;
 import org.firstinspires.ftc.teamcode.Components.Sensors.Cameras.MotoG4;
 import org.firstinspires.ftc.teamcode.Components.Sensors.REVToFSensor;
 import org.firstinspires.ftc.teamcode.Robots.Robot;
@@ -23,10 +25,8 @@ import org.opencv.core.Point3;
 
 public abstract class WestBot15 extends Robot {
     //IMPORTANT: phone locations should be taken in relation to the robot, not the field
-
-    public CRServo frontIntake, backIntake;
-    public Servo dispensor;
-    public DcMotor hang, leftLift, rightLift, extension;
+    public Intake intaek = new Intake();
+    public Lift lift = new Lift();
     protected WestCoast15 drivetrain = new WestCoast15(DcMotor.ZeroPowerBehavior.BRAKE, 1.0);
 
     public Map2 robotMap, fieldMap;
@@ -41,13 +41,8 @@ public abstract class WestBot15 extends Robot {
         msStuckDetectInit = 50000000;
         super.init();
         if(hadleyOnSchedule) {
-            frontIntake = hardwareMap.crservo.get("inF");
-            backIntake = hardwareMap.crservo.get("inB");
-            hang = hardwareMap.dcMotor.get("hang");
-            leftLift = hardwareMap.dcMotor.get("liL");
-            rightLift = hardwareMap.dcMotor.get("liR");
-            extension = hardwareMap.dcMotor.get("ex");
-            dispensor = hardwareMap.servo.get("tm");
+            intaek.init(hardwareMap);
+            lift.init(hardwareMap);
         }
         drivetrain.maxSpeed = 1.0;
         drivetrain.initMotors(hardwareMap);
