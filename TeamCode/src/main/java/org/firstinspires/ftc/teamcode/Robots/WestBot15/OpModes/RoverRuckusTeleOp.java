@@ -36,7 +36,7 @@ public class RoverRuckusTeleOp extends WestBot15 {
         if(gamepad2.left_stick_button && gamepad2.right_stick_button)
             engame = true;
 
-        //drivecodehere
+        drivetrain.mildSpicyDrive(leftStick1, gamepad1.left_trigger, gamepad1.right_trigger);
 
         intaek.intakeMode = gamepad2.left_bumper ? Intake.IntakeMode.GOLD : Intake.IntakeMode.SILVER;
         intaek.setModePower(gamepad2.left_trigger);
@@ -51,8 +51,13 @@ public class RoverRuckusTeleOp extends WestBot15 {
                 aextendo.articulateDown();
             if(gamepad2.x)
                 intaek.dispense();
+            if(gamepad1.left_stick_button)
+                drivetrain.maxSpeed = 0.95;
+            else
+                drivetrain.maxSpeed = 0.5 + 3 * rightStick1.x;
         }
         else {
+            drivetrain.maxSpeed = 0.3;
             aextendo.aextendTM(-1);
             aextendo.articulateUp();
             intaek.dispense();

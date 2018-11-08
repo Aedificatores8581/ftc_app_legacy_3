@@ -128,23 +128,14 @@ public abstract class TankDT extends Drivetrain {
         Vector2 angleVect = new Vector2();
         angleVect.setFromPolar(1, angle);
         teleOpLoop(leftVect, rightVect, angleVect);
-    }/*
-    public void mildSpicyDrive(Vector2 leftVect, Vector2 rightVect, double leftBumper, double rightBumper){
+    }
+    public void mildSpicyDrive(Vector2 leftVect, double leftBumper, double rightBumper){
         turnMult = 1 - leftVect.magnitude() * (1 - maxTurn);
-        Vector2 turnVect = new Vector2(0, leftBumper);
-
-
-
-        turnMult = (1 - leftVect.magnitude() * maxTurn) * gamepad1.right_trigger + leftStick1.magnitude() * (1 - gamepad1.right_trigger);
-        drivetrain.leftPow = leftStick1.y + drivetrain.turnMult * rightStick1.x;
-        drivetrain.rightPow = leftStick1.y - drivetrain.turnMult * rightStick1.x;
-
-        leftPow = leftVect.y + turnMult * rightVect.x;
-        rightPow = leftVect.y - turnMult * rightVect.x;
-    }*/
-
-    public void mildSpicyDrive(Vector2 leftVect, Vector2 rightVect, double cheesiness){
-
+        Vector2 turnVect = new Vector2(rightBumper - leftBumper, 0);
+        leftPow = leftVect.y + leftVect.x * turnVect.x;
+        rightPow = leftVect.y - leftVect.x * turnVect.x;
+        setLeftPow();
+        setRightPow();
     }
 
     public void driveToPoint(double x, double y, Direction dir){
