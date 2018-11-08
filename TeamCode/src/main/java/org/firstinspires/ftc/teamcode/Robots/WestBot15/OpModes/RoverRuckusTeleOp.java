@@ -23,6 +23,5 @@ public class RoverRuckusTeleOp extends WestBot15 {
         updateGamepad1();
         updateGamepad2();
 
-
     }
 }

@@ -12,8 +12,8 @@ public class AExtendotm {
     public Pose markerPosition = new Pose();
     public final Pose AEXTENDOtm_POSE = new Pose();
     //TODO: find these values
-    public final double SERVO_ZERO_POSITION = 0,
-                        SERVO_ONE_POSITION = 1,
+    public final double MARKER_CLOSED_POSITION = 0,
+                        MARKER_OPEN_POSITION = 1,
                         MAX_EXTENSION_LENGTH = 36,
                         ENC_PER_RADIAN = 10,
                         TICKS_PER_INCH = 500,
@@ -41,7 +41,7 @@ public class AExtendotm {
         return (int) (ang * ENC_PER_RADIAN);
     }
     public void dropMarker(){
-        marker.setPosition(SERVO_ONE_POSITION);
+        marker.setPosition(MARKER_OPEN_POSITION);
     }
     public void aextendTM(double value){
         if(extendo.getMode() == DcMotor.RunMode.RUN_TO_POSITION)
@@ -68,7 +68,7 @@ public class AExtendotm {
         articulator.setTargetPosition(angleToEnc(willBeRetracted() ? RETRACTED_RAISED_ANGLE : EXTENDED_RAISED_ANGLE));
     }
     public String toString(){
-        String markerTerm  = marker.getPosition() == SERVO_ONE_POSITION ? "marker is deployed" : "marker is not deployed";
+        String markerTerm  = marker.getPosition() == MARKER_OPEN_POSITION ? "marker is deployed" : "marker is not deployed";
         return getExtensionLength() + " inches, " + getArticulatorAngle() + " degrees, " + markerTerm;
     }
 }

@@ -13,7 +13,8 @@ public class Lift {
                          SIDE_RATCHET_ZERO_POSITION = 0 ,
                          SIDE_RATCHET_ONE_POSITION  = 1 ;
     private final double TIME_TO_SWITCH_MS          = 20,
-                         TICKS_PER_INCH             = 0;
+                         TICKS_PER_INCH             = 0,
+                         MAX_LIFT_DISTANCE          = 30;
     public double height;
     private double timer;
     RatchetState ratchetState;
@@ -34,6 +35,7 @@ public class Lift {
         sideRatchetServo = hardwareMap.servo.get("srat");
         liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     public void switchRatchetState(){
         resetTimer();
@@ -55,23 +57,31 @@ public class Lift {
                 sideRatchetServo.setPosition(SIDE_RATCHET_ONE_POSITION);
                 break;
         }
+        setPower();
+    }
+    public void setPower(){
+        setPower(liftMotor.getPower());
     }
     public void setPower(double pow){
         if(hasSwitched())
             switch (ratchetState) {
                 case UP:
-                    if (pow > 0)
+                    if (pow > 0 || getHeight() < MAX_LIFT_DISTANCE)
                         liftMotor.setPower(pow);
                     break;
                 case DOWN:
-                    if (pow < 0) {
+                    if (pow < 0 || getHeight() > 0)
                         liftMotor.setPower(pow);
-                    }
                     break;
                 case DISENGAGED:
                     liftMotor.setPower(pow);
                     break;
+                case STOPPED:
+                    liftMotor.setPower(0);
+                    break;
             }
+            else
+                liftMotor.setPower(0);
     }
     public void setPowerOverride(double pow){
         if (pow != 0)
