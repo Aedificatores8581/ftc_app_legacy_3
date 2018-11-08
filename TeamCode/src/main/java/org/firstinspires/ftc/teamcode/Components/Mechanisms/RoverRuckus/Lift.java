@@ -17,7 +17,7 @@ public class Lift {
                          MAX_LIFT_DISTANCE          = 30;
     public double height;
     private double timer;
-    RatchetState ratchetState;
+    public RatchetState ratchetState;
 
     public Lift(){
         ratchetState = RatchetState.DISENGAGED;
@@ -89,6 +89,10 @@ public class Lift {
                 ratchetState = pow > 0 ? RatchetState.UP : RatchetState.DOWN;
         setPower(pow);
     }
+    public void  stop(){
+        ratchetState = RatchetState.STOPPED;
+        switchRatchetState();
+    }
     public double getHeight(){
         return liftMotor.getCurrentPosition() * TICKS_PER_INCH;
     }
@@ -98,7 +102,7 @@ public class Lift {
     private boolean hasSwitched(){
         return System.currentTimeMillis() - timer > TIME_TO_SWITCH_MS;
     }
-    enum RatchetState{
+    public enum RatchetState{
         UP,
         DOWN,
         DISENGAGED,

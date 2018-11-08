@@ -32,6 +32,7 @@ public class Intake {
         setPowerDirectly(pow);
     }
     public void setPowerDirectly(double pow){
+        dispensor.setPosition(CLOSED_DISPENSOR_POSITION);
         frontRoller.setPower(pow);
         backRoller.setPower(pow);
         if(pow > 0)
@@ -39,10 +40,11 @@ public class Intake {
         else if (pow < 0)
             intakeMode = IntakeMode.GOLD;
     }
-    public void dispense(boolean dispensing){
-        dispensor.setPosition(dispensing ? OPEN_DISPENSOR_POSITION : CLOSED_DISPENSOR_POSITION);
+    public void dispense(){
+
+        dispensor.setPosition(getPower() == 0 ? OPEN_DISPENSOR_POSITION : CLOSED_DISPENSOR_POSITION);
     }
-    enum IntakeMode{
+    public enum IntakeMode{
         GOLD,
         SILVER
     }

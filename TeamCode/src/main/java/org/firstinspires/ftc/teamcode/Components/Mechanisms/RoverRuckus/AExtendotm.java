@@ -9,7 +9,6 @@ import org.firstinspires.ftc.teamcode.Universal.Math.Pose;
 public class AExtendotm {
     public DcMotor articulator, extendo;
     public Servo marker;
-    public Pose markerPosition = new Pose();
     public final Pose AEXTENDOtm_POSE = new Pose();
     //TODO: find these values
     public final double MARKER_CLOSED_POSITION = 0,
@@ -20,8 +19,7 @@ public class AExtendotm {
                         START_ANGLE = 0,
                         RETRACTED_RAISED_ANGLE = 0,
                         EXTENDED_RAISED_ANGLE = 0,
-                        LOWERED_ANGLE = -Math.PI
-                        ;
+                        LOWERED_ANGLE = -Math.PI;
     public void init(HardwareMap hardwareMap, boolean isAutonomous){
         articulator = hardwareMap.dcMotor.get("arti");
         extendo = hardwareMap.dcMotor.get("aetm");
@@ -32,7 +30,7 @@ public class AExtendotm {
         articulator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         extendo.setMode(isAutonomous ? DcMotor.RunMode.RUN_TO_POSITION : DcMotor.RunMode.RUN_USING_ENCODER);
         articulator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+        articulateUp();
     }
     public double getArticulatorAngle(){
         return articulator.getCurrentPosition() / ENC_PER_RADIAN;
