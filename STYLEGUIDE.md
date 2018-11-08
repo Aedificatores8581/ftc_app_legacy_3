@@ -1,11 +1,10 @@
 # STYLEGUIDE
-### For Team 8581 Aedificatores.
+### For FTC Team 8581 Aedificatores.
 
 ![alt text](https://pbs.twimg.com/profile_images/823235140067409920/3bLfT8sI_400x400.jpg)
 
-The style guide IS NOT A STRICT SET OF RULES
-Flexibility exists, and breaking any conventions set is ok if the programmer is conscious of his/her decision, and it doesn't
-hinder readability/writability.
+The style guide IS NOT A STRICT SET OF RULES.
+Flexibility exists, and breaking any conventions set is ok if the programmer is conscious of his/her decision, and it doesn't hinder readability/writability not only for yourself but for the other programmers.
 
 Also, feel free to propose changes to the styleguide.
 
@@ -51,7 +50,7 @@ if (shorty != 3) {foo();} // This is a no no
 if (shorty != 3) foo();   // This does the same thing and has a lot less clutter.
 ```
 
-* With if-statements, try and keep the same style throughout the entirety of the if-else clause
+* With if-statements, try and keep the same style throughout the entirety of the if-else clause.
 
 i.e. this is bad:
 ```java
@@ -94,11 +93,8 @@ void stillDoNothing() { // This.
 
 * The rest about brackets is up to programmer preferences, so long as it is easy to read. And don't be picky.
 
-
-
 ### COMMENTS
 * Make comments **clear** and **readable,** capitalize your comments when they are full sentences.
-
 
 * When you are making a TODO, be clear and specific about what needs to be done.
 
@@ -123,23 +119,23 @@ Tell us more or get rid of it, it's like going out and speaking random nonsense.
 **Pro Tip**: use `NOTE`.
 
 
-* Comments are used as a LAST RESORT. Programmers should not be reliant on comments to explain poopy code
-Also, refrain from making fancy shmancy ASCII art in comments like this
+* Comments are used as a LAST RESORT. Programmers should not be reliant on comments to explain poopy code Also, refrain from making fancy shmancy ASCII art in comments like this:
 
 ```java
 /*- - - - - - - - - - - -
- *	THE CLASS         |
+ *	THE CLASS           |
  *   AUTHOR: SMOLBOT	|
  *	 8581 (c)	        |
- */ - - - - - - - - - - -
+ - - - - - - - - - - - */
 ```
 
-Please no.
+Please **no**.
 
 * As in line with FTC, make sure that you are putting your name at the top, you can be as verbose as you want,
 preferably put the date.
 
-* For multi - line comments, it's fine if you do whatever in terms of style.
+* For multi - line comments, it's fine if you do whatever in terms of style. Nobody really cares.
+
 ```java
 /* This is good.
 	And is cool.
@@ -241,7 +237,7 @@ void printJibberish() {
 * This also ties into some variable naming rules. Regarding acronyms and such.
 
 * Declarations should be clear and direct, make it as simple as possible, but...
-Simple != Small
+Simple != Small, avoid acronyms at all costs.
 
 For instance. The Google style guide illustrates this perfectly:
 ```java
@@ -251,7 +247,7 @@ String unitAbbrev = "μs";
 
 String unitAbbrev = "\u03bcs";
 ```
-The second was very hard to understand.
+The second was very hard to understand because we as humans just don't get it.
 
 * While it is ok if you don't do this, try and line up variables in a rapidfire definition of variables.
 Try not to spread it around the code.
@@ -275,7 +271,7 @@ int elephants = 1;
  * Use spaces not tabs, see spacing.
 
 
-* **NO ABBREVIATIONS**
+* **NO ABBREVIATIONS, OR ACRONYMS, PLEASE**
 
 The only abbreviations you should be using are common things like dt for delta time.
 Or basic stuff like languages, for example:
@@ -353,7 +349,11 @@ public static final int MR_FOO = 15;
 
 . . . and should generally be used to eliminate magic numbers in the code.
 
+* For temporary variables, use an `_`  before a variable, this is anything that isn't all that relevant.
+
 * Lastly, don't be afraid to make long variable names.
+
+* Joke method names are fine if everyone else is OK with it.
 
 
 ### STATE MACHINES

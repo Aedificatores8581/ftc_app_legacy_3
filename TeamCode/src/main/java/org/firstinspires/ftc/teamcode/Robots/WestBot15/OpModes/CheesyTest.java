@@ -8,9 +8,10 @@ import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 @TeleOp(name = "Cheesy Test Drive", group = "wcd")
 public class CheesyTest extends WestBot15 {
     @Override
-    public void init(){
+    public void init() {
         super.init();
         activateGamepad1();
+
         drivetrain.direction = TankDT.Direction.FOR;
     }
 
@@ -22,20 +23,27 @@ public class CheesyTest extends WestBot15 {
     @Override
     public void loop(){
         updateGamepad1();
-        if(gamepad1.left_stick_button)
-            drivetrain.maxSpeed = 1;
-        else{
+
+        if (gamepad1.left_stick_button) {
+			drivetrain.maxSpeed = 1;
+		} else {
             drivetrain.maxSpeed = gamepad1.left_trigger * 3 / 10.0;
-            if(gamepad1.left_bumper)
-                drivetrain.maxSpeed += 0.3;
-            else
-                drivetrain.maxSpeed += 0.5;
+
+            if (gamepad1.left_bumper) {
+				drivetrain.maxSpeed += 0.3;
+			} else {
+				drivetrain.maxSpeed += 0.5;
+			}
         }
+
         double maxTurn = 1;
-        if(!gamepad1.right_bumper)
-            maxTurn = 2.0/3;
-        else
-            maxTurn = 1;
+
+        if (!gamepad1.right_bumper) {
+			maxTurn = 2.0 / 3;
+		} else {
+			maxTurn = 1;
+		}
+
         drivetrain.turnMult = (1 - leftStick1.magnitude() * maxTurn) * gamepad1.right_trigger + leftStick1.magnitude() * (1 - gamepad1.right_trigger);
         drivetrain.leftPow = leftStick1.y + drivetrain.turnMult * rightStick1.x;
         drivetrain.rightPow = leftStick1.y - drivetrain.turnMult * rightStick1.x;

@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 /**
  * Created by Frank Portman on 6/17/2018
  */
+
 @TeleOp(name = "WestBotFieldCentricTest", group = "")
 public class DriveBotFieldCentricTest extends WestBot15 {
     boolean switchControlState    = false,
@@ -37,11 +38,15 @@ public class DriveBotFieldCentricTest extends WestBot15 {
         double y = gamepad1.left_stick_y;
         double x = gamepad1.left_stick_x;
         double rad = Math.sqrt(x * x + y * y);
-        double angleBetween = Math.toRadians(UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(Math.atan2(y, x)), UniversalFunctions.normalizeAngleDegrees(getGyroAngle())));
+        double angleBetween = Math.toRadians(
+                UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(Math.atan2(y, x)),
+                UniversalFunctions.normalizeAngleDegrees(getGyroAngle()))
+        );
 
-        if(rad < UniversalConstants.Triggered.STICK) {
+        if (rad < UniversalConstants.Triggered.STICK) {
             drivetrain.setLeftPow(0.001);
             drivetrain.setRightPow(0.001);
+
         } else {
             switch (drivetrain.direction) {
                 case FOR:
@@ -50,17 +55,22 @@ public class DriveBotFieldCentricTest extends WestBot15 {
                         drivetrain.direction = Drivetrain.Direction.BACK;
                         drivetrain.directionMult *= -1;
                         drivetrain.turn = false;
-                    } else if (Math.sin(angleBetween) >= 0)
+                    } else if (Math.sin(angleBetween) >= 0) {
                         drivetrain.turn = true;
+                    }
+
                     break;
+
                 case BACK:
                     sin = Math.sin(angleBetween);
                     if (Math.sin(angleBetween) > 0 && drivetrain.turn) {
                         drivetrain.direction = Drivetrain.Direction.FOR;
                         drivetrain.turn = false;
                         drivetrain.directionMult *= -1;
-                    } else if (Math.sin(angleBetween) <= 0)
+                    } else if (Math.sin(angleBetween) <= 0) {
                         drivetrain.turn = true;
+                    }
+
                     break;
             }
 
@@ -95,15 +105,17 @@ public class DriveBotFieldCentricTest extends WestBot15 {
                         rp = drivetrain.directionMult * -Math.cos(2 * angleBetween) * rad;
                     }
 
-                    if(switchTurnState){
+                    if (switchTurnState) {
                         drivetrain.turnState = TankDT.FCTurnState.FAST;
                         switchTurnState = false;
                         canSwitchTurnState = false;
-                    } else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER){
+                    } else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER) {
                         switchTurnState = false;
                         canSwitchTurnState = true;
-                    } else if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
+                    } else if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState) {
                         switchTurnState = true;
+                    }
+
                     break;
             }
 
