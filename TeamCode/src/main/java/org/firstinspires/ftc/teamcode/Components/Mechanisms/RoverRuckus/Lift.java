@@ -12,7 +12,8 @@ public class Lift {
                          TOP_RATCHET_ONE_POSITION   = 1 ,
                          SIDE_RATCHET_ZERO_POSITION = 0 ,
                          SIDE_RATCHET_ONE_POSITION  = 1 ;
-    private final double TIME_TO_SWITCH_MS          = 20;
+    private final double TIME_TO_SWITCH_MS          = 20,
+                         TICKS_PER_INCH             = 0;
     public double height;
     private double timer;
     RatchetState ratchetState;
@@ -20,10 +21,12 @@ public class Lift {
     public Lift(){
         ratchetState = RatchetState.DISENGAGED;
         switchRatchetState();
+        height = 0;
     }
     public Lift(RatchetState ratchetState){
         this.ratchetState = ratchetState;
         switchRatchetState();
+        height = 0;
     }
     public void init(HardwareMap hardwareMap){
         liftMotor = hardwareMap.dcMotor.get("lift");
@@ -75,6 +78,9 @@ public class Lift {
             if (ratchetState != RatchetState.DISENGAGED)
                 ratchetState = pow > 0 ? RatchetState.UP : RatchetState.DOWN;
         setPower(pow);
+    }
+    public double getHeight(){
+        return liftMotor.getCurrentPosition() * TICKS_PER_INCH;
     }
     private void resetTimer(){
         timer = System.nanoTime() * 10E6;
