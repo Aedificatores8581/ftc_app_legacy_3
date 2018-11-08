@@ -67,4 +67,8 @@ public class AExtendotm {
     public void articulateUp(){
         articulator.setTargetPosition(angleToEnc(willBeRetracted() ? RETRACTED_RAISED_ANGLE : EXTENDED_RAISED_ANGLE));
     }
+    public String toString(){
+        String markerTerm  = marker.getPosition() == SERVO_ONE_POSITION ? "marker is deployed" : "marker is not deployed";
+        return getExtensionLength() + " inches, " + getArticulatorAngle() + " degrees, " + markerTerm;
+    }
 }
