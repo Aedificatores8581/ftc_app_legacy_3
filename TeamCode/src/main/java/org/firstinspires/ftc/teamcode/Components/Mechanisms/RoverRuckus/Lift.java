@@ -1,16 +1,17 @@
 package org.firstinspires.ftc.teamcode.Components.Mechanisms.RoverRuckus;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Lift {
     public DcMotor liftMotor;
     public Servo topRatchetServo, sideRatchetServo;
-    public final double TOP_RATCHET_ZERO_POSITION  = 0,
-                        TOP_RATCHET_ONE_POSITION   = 1,
-                        SIDE_RATCHET_ZERO_POSITION = 0,
-                        SIDE_RATCHET_ONE_POSITION  = 1;
-    private final double TIME_TO_SWITCH_MS = 20;
+    public final double  TOP_RATCHET_ZERO_POSITION  = 0 ,
+                         TOP_RATCHET_ONE_POSITION   = 1 ,
+                         SIDE_RATCHET_ZERO_POSITION = 0 ,
+                         SIDE_RATCHET_ONE_POSITION  = 1 ;
+    private final double TIME_TO_SWITCH_MS          = 20;
     public double height;
     private double timer;
     RatchetState ratchetState;
@@ -22,6 +23,13 @@ public class Lift {
     public Lift(RatchetState ratchetState){
         this.ratchetState = ratchetState;
         switchRatchetState();
+    }
+    public void init(HardwareMap hardwareMap){
+        liftMotor = hardwareMap.dcMotor.get("lift");
+        topRatchetServo = hardwareMap.servo.get("trat");
+        sideRatchetServo = hardwareMap.servo.get("srat");
+        liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public void switchRatchetState(){
         resetTimer();
@@ -66,7 +74,6 @@ public class Lift {
             if (ratchetState != RatchetState.DISENGAGED)
                 ratchetState = pow > 0 ? RatchetState.UP : RatchetState.DOWN;
         setPower(pow);
-
     }
     private void resetTimer(){
         timer = System.nanoTime() * 10E6;
@@ -79,5 +86,8 @@ public class Lift {
         DOWN,
         DISENGAGED,
         STOPPED
+    }
+    public String toString(){
+        return ratchetState + ", " + height + " inches upwards";
     }
 }
