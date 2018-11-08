@@ -49,7 +49,7 @@ public abstract class WestBot15 extends Robot {
             extension = hardwareMap.dcMotor.get("ex");
             dispensor = hardwareMap.servo.get("tm");
         }
-        drivetrain.maxSpeed = 0.6;
+        drivetrain.maxSpeed = 1.0;
         drivetrain.initMotors(hardwareMap);
 
         drivetrain.position = new Pose();
