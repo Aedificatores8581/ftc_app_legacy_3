@@ -75,7 +75,7 @@ public class DigitalCamera {
         double vertAng = temp.y / imageSize.width * verticalAngleOfView() + xAng;
         double horiAng = temp.x / imageSize.height * horizontalAngleOfView() + zAng;
 
-        double newY = (z - objectHeight / 2) / Math.tan(vertAng);
+        double newY = (z - objectHeight / 2) / Math.tan(-vertAng);
         double newX = newY * Math.tan(horiAng) + x;
         newY += y;
         return new Point(newX, newY);
