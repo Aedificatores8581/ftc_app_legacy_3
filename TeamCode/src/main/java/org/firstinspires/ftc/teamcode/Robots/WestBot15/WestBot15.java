@@ -19,31 +19,36 @@ import org.firstinspires.ftc.teamcode.Universal.Math.Pose3;
 import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 import org.opencv.core.Point3;
 
+import static org.firstinspires.ftc.teamcode.Universal.UniversalConstants.MS_STUCK_DETECT_INIT_DEFAULT;
+
 /**
  * Created by Frank Portman on 6/1/2018
  */
 
 public abstract class WestBot15 extends Robot {
+    public boolean _hadleyOnSchedule = false; // ):
+
     //IMPORTANT: phone locations should be taken in relation to the robot, not the field
     public Intake intaek = new Intake();
     public Lift lift = new Lift();
+
     protected WestCoast15 drivetrain = new WestCoast15(DcMotor.ZeroPowerBehavior.BRAKE, 1.0);
 
     public Map2 robotMap, fieldMap;
-    public boolean hadleyOnSchedule = false;
     public MotoG4 motoG4 = new MotoG4();
 
     protected double currentAngle = 0;
 
-
     @Override
     public void init(){
-        msStuckDetectInit = 50000000;
+        msStuckDetectInit = MS_STUCK_DETECT_INIT_DEFAULT;
+
         super.init();
-        if(hadleyOnSchedule) {
+        if (_hadleyOnSchedule) {
             intaek.init(hardwareMap);
             lift.init(hardwareMap);
         }
+
         drivetrain.maxSpeed = 1.0;
         drivetrain.initMotors(hardwareMap);
 
@@ -56,13 +61,16 @@ public abstract class WestBot15 extends Robot {
     public void start(){
         super.start();
     }
+
     @Override
     public double getGyroAngle(){
-        if(!usingIMU)
-            return startAngle + (drivetrain.averageRightEncoders() -  drivetrain.averageLeftEncoders()) / drivetrain.ENC_PER_INCH / drivetrain.DISTANCE_BETWEEN_WHEELS;
+        if(!usingIMU) {
+            return startAngle + (drivetrain.averageRightEncoders() - drivetrain.averageLeftEncoders()) / drivetrain.ENC_PER_INCH / drivetrain.DISTANCE_BETWEEN_WHEELS;
+        }
+
         return super.getGyroAngle();
     }
-    public enum AutoState{
+    public enum AutoState {
         HANG,
         LOWER,
         SAMPLE,
