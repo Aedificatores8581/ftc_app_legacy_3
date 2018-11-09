@@ -101,7 +101,7 @@ public class Lift {
         return System.currentTimeMillis() - timer > TIME_TO_SWITCH_MS;
     }
 
-    enum RatchetState {
+    public enum RatchetState {
         UP,
         DOWN,
         DISENGAGED,
