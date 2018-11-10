@@ -3,26 +3,36 @@ package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.RoverRuckus;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Components.Sensors.Cameras.MotoG4;
+import org.firstinspires.ftc.teamcode.Robots.Robot;
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
+import org.firstinspires.ftc.teamcode.Universal.Math.GyroAngles;
 import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
 import org.opencv.core.Point3;
 
 import static org.firstinspires.ftc.teamcode.Universal.UniversalConstants.MS_STUCK_DETECT_INIT_DEFAULT;
 
+/**
+ * Written by Theo Lovinski, 5/11/2018.
+ *
+ * This is a test, it should be coupled with other routines in autonomous.
+ */
+
 @Autonomous(name = "ScaleCrater", group = "Auto Testing")
-public class AutoScaleCrater extends WestBot15 {
+public class AutoScaleCraterTest extends WestBot15 {
     MotoG4 motoG4;
+    GyroAngles gyroAngles;
 
     // 100 is a temporary value.
-    private static final int ON_CRATER_RIM_THRESHOLD = 100;
-    public static boolean onCrater = false;
+    // TODO: This needs to be tuned.
+    private final static int ON_CRATER_RIM_THRESHOLD = 100;
+    public boolean onCrater = false;
 
     @Override
     public void init() {
         usingIMU = true;
         super.init();
         msStuckDetectInit = MS_STUCK_DETECT_INIT_DEFAULT;
-
+        normalizeGyroAngle();
         setStartAngle();
 
         motoG4 = new MotoG4();
@@ -37,12 +47,22 @@ public class AutoScaleCrater extends WestBot15 {
 
     @Override
     public void loop() {
-        if (getGyroAngle() > ON_CRATER_RIM_THRESHOLD) {
+        if (Math.abs(gyroAngles.getZ()) > ON_CRATER_RIM_THRESHOLD) {
             onCrater = true;
         } else {
             onCrater = false;
         }
 
+        if (onCrater = false) {
+			drivetrain.setRightPow(1.0);
+			drivetrain.setLeftPow(1.0);
+		}
+
         drivetrain.updateEncoders();
+
+        telemetry.addData("onCrater?", onCrater);
+        telemetry.addData("Robot Z", gyroAngles.getZ());
+        telemetry.addData("Robot X", gyroAngles.getX());
+        telemetry.addData("Robot Y", gyroAngles.getY());
     }
 }
