@@ -1,21 +1,14 @@
-package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.RoverRuckus;
+package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
-import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
-import org.firstinspires.ftc.teamcode.Components.Sensors.Cameras.MotoG4;
-import org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.DriveBotFieldCentricTest;
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
 import org.firstinspires.ftc.teamcode.Vision.Detectors.BlockDetector;
-import org.firstinspires.ftc.teamcode.Vision.Detectors.GenericDetector;
 import org.opencv.core.Point;
-import org.opencv.core.Point3;
-import org.opencv.core.Size;
 
 import ftc.vision.Detector;
 
