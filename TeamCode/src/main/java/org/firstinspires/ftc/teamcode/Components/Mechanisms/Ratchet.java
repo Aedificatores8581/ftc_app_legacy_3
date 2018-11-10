@@ -78,4 +78,6 @@ public class Ratchet {
                 break;
         }
     }
+
+    public String toString() { return ratchetState + ""; }
 }
