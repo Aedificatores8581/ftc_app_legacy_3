@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 import static org.firstinspires.ftc.teamcode.Universal.UniversalConstants.MS_STUCK_DETECT_INIT_DEFAULT;
 
 public class AutoLowerTest extends WestBot15 {
-	MotoG4 MotoG4;
-	Lift instanceLift;
+	MotoG4 motoG4;
+	Lift lift;
 	Lift.RatchetState ratchetState;
 
 	@Override

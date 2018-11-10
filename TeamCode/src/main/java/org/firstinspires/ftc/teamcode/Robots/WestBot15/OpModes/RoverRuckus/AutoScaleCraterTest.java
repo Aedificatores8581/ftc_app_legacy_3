@@ -20,7 +20,7 @@ import static org.firstinspires.ftc.teamcode.Universal.UniversalConstants.MS_STU
 @Autonomous(name = "ScaleCrater", group = "Auto Testing")
 public class AutoScaleCraterTest extends WestBot15 {
     MotoG4 motoG4;
-    GyroAngles GyroAngles;
+    GyroAngles gyroAngles;
 
     // 100 is a temporary value.
     // TODO: This needs to be tuned.
@@ -45,7 +45,7 @@ public class AutoScaleCraterTest extends WestBot15 {
 
     @Override
     public void loop() {
-        if (Math.abs(GyroAngles.getZ()) > ON_CRATER_RIM_THRESHOLD) {
+        if (Math.abs(gyroAngles.getZ()) > ON_CRATER_RIM_THRESHOLD) {
             onCrater = true;
         } else {
             onCrater = false;
@@ -59,8 +59,8 @@ public class AutoScaleCraterTest extends WestBot15 {
         drivetrain.updateEncoders();
 
         telemetry.addData("onCrater?", onCrater);
-        telemetry.addData("Robot Z", GyroAngles.getZ());
-        telemetry.addData("Robot X", GyroAngles.getX());
-        telemetry.addData("Robot Y", GyroAngles.getY());
+        telemetry.addData("Robot Z", gyroAngles.getZ());
+        telemetry.addData("Robot X", gyroAngles.getX());
+        telemetry.addData("Robot Y", gyroAngles.getY());
     }
 }
