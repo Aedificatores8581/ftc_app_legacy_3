@@ -11,6 +11,8 @@ public class RatchetTest extends WestBot15{
 
     @Override
     public void init() {
+        usingIMU = false;
+
         ratchet.setRatchetState(Ratchet.RatchetState.DISENGAGED);
         activateGamepad1();
     }
@@ -33,5 +35,6 @@ public class RatchetTest extends WestBot15{
         }
 
         telemetry.addData("Ratchet State", ratchet.toString());
+        telemetry.addData("Gamepad Y", gamepad1.left_stick_y);
     }
 }
