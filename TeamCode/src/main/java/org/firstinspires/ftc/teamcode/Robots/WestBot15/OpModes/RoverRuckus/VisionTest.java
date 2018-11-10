@@ -4,9 +4,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
+import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
+import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
 import org.firstinspires.ftc.teamcode.Components.Sensors.Cameras.MotoG4;
+import org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.DriveBotFieldCentricTest;
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
+import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
 import org.firstinspires.ftc.teamcode.Vision.Detectors.BlockDetector;
 import org.firstinspires.ftc.teamcode.Vision.Detectors.GenericDetector;
 import org.opencv.core.Point;
@@ -19,20 +23,21 @@ import ftc.vision.Detector;
 public class VisionTest extends WestBot15 {
     BlockDetector detector;
     Point sampleLocation;
-    MotoG4 motoG4;
-
+    boolean hasDrove;
+    double prevLeft0, prevRight = 0;
     public void init(){
         msStuckDetectInit = 500000;
         super.init();
         activateGamepad1();
-        motoG4 = new MotoG4();
-        motoG4.setLocationAndOrientation(new Point3(0, 0, 12), new Point3(0, 0, 0));
         detector = new BlockDetector();
         detector.opState = Detector.OperatingState.TUNING;
         FtcRobotControllerActivity.frameGrabber.detector = detector;
+
+        drivetrain.controlState = TankDT.ControlState.FIELD_CENTRIC;
+        drivetrain.direction = TankDT.Direction.FOR;
     }
     public void initLoop(){
-        telemetry.addData("location 1", motoG4.rearCamera.getObjectLocation(detector.elements.get(0), detector.result().size(), 2));
+        //telemetry.addData("location 1", motoG4.rearCamera.getObjectLocation(detector.elements.get(0), detector.result().size(), 2));
     }
     @Override
     public void start(){
@@ -41,7 +46,7 @@ public class VisionTest extends WestBot15 {
     }
 
     public void loop(){
-
+        setRobotAngle();
         Vector2 temp = new Vector2(detector.element.y, -detector.element.x);
         temp.x -= 480/ 2;
         temp.y += 640 / 2;
@@ -49,14 +54,23 @@ public class VisionTest extends WestBot15 {
         double vertAng = temp.y / 640 * motoG4.rearCamera.verticalAngleOfView();
         double horiAng = temp.x / 480 * motoG4.rearCamera.horizontalAngleOfView();
 
-        double newY = (12 - 2 / 2) / Math.tan(vertAng);
-        double newX = newY * Math.tan(horiAng);
+        double newY = (11.66666666666 - 2 / 2) / Math.tan(-vertAng) - 3.375;
+        double newX = newY * Math.tan(horiAng) + 2.333333333333333;
         Point newPoint = new Point(newX, newY);
+        if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER)
+            hasDrove = true;
+        /*drivetrain.updateLocation(drivetrain.averageLeftEncoders() - prevLeft0, drivetrain.averageRightEncoders() - prevRight);
+        prevLeft0 = drivetrain.averageLeftEncoders();
+        prevRight = drivetrain.averageRightEncoders();*/
+        if(hasDrove) {
+            Vector2 sampleVect = new Vector2(newX, newY);
+            if (sampleVect.magnitude() > 12)
+                sampleVect.setFromPolar(1 / 2.0, sampleVect.angle());
+            else
+                sampleVect.setFromPolar(sampleVect.magnitude() / 24.0, sampleVect.angle());
+        }
 
-        telemetry.addData("location 1", (int)(100 * newPoint.x) / 100.0 + ", " + (int)(100 * newPoint.y) / 100.0);
-        telemetry.addData("center", (float)detector.element.x + ", " + (float)detector.element.y);
-        telemetry.addData("size", detector.workingImage.size());
-        telemetry.addData("temp", temp);
+        //telemetry.addData("location 1", motoG4.rearCamera.getObjectLocation(detector.elements.get(0), detector.result().size(), 2));
     }
 
     public void stop(){

@@ -95,8 +95,8 @@ public abstract class TankDT extends Drivetrain {
                     switch (turnState) {
                         case FAST:
                             turnMult = Math.abs(cos) + 1;
-                            leftPow = directionMult * (leftVect.magnitude() - turnMult * cos);
-                            rightPow = directionMult * (leftVect.magnitude() + turnMult * cos);
+                            leftPow = directionMult * (leftVect.magnitude() + turnMult * cos);
+                            rightPow = directionMult * (leftVect.magnitude() - turnMult * cos);
                             break;
 
                         case SMOOTH:

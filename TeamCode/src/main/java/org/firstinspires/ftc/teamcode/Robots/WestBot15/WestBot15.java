@@ -27,9 +27,9 @@ import org.opencv.core.Point3;
 public abstract class WestBot15 extends Robot {
     public boolean isAutonomous = false;
     //IMPORTANT: phone locations should be taken in relation to the robot, not the field
-    public Intake intaek = new Intake();
-    public Lift lift = new Lift();
-    public AExtendotm aextendo = new AExtendotm();
+    //public Intake intaek = new Intake();
+    //public Lift lift = new Lift();
+    //public AExtendotm aextendo = new AExtendotm();
     protected WestCoast15 drivetrain = new WestCoast15(DcMotor.ZeroPowerBehavior.BRAKE, 1.0);
 
     public Map2 robotMap, fieldMap;
@@ -42,21 +42,18 @@ public abstract class WestBot15 extends Robot {
     public void init(){
         msStuckDetectInit = 50000000;
         super.init();
-        if(hadleyOnSchedule) {
-            intaek.init(hardwareMap);
-            lift.init(hardwareMap);
-        }
+
         drivetrain.maxSpeed = 1.0;
         drivetrain.initMotors(hardwareMap);
 
         drivetrain.position = new Pose();
         motoG4 = new MotoG4();
-        motoG4.setLocationAndOrientation(new Point3(0, 0, 0), new Point3(0, 0, 0));
-        if (hadleyOnSchedule) {
+        motoG4.setLocationAndOrientation(new Point3(2.3, 3.5, 11.7), new Point3(0, 0, 0));
+        /*if (false) {
             aextendo.init(hardwareMap, isAutonomous);
             intaek.init(hardwareMap);
             lift.init(hardwareMap);
-        }
+        }*/
     }
 
     @Override

@@ -19,6 +19,8 @@ public class AutoScaleCrater extends WestBot15 {
 
     @Override
     public void init() {
+        usingIMU = true;
+        super.init();
         msStuckDetectInit = MS_STUCK_DETECT_INIT_DEFAULT;
 
         setStartAngle();

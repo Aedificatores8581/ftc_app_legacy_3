@@ -21,7 +21,7 @@ public class WestBot15TestDrive extends WestBot15 {
         activateGamepad1();
 
         drivetrain.maxSpeed = 0.4;
-        drivetrain.controlState = TankDT.ControlState.TANK;
+        drivetrain.controlState = TankDT.ControlState.FIELD_CENTRIC;
         drivetrain.direction = TankDT.Direction.FOR;
     }
 

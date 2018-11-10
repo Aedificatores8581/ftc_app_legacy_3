@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.RoverRuckus.Intake;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.RoverRuckus.Lift;
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
+import org.firstinspires.ftc.teamcode.Universal.Math.GyroAngles;
 import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
 
 //@TeleOp(name = "teleop")
@@ -37,7 +38,7 @@ public class RoverRuckusTeleOp extends WestBot15 {
             engame = true;
 
         drivetrain.mildSpicyDrive(leftStick1, gamepad1.left_trigger, gamepad1.right_trigger);
-
+/*
         intaek.intakeMode = gamepad2.left_bumper ? Intake.IntakeMode.GOLD : Intake.IntakeMode.SILVER;
         intaek.setModePower(gamepad2.left_trigger);
         intaek.dispense();
@@ -71,7 +72,7 @@ public class RoverRuckusTeleOp extends WestBot15 {
                 lift.setPowerOverride(rightStick1.magnitude());
                 prevRightStick1 = rightStick1.magnitude();
             }
-        }
+        }*/
 
     }
 }
