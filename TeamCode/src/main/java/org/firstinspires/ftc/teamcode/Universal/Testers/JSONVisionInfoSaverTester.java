@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+//Todo: Test!
 @Autonomous(name = "JSONVisionInfoSaverTester", group = "tester")
 public class JSONVisionInfoSaverTester extends OpMode {
     private JSONAutonGetter jsonAutonGetter;
@@ -23,28 +24,34 @@ public class JSONVisionInfoSaverTester extends OpMode {
 
     @Override
     public void init() {
+        currentLocation = new JSONObject();
+
         try {
             jsonAutonGetter = new JSONAutonGetter("JSONVisionInfoSaverTester.json");
         } catch (IOException | JSONException e) {
             telemetry.addData("Couldn't open JSONVisionInfoSaverTester.json", e.getMessage());
+            stop();
         }
 
         try {
             locations = new JSONArray(jsonAutonGetter.jsonObject.getJSONArray("locations"));
         } catch (JSONException e) {
             telemetry.addData("Issue with 'locations'", e.getMessage());
+            stop();
         }
 
         try {
             currentLocationIndex = jsonAutonGetter.jsonObject.getInt("lastSavedLocation");
         } catch (JSONException e) {
             telemetry.addData("Issue with lastSavedLocaition", e.getMessage());
+            stop();
         }
 
         try {
             currentLocation = locations.getJSONObject(currentLocationIndex);
-        } catch (JSONException e) {
+        } catch (JSONException | NullPointerException e) {
             telemetry.addData("Issue with currentLocation", e.getMessage());
+            stop();
         }
     }
 
@@ -59,6 +66,7 @@ public class JSONVisionInfoSaverTester extends OpMode {
                 currentLocation = locations.getJSONObject(currentLocationIndex);
             } catch (JSONException e) {
                 telemetry.addData("Issue with currentLocation", e.getMessage());
+                stop();
             }
         }
 
@@ -71,6 +79,7 @@ public class JSONVisionInfoSaverTester extends OpMode {
                 currentLocation = locations.getJSONObject(currentLocationIndex);
             } catch (JSONException e) {
                 telemetry.addData("Issue with currentLocation", e.getMessage());
+                stop();
             }
         }
 
@@ -96,6 +105,16 @@ public class JSONVisionInfoSaverTester extends OpMode {
             prev1.copy(gamepad1);
         } catch (RobotCoreException e) {
             telemetry.addData("Issue with Gamepad", e.getMessage());
+        }
+    }
+
+    @Override
+    public void stop(){
+        try {
+            jsonAutonGetter.jsonObject.put("lastSavedLocation", currentLocationIndex);
+            jsonAutonGetter.saveToFile();
+        } catch (JSONException | IOException e) {
+            telemetry.addData("Issue with saving currentLocationIndex", e.getMessage());
         }
     }
 }
