@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.Universal.Testers;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.exception.RobotCoreException;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.Universal.JSONAutonGetter;
 import org.json.JSONArray;
@@ -17,7 +19,7 @@ public class JSONVisionInfoSaverTester extends OpMode {
     private int currentLocationIndex;
     private JSONObject currentLocation;
 
-
+    Gamepad prev1;
 
     @Override
     public void init() {
@@ -72,6 +74,13 @@ public class JSONVisionInfoSaverTester extends OpMode {
             }
         }
 
+        if (gamepad1.a && !prev1.a) {
+            try {
+                jsonAutonGetter.saveToFile();
+            } catch (IOException e) {
+                telemetry.addData("Issue with File Saving", e.getMessage());
+            }
+        }
 
 
         try {
@@ -80,7 +89,13 @@ public class JSONVisionInfoSaverTester extends OpMode {
             telemetry.addData("X",currentLocation.getString("x"));
             telemetry.addData("Y",currentLocation.getString("y"));
         } catch (JSONException e) {
-            e.printStackTrace();
+            telemetry.addData("Issue with Telemetry", e.getMessage());
+        }
+
+        try {
+            prev1.copy(gamepad1);
+        } catch (RobotCoreException e) {
+            telemetry.addData("Issue with Gamepad", e.getMessage());
         }
     }
 }
