@@ -74,7 +74,7 @@ if (foo == 1 ) {
 Or, if you prefer, this:
 ```java
 if (foo == 1) die();
-else if (foo == 3) live;
+else if (foo == 3) live();
 else transcend();
 ```
 But, is discouraged.
@@ -212,8 +212,7 @@ boolean isTrue() {
 ### VARIABLES AND CONSTANTS
 * Please be VERY clear in communicating what the variable does, a good rule of thumb is:
 
-If someone who is not you can be reading the file that that function is called in and have a fairly
-good idea of what that function does, then you're good.
+If someone who is not you can be reading the file that that function is called in and have a fairly good idea of what that function does, then you're good.
 
 
 For example. This. . .
@@ -355,6 +354,15 @@ public static final int MR_FOO = 15;
 
 * Joke method names are fine if everyone else is OK with it.
 
+### INSTANCES
+When you make an instance of a class, either name it something else that makes sense, or you can name it the name of the class.
+
+Example:
+```java
+private GyroAngles gyroAngles;
+// or
+private SystemTimer timer;
+```
 
 ### STATE MACHINES
 * State machines should pair enums with switch-cases.

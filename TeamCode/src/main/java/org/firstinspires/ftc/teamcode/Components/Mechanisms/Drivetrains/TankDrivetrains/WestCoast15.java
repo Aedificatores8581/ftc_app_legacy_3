@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Components.Sensors.MotorEncoder;
@@ -58,10 +59,10 @@ public class WestCoast15 extends TankDT {
         rightFore.setZeroPowerBehavior(zeroPowerBehavior);
         rightRear.setZeroPowerBehavior(zeroPowerBehavior);
 
-        rightFore.setDirection(REVERSE);
-        rightRear.setDirection(REVERSE);
-        leftFore.setDirection(FORWARD);
-        leftRear.setDirection(FORWARD);
+        rightFore.setDirection(FORWARD);
+        rightRear.setDirection(FORWARD);
+        leftFore.setDirection(REVERSE);
+        leftRear.setDirection(REVERSE);
         lfEncoder = new MotorEncoder(leftFore);
         lrEncoder = new MotorEncoder(leftRear);
         rfEncoder = new MotorEncoder(rightFore);

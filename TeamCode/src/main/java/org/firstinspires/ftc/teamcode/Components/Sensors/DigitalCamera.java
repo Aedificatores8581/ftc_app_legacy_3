@@ -67,27 +67,18 @@ public class DigitalCamera {
         yAng = pose.phi;
         zAng = pose.theta;
     }
-    //TODO: Fix variable names
     public Point getObjectLocation(Point pointOnImage, Size imageSize, double objectHeight){
         Vector2 temp = new Vector2(pointOnImage.y, -pointOnImage.x);
-        temp.x -= imageSize.height / 2;
-        temp.y -= imageSize.width / 2;
+        temp.x -= imageSize.height/ 2;
+        temp.y += imageSize.width / 2;
+        temp.rotate(yAng);
+        double vertAng = temp.y / imageSize.width * verticalAngleOfView() + xAng;
+        double horiAng = temp.x / imageSize.height * horizontalAngleOfView() + zAng;
 
-        double vertAng = temp.y / imageSize.width * verticalAngleOfView();
-        double horiAng = temp.x / imageSize.height * horizontalAngleOfView();
-
-        double newY = (z - objectHeight / 2) / Math.tan(vertAng);
-        double newX = newY * Math.tan(horiAng);
+        double newY = (z - objectHeight / 2) / Math.tan(-vertAng);
+        double newX = newY * Math.tan(horiAng) + x;
+        newY += y;
         return new Point(newX, newY);
-    }
-    public Point getObjectLocation2(Point pointOnImage, Size imageSize, double objectHeight){
-        pointOnImage.x -= imageSize.width / 2;
-        pointOnImage.y -= imageSize.height / 2;
-        Vector2 temp = new Vector2(pointOnImage.x, pointOnImage.y);
-        temp.rotate(Math.PI / 2 + yAng);
-        double theta = Math.PI / 2 - temp.y / imageSize.height * verticalAngleOfView() + xAng;
-        double rho = Math.PI / 2 - temp.x / imageSize.width * horizontalAngleOfView() - zAng;
-        return new Point((z - objectHeight / 2) * Math.tan(theta) * Math.cos(rho), (z - objectHeight / 2) * Math.tan(theta) * Math.sin(rho));
     }
     public void updateLocation(double xChange, double yChange, double zChange){
         x += xChange;
