@@ -20,9 +20,9 @@ public class Ratchet {
 
     // TODO: Tune these values, see Lift.java.
     public final double TOP_RATCHET_NOT_ENGAGED = 0,
-                        TOP_RATCHET_ENGAGED = 1,
+                        TOP_RATCHET_ENGAGED = 0.5,
                         SIDE_RATCHET_NOT_ENGAGED = 0,
-                        SIDE_RATCHET_ENGAGED = 1;
+                        SIDE_RATCHET_ENGAGED = 0.5;
 
     public void init(HardwareMap hardwareMap) {
         ratchetMotor = hardwareMap.dcMotor.get("rmot");
