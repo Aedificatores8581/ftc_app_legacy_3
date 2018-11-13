@@ -41,6 +41,7 @@ public class VisionTest extends WestBot15 {
     }
 
     public void loop(){
+        setRobotAngle();
         drivetrain.maxSpeed = 0.2;
         setRobotAngle();
         Vector2 temp = new Vector2(detector.element.y, -detector.element.x);
@@ -62,8 +63,8 @@ public class VisionTest extends WestBot15 {
             xAng = horiAng;
         }
         if(hasDrove){
-            drivetrain.setLeftPow(Math.sin(xAng));
-            drivetrain.setRightPow(-Math.sin(xAng));
+            drivetrain.setLeftPow(Math.sin(xAng - robotAngle.angle()));
+            drivetrain.setRightPow(-Math.sin(xAng) - robotAngle.angle());
         }
         /*if(hasDrove) {
             drivetrain.updateLocation(drivetrain.averageLeftEncoders() - prevLeft0, drivetrain.averageRightEncoders() - prevRight);
@@ -78,6 +79,8 @@ public class VisionTest extends WestBot15 {
         }*/
         telemetry.addData("sample location: ", newPoint);
         telemetry.addData("robot location: ", drivetrain.position);
+        telemetry.addData("xAng: ", Math.toDegrees(horiAng));
+        telemetry.addData("robot ang: ", Math.toDegrees(robotAngle.angle()));
     }
 
     public void stop(){
