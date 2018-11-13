@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.Components.Sensors.MotorEncoder;
 import org.firstinspires.ftc.teamcode.Universal.Math.Pose;
 import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 
 /**
  * Created by Frank Portman on 5/21/2018
@@ -37,12 +38,14 @@ public class WestCoast15 extends TankDT {
     }
 
     public void setLeftPow(double pow) {
+        pow = UniversalFunctions.clamp(-1, pow, 1);
         leftFore.setPower(pow * maxSpeed);
         leftRear.setPower(pow * maxSpeed);
         leftPow = pow;
     }
 
     public void setRightPow(double pow) {
+        pow = UniversalFunctions.clamp(-1, pow, 1);
         rightFore.setPower(pow * maxSpeed);
         rightRear.setPower(pow * maxSpeed);
         rightPow = pow;
