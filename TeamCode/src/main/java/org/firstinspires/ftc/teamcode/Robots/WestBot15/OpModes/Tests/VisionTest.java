@@ -16,7 +16,7 @@ import ftc.vision.Detector;
 public class VisionTest extends WestBot15 {
     BlockDetector detector;
     boolean hasDrove;
-    double prevLeft0, prevRight = 0;
+    double prevLeft, prevRight = 0;
     Point newNewPoint = new Point();
     Vector2 sampleVect = new Vector2();
     double xAng = 0;
@@ -41,6 +41,7 @@ public class VisionTest extends WestBot15 {
     }
 
     public void loop(){
+        drivetrain.updateLocation(drivetrain.averageLeftEncoders() - prevLeft, drivetrain.averageRightEncoders() - prevRight);
         setRobotAngle();
         drivetrain.maxSpeed = 0.2;
         setRobotAngle();
@@ -55,16 +56,22 @@ public class VisionTest extends WestBot15 {
         double newX = newY * Math.tan(horiAng);
         newY += 5.75;
         newX += 3.5;
+        Vector2 location = new Vector2(-newX, newY);
+        horiAng = -location.angle();
         Point newPoint = new Point(newX, newY);
-        newNewPoint = new Point(newX, newY);
-        if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER) {
+        if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && !hasDrove) {
             hasDrove = true;
             sampleVect = new Vector2(newX, newY);
             xAng = horiAng;
         }
+        if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER && hasDrove)
+            hasDrove = false;
+        int i;
+        i = gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER ? 1 : -1;
+
         if(hasDrove){
-            drivetrain.setLeftPow(Math.sin(xAng - robotAngle.angle()));
-            drivetrain.setRightPow(-Math.sin(xAng) - robotAngle.angle());
+            drivetrain.setLeftPow(-i * Math.sin(xAng - drivetrain.position.angle));
+            drivetrain.setRightPow(i * Math.sin(xAng - drivetrain.position.angle));
         }
         /*if(hasDrove) {
             drivetrain.updateLocation(drivetrain.averageLeftEncoders() - prevLeft0, drivetrain.averageRightEncoders() - prevRight);
@@ -77,9 +84,10 @@ public class VisionTest extends WestBot15 {
                 drivetrain.setRightPow(0);
             }
         }*/
-        telemetry.addData("sample location: ", newPoint);
-        telemetry.addData("robot location: ", drivetrain.position);
-        telemetry.addData("xAng: ", Math.toDegrees(horiAng));
+        telemetry.addData("sample location: ", location);
+        telemetry.addData("robot location: ", drivetrain.position.angle);
+        telemetry.addData("horiAng: ", Math.toDegrees(horiAng));
+        telemetry.addData("xAng: ", Math.toDegrees(xAng));
         telemetry.addData("robot ang: ", Math.toDegrees(robotAngle.angle()));
     }
 
