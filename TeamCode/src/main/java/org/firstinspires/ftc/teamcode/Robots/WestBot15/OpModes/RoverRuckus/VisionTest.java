@@ -69,8 +69,11 @@ public class VisionTest extends WestBot15 {
             prevLeft0 = drivetrain.averageLeftEncoders();
             prevRight = drivetrain.averageRightEncoders();
             drivetrain.driveToPoint(sampleVect.x, sampleVect.y, TankDT.Direction.FOR);
-            if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER)
+            if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {
                 hasDrove = false;
+                drivetrain.setLeftPow(0);
+                drivetrain.setRightPow(0);
+            }
         }
         telemetry.addData("sample location: ", newPoint);
         telemetry.addData("robot location: ", drivetrain.position);
