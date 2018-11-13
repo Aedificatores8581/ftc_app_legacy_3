@@ -33,6 +33,7 @@ public class JSONVisionInfoSaverTester extends OpMode {
             jsonAutonGetter = new JSONAutonGetter("JSONVisionInfoSaverTester.json");
 
             for (int i = 0; i < jsonAutonGetter.jsonObject.getJSONArray("locations").length(); ++i) {
+                telemetry.addLine(jsonAutonGetter.jsonObject.getJSONArray("locations").getJSONObject(i).toString());
                 testLocations.add(new TestLocation(jsonAutonGetter.jsonObject.getJSONArray("locations").getJSONObject(i)));
             }
 
@@ -93,7 +94,7 @@ class TestLocation {
     int x;
     int y;
 
-    public TestLocation(JSONObject jsonObject) throws JSONException {
+    public TestLocation(JSONObject jsonObject) throws JSONException, NullPointerException {
         this.name = jsonObject.getString("name");
         this.x = jsonObject.getInt("x");
         this.y = jsonObject.getInt("y");
