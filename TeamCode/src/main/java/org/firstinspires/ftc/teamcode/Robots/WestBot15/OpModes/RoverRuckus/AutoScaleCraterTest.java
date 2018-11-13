@@ -31,6 +31,7 @@ public class AutoScaleCraterTest extends WestBot15 {
     public void init() {
         usingIMU = true;
         super.init();
+
         msStuckDetectInit = MS_STUCK_DETECT_INIT_DEFAULT;
         normalizeGyroAngle();
         setStartAngle();
@@ -47,7 +48,12 @@ public class AutoScaleCraterTest extends WestBot15 {
 
     @Override
     public void loop() {
-        if (Math.abs(gyroAngles.getZ()) > ON_CRATER_RIM_THRESHOLD) {
+        double angleX = gyroAngles.getX();
+        double angleY = gyroAngles.getY();
+        double angleZ = gyroAngles.getZ();
+
+
+        if (Math.abs(angleZ) > ON_CRATER_RIM_THRESHOLD) {
             onCrater = true;
         } else {
             onCrater = false;
@@ -61,8 +67,8 @@ public class AutoScaleCraterTest extends WestBot15 {
         drivetrain.updateEncoders();
 
         telemetry.addData("onCrater?", onCrater);
-        telemetry.addData("Robot Z", gyroAngles.getZ());
-        telemetry.addData("Robot X", gyroAngles.getX());
-        telemetry.addData("Robot Y", gyroAngles.getY());
+        telemetry.addData("Robot Z", angleZ);
+        telemetry.addData("Robot X", angleX);
+        telemetry.addData("Robot Y", angleY);
     }
 }
