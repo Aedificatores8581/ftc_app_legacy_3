@@ -153,8 +153,8 @@ public abstract class TankDT extends Drivetrain {
             }
             double sin = Math.sin(angleBetween);
             turnMult = Math.abs(sin) + 1;
-            leftPow = directionMult * (UniversalFunctions.clamp(0, destination.magnitude(), 1) - turnMult * sin);
-            rightPow = directionMult * (UniversalFunctions.clamp(0, destination.magnitude(), 1) + turnMult * sin);
+            leftPow = directionMult * (UniversalFunctions.clamp(0, destination.magnitude(), 1) + turnMult * sin);
+            rightPow = directionMult * (UniversalFunctions.clamp(0, destination.magnitude(), 1) - turnMult * sin);
         switch (direction) {
             case FOR:
                 if (Math.sin(angleBetween) < 0) {
