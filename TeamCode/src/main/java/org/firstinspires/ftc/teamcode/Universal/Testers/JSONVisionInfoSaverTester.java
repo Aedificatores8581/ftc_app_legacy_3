@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.Universal.Testers;
 
+import com.google.gson.annotations.JsonAdapter;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.Gamepad;
+
+import junit.framework.Test;
 
 import org.firstinspires.ftc.teamcode.Universal.JSONAutonGetter;
 import org.json.JSONArray;
@@ -11,46 +14,31 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 //Todo: Test!
 @Autonomous(name = "JSONVisionInfoSaverTester", group = "tester")
 public class JSONVisionInfoSaverTester extends OpMode {
     private JSONAutonGetter jsonAutonGetter;
-    private JSONArray locations;
     private int currentLocationIndex;
-    private JSONObject currentLocation;
-
+    ArrayList<TestLocation> testLocations;
     Gamepad prev1;
 
     @Override
     public void init() {
-        currentLocation = new JSONObject();
 
         try {
+            testLocations = new ArrayList<>(jsonAutonGetter.jsonObject.getJSONArray("locations").length());
+
             jsonAutonGetter = new JSONAutonGetter("JSONVisionInfoSaverTester.json");
-        } catch (IOException | JSONException e) {
-            telemetry.addData("Couldn't open JSONVisionInfoSaverTester.json", e.getMessage());
-            stop();
-        }
 
-        try {
-            locations = new JSONArray(jsonAutonGetter.jsonObject.getJSONArray("locations"));
-        } catch (JSONException e) {
-            telemetry.addData("Issue with 'locations'", e.getMessage());
-            stop();
-        }
+            for (int i = 0; i < jsonAutonGetter.jsonObject.getJSONArray("locations").length(); ++i) {
+                testLocations.add(new TestLocation(jsonAutonGetter.jsonObject.getJSONArray("locations").getJSONObject(i)));
+            }
 
-        try {
             currentLocationIndex = jsonAutonGetter.jsonObject.getInt("lastSavedLocation");
-        } catch (JSONException e) {
-            telemetry.addData("Issue with lastSavedLocaition", e.getMessage());
-            stop();
-        }
-
-        try {
-            currentLocation = locations.getJSONObject(currentLocationIndex);
-        } catch (JSONException | NullPointerException e) {
-            telemetry.addData("Issue with currentLocation", e.getMessage());
+        } catch (IOException | JSONException | NullPointerException e) {
+            telemetry.addLine(e.getMessage());
             stop();
         }
     }
@@ -58,29 +46,14 @@ public class JSONVisionInfoSaverTester extends OpMode {
     @Override
     public void loop() {
         if (gamepad1.dpad_up) {
-            try {
-                locations.put(currentLocationIndex, currentLocation);
-
-                // mod operation causes index to wrap around in case currentLocationIndex becomes negative
-                currentLocationIndex = (currentLocationIndex - 1) % locations.length();
-                currentLocation = locations.getJSONObject(currentLocationIndex);
-            } catch (JSONException e) {
-                telemetry.addData("Issue with currentLocation", e.getMessage());
-                stop();
-            }
+            // mod operation causes index to wrap around in case currentLocationIndex becomes negative
+            currentLocationIndex = (currentLocationIndex - 1) % testLocations.size();
         }
 
         if (gamepad1.dpad_down) {
-            try {
-                locations.put(currentLocationIndex, currentLocation);
 
-                // mod operation causes index to wrap around in case currentLocationIndex becomes negative
-                currentLocationIndex = (currentLocationIndex + 1) % locations.length();
-                currentLocation = locations.getJSONObject(currentLocationIndex);
-            } catch (JSONException e) {
-                telemetry.addData("Issue with currentLocation", e.getMessage());
-                stop();
-            }
+            // mod operation causes index to wrap around in case currentLocationIndex becomes negative
+            currentLocationIndex = (currentLocationIndex + 1) % testLocations.size();
         }
 
         if (gamepad1.a && !prev1.a) {
@@ -92,14 +65,10 @@ public class JSONVisionInfoSaverTester extends OpMode {
         }
 
 
-        try {
-            telemetry.addData("Index",currentLocationIndex);
-            telemetry.addData("Name",currentLocation.getString("name"));
-            telemetry.addData("X",currentLocation.getString("x"));
-            telemetry.addData("Y",currentLocation.getString("y"));
-        } catch (JSONException e) {
-            telemetry.addData("Issue with Telemetry", e.getMessage());
-        }
+        telemetry.addData("Index",currentLocationIndex);
+        telemetry.addData("Name", testLocations.get(currentLocationIndex).name);
+        telemetry.addData("X", testLocations.get(currentLocationIndex).x);
+        telemetry.addData("Y", testLocations.get(currentLocationIndex).y);
 
         try {
             prev1.copy(gamepad1);
@@ -116,5 +85,17 @@ public class JSONVisionInfoSaverTester extends OpMode {
         } catch (JSONException | IOException e) {
             telemetry.addData("Issue with saving currentLocationIndex", e.getMessage());
         }
+    }
+}
+
+class TestLocation {
+    String name;
+    int x;
+    int y;
+
+    public TestLocation(JSONObject jsonObject) throws JSONException {
+        this.name = jsonObject.getString("name");
+        this.x = jsonObject.getInt("x");
+        this.y = jsonObject.getInt("y");
     }
 }
