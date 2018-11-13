@@ -15,9 +15,11 @@ import ftc.vision.Detector;
 @Autonomous(name = "block detector test", group = "none")
 public class VisionTest extends WestBot15 {
     BlockDetector detector;
-    Point sampleLocation;
     boolean hasDrove;
     double prevLeft0, prevRight = 0;
+    Point newNewPoint = new Point();
+    Vector2 sampleVect = new Vector2();
+    double xAng = 0;
     public void init(){
         msStuckDetectInit = 500000;
         super.init();
@@ -39,6 +41,7 @@ public class VisionTest extends WestBot15 {
     }
 
     public void loop(){
+        drivetrain.maxSpeed = 0.2;
         setRobotAngle();
         Vector2 temp = new Vector2(detector.element.y, -detector.element.x);
         temp.x -= 480/ 2;
@@ -47,23 +50,34 @@ public class VisionTest extends WestBot15 {
         double vertAng = temp.y / 640 * motoG4.rearCamera.verticalAngleOfView();
         double horiAng = temp.x / 480 * motoG4.rearCamera.horizontalAngleOfView();
 
-        double newY = (11.66666666666 - 2 / 2) / Math.tan(-vertAng) - 3.375;
-        double newX = newY * Math.tan(horiAng) + 2.333333333333333;
+        double newY = (10 - 2 / 2) / Math.tan(-vertAng);
+        double newX = newY * Math.tan(horiAng);
+        newY += 5.75;
+        newX += 3.5;
         Point newPoint = new Point(newX, newY);
-        if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER)
+        newNewPoint = new Point(newX, newY);
+        if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER) {
             hasDrove = true;
-        /*drivetrain.updateLocation(drivetrain.averageLeftEncoders() - prevLeft0, drivetrain.averageRightEncoders() - prevRight);
-        prevLeft0 = drivetrain.averageLeftEncoders();
-        prevRight = drivetrain.averageRightEncoders();*/
-        if(hasDrove) {
-            Vector2 sampleVect = new Vector2(newX, newY);
-            if (sampleVect.magnitude() > 12)
-                sampleVect.setFromPolar(1 / 2.0, sampleVect.angle());
-            else
-                sampleVect.setFromPolar(sampleVect.magnitude() / 24.0, sampleVect.angle());
+            sampleVect = new Vector2(newX, newY);
+            xAng = horiAng;
         }
-
-        //telemetry.addData("location 1", motoG4.rearCamera.getObjectLocation(detector.elements.get(0), detector.result().size(), 2));
+        if(hasDrove){
+            drivetrain.setLeftPow(Math.sin(xAng));
+            drivetrain.setRightPow(-Math.sin(xAng));
+        }
+        /*if(hasDrove) {
+            drivetrain.updateLocation(drivetrain.averageLeftEncoders() - prevLeft0, drivetrain.averageRightEncoders() - prevRight);
+            prevLeft0 = drivetrain.averageLeftEncoders();
+            prevRight = drivetrain.averageRightEncoders();
+            drivetrain.driveToPoint(sampleVect.x, sampleVect.y, TankDT.Direction.FOR);
+            if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER) {
+                hasDrove = false;
+                drivetrain.setLeftPow(0);
+                drivetrain.setRightPow(0);
+            }
+        }*/
+        telemetry.addData("sample location: ", newPoint);
+        telemetry.addData("robot location: ", drivetrain.position);
     }
 
     public void stop(){
