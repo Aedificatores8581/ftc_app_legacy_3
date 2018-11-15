@@ -8,18 +8,23 @@ import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 import org.firstinspires.ftc.teamcode.Universal.Math.Pose;
 import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
+import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 import org.firstinspires.ftc.teamcode.Vision.Detectors.BlockDetector;
 import org.opencv.core.Point;
 
 import ftc.vision.Detector;
 
-@Autonomous(name = "block detector test", group = "none")
-public class VisionTest extends WestBot15 {
+@Autonomous(name = "sampling test", group = "none")
+public class SamplingTest extends WestBot15 {
     BlockDetector detector;
     boolean hasDrove;
     double prevLeft, prevRight = 0;
+    double hardNewY;
+    boolean hasDriven = false;
     Point newNewPoint = new Point();
+    double rightEncPosition, leftEncPosition;
     Vector2 sampleVect = new Vector2();
+    Pose robotPose = new Pose();
     double xAng = 0;
     public void init(){
         drivetrain.position = new Pose();
@@ -54,16 +59,9 @@ public class VisionTest extends WestBot15 {
         double horiAng = temp.x / 480 * motoG4.rearCamera.horizontalAngleOfView();
 
         double newY = (10 - 2 / 2) / Math.tan(-vertAng);
-        double newX = newY * Math.tan(horiAng);
-        newY += 5.75;
-        newX += 3.5;
-        Vector2 location = new Vector2(-newX, newY);
-        horiAng = -location.angle();
-        Point newPoint = new Point(newX, newY);
+
         if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && !hasDrove) {
             hasDrove = true;
-            sampleVect = new Vector2(newX, newY);
-            xAng = horiAng;
         }
         if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER && hasDrove) {
             hasDrove = false;
@@ -74,12 +72,27 @@ public class VisionTest extends WestBot15 {
         i = gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER ? 1 : -1;
 
         if(hasDrove){
-            drivetrain.setLeftPow(-i * Math.cos(xAng - robotAngle.angle()));
-            drivetrain.setRightPow(i * Math.cos(xAng - robotAngle.angle()));
-            if(Math.abs(Math.cos(xAng - robotAngle.angle())) < 0.1){
-                hasDrove = false;
-                drivetrain.setLeftPow(0);
-                drivetrain.setRightPow(0);
+            if(gamepad1.right_stick_button){
+                hasDriven = true;
+                hardNewY = newY;
+                rightEncPosition = drivetrain.averageRightEncoders();
+                leftEncPosition = drivetrain.averageLeftEncoders();
+            }
+            else
+                hasDriven = false;
+            if(hasDriven){
+                if(drivetrain.averageLeftEncoders() - leftEncPosition > drivetrain.ENC_PER_INCH * hardNewY) {
+                    drivetrain.setLeftPow(0);
+                    drivetrain.setRightPow(0);
+                }
+                else {
+                    drivetrain.setRightPow(1);
+                    drivetrain.setLeftPow(1);
+                }
+            }
+            else{
+                drivetrain.setLeftPow(-i * Math.sin(horiAng));
+                drivetrain.setRightPow(i * Math.sin(horiAng));
             }
         }
         /*if(hasDrove) {
@@ -93,19 +106,39 @@ public class VisionTest extends WestBot15 {
                 drivetrain.setRightPow(0);
             }
         }*/
-        telemetry.addData("sample location: ", location);
-        telemetry.addData("robot location: ", drivetrain.position.angle);
         telemetry.addData("hasDrove", hasDrove);
         telemetry.addData("horiAng: ", Math.toDegrees(horiAng));
-        telemetry.addData("xAng: ", Math.toDegrees(xAng));
         telemetry.addData("robot ang: ", Math.toDegrees(robotAngle.angle()));
         telemetry.addData("left pow", drivetrain.leftFore.getPower());
-        telemetry.addData("thing, ", Math.toDegrees(xAng - robotAngle.angle()));
+        telemetry.addData("hasDriven, ", hasDriven);
         telemetry.addData("cosThing, ", Math.abs(Math.cos(xAng - robotAngle.angle())));
+        telemetry.addData("desired distance, ", drivetrain.ENC_PER_INCH * hardNewY);
+        telemetry.addData("distance traveled, ", drivetrain.averageLeftEncoders() - leftEncPosition );
+
     }
 
     public void stop(){
         super.stop();
         detector.isInitialized = false;
+    }
+    public void updateLocation(double leftChange, double rightChange){
+        leftChange = leftChange / drivetrain.ENC_PER_INCH;
+        rightChange = rightChange / drivetrain.ENC_PER_INCH;
+        double angle = 0;
+        Vector2 turnVector = new Vector2();
+        if(rightChange == leftChange)
+            turnVector.setFromPolar(rightChange, robotPose.angle);
+        else {
+            double radius = drivetrain.DISTANCE_BETWEEN_WHEELS / 2 * (leftChange + rightChange) / (rightChange - leftChange);
+            angle = (rightChange - leftChange) / (drivetrain.DISTANCE_BETWEEN_WHEELS);
+            radius = Math.abs(radius);
+            turnVector.setFromPolar(radius, angle);
+            turnVector.setFromPolar(radius - turnVector.x, angle);
+            if(Math.min(leftChange, rightChange) == -UniversalFunctions.maxAbs(leftChange, rightChange))
+                turnVector.x *= -1;
+        }
+        turnVector.rotate(robotPose.angle);
+        robotPose.add(turnVector);
+        robotPose.angle += angle;
     }
 }
