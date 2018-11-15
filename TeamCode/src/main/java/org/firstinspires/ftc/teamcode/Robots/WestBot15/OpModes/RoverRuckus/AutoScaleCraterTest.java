@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.RoverRuckus;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.Components.Sensors.Cameras.MotoG4;
 import org.firstinspires.ftc.teamcode.Robots.Robot;
@@ -24,7 +25,7 @@ public class AutoScaleCraterTest extends WestBot15 {
 
     // 100 is a temporary value.
     // TODO: This needs to be tuned.
-    private final static int ON_CRATER_RIM_THRESHOLD = 100;
+    private final static int ON_CRATER_RIM_THRESHOLD = 60;
     public boolean onCrater = false;
 
     @Override
@@ -48,18 +49,13 @@ public class AutoScaleCraterTest extends WestBot15 {
 
     @Override
     public void loop() {
-        double angleX = gyroAngles.getX();
-        double angleY = gyroAngles.getY();
-        double angleZ = gyroAngles.getZ();
-
-
-        if (Math.abs(angleZ) > ON_CRATER_RIM_THRESHOLD) {
+        if (Math.abs(gyroAngles.getY()) > ON_CRATER_RIM_THRESHOLD) {
             onCrater = true;
         } else {
             onCrater = false;
         }
 
-        if (onCrater = false) {
+        if (!onCrater) {
 			drivetrain.setRightPow(1.0);
 			drivetrain.setLeftPow(1.0);
 		}
@@ -67,8 +63,6 @@ public class AutoScaleCraterTest extends WestBot15 {
         drivetrain.updateEncoders();
 
         telemetry.addData("onCrater?", onCrater);
-        telemetry.addData("Robot Z", angleZ);
-        telemetry.addData("Robot X", angleX);
-        telemetry.addData("Robot Y", angleY);
+        telemetry.addData("Robot Y", gyroAngles.getY());
     }
 }
