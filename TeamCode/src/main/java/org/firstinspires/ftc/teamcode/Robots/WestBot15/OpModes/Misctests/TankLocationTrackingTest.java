@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.Tests;
+package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.Misctests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
