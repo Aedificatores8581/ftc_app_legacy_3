@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.Misctests;
+package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
