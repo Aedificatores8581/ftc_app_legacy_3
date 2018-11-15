@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Universal.Controller;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -22,7 +22,7 @@ public class ConsecutiveButtonPress {
 	private double startTime;
 	private int pressesSatisfied = 0;
 
-	public boolean ConsecutiveTrigger(int pressesDesired, double maxInterval, boolean value) {
+	public boolean CTLeftBumper(int pressesDesired, double maxInterval) {
 		pressesSatisfied = 0;
 
 		startTime = timer.now(TimeUnit.MILLISECONDS);
