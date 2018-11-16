@@ -79,7 +79,13 @@ public abstract class Robot extends OpMode {
     public double getGyroAngle(){
         return gyroangles.refreshGyroAnglesZ(imu.getAngularOrientation(AxesReference.INTRINSIC, GyroAngles.ORDER, GyroAngles.UNIT));
     }
+    public double getGyroAngleX(){
+        return gyroangles.refreshGyroAnglesX(imu.getAngularOrientation(AxesReference.INTRINSIC, GyroAngles.ORDER, GyroAngles.UNIT));
+    }
 
+    public double getGyroAngleY(){
+        return gyroangles.refreshGyroAnglesY(imu.getAngularOrientation(AxesReference.INTRINSIC, GyroAngles.ORDER, GyroAngles.UNIT));
+    }
     //Sets the start angle of the robot
     public void setStartAngle(){
         startAngle = getGyroAngle();
