@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.Tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Ratchet;
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 
+@Disabled
 @TeleOp(name = "RatchetTest", group = "Test")
 public class RatchetTest extends WestBot15{
     private Ratchet ratchet;

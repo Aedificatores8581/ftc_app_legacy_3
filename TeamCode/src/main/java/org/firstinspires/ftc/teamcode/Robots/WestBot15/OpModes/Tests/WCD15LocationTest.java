@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.Tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
-
+@Disabled
 @TeleOp(name = "locationTestWCD", group = "WestBot15")
 public class WCD15LocationTest extends WestBot15{
     public double oldLeftEncVal = 0, oldRightEncVal = 0, maxLeftError = 0, maxRightError = 0;

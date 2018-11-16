@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
@@ -12,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Vision.Detectors.BlockDetector;
 import org.opencv.core.Point;
 
 import ftc.vision.Detector;
-
+@Disabled
 @Autonomous(name = "block detector test", group = "none")
 public class VisionTest extends WestBot15 {
     BlockDetector detector;

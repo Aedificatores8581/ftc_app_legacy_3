@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.Tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 /**
  * Created by Frank Portman on 6/17/2018
  */
-
+@Disabled
 @TeleOp(name = "WestBotFieldCentricTest", group = "")
 public class DriveBotFieldCentricTest extends WestBot15 {
     boolean switchControlState    = false,

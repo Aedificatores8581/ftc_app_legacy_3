@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.Tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Robots.WestBot15.WestBot15;
 import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 
+@Disabled
 @TeleOp(name = "encoder wrap test", group = "WestBot15")
 public class WCD15EncoderWrapTest extends WestBot15{
     double maxEncVal = 0, minEncVal = 0;

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes.Tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.TankDrivetrains.TankDT;
@@ -37,6 +38,14 @@ public class SamplingTest extends WestBot15 {
 
         drivetrain.controlState = TankDT.ControlState.FIELD_CENTRIC;
         drivetrain.direction = TankDT.Direction.FOR;
+        drivetrain.leftFore.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        drivetrain.leftFore.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        drivetrain.leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        drivetrain.leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        drivetrain.rightFore.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        drivetrain.rightFore.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        drivetrain.rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        drivetrain.rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public void initLoop(){
         //telemetry.addData("location 1", motoG4.rearCamera.getObjectLocation(detector.elements.get(0), detector.result().size(), 2));
@@ -44,13 +53,15 @@ public class SamplingTest extends WestBot15 {
     @Override
     public void start(){
         super.start();
-
+        drivetrain.position = new Pose(0, 0, 0);
     }
 
     public void loop(){
         drivetrain.updateLocation(drivetrain.averageLeftEncoders() - prevLeft, drivetrain.averageRightEncoders() - prevRight);
         setRobotAngle();
         drivetrain.maxSpeed = 0.2;
+
+
         Vector2 temp = new Vector2(detector.element.y, -detector.element.x);
         temp.x -= 480/ 2;
         temp.y += 640 / 2;
@@ -59,9 +70,10 @@ public class SamplingTest extends WestBot15 {
         double horiAng = temp.x / 480 * motoG4.rearCamera.horizontalAngleOfView();
 
         double newY = (10 - 2 / 2) / Math.tan(-vertAng);
-
+        double newX = newY * Math.tan(horiAng) * -1 + Math.PI / 2;
         if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && !hasDrove) {
             hasDrove = true;
+            sampleVect = new Vector2(newX - 3.5, newY + 5.75);
         }
         if(gamepad1.right_trigger < UniversalConstants.Triggered.TRIGGER && hasDrove) {
             hasDrove = false;
@@ -86,8 +98,11 @@ public class SamplingTest extends WestBot15 {
                     drivetrain.setRightPow(0);
                 }
                 else {
-                    drivetrain.setRightPow(1);
-                    drivetrain.setLeftPow(1);
+                    Vector2 newVect = new Vector2(sampleVect.x, sampleVect.y);
+                    newVect.setFromPolar(UniversalFunctions.clamp(0, sampleVect.magnitude(), 1), sampleVect.angle());
+                    drivetrain.teleOpLoop(newVect, new Vector2(), robotAngle);
+                    drivetrain.setLeftPow();
+                    drivetrain.setRightPow();
                 }
             }
             else{

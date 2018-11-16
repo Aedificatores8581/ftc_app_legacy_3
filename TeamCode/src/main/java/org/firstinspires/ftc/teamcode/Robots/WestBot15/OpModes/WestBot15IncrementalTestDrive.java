@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robots.WestBot15.OpModes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Components.Mechanisms.Drivetrains.Drivetrain;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalConstants;
  * Created by Frank Portman on 6/13/2018
  */
 //This is a version of WestCoast15TestDrive with incremental motors
+@Disabled
 @TeleOp(name = "WCD15 Incremental Test Drive")
 public class WestBot15IncrementalTestDrive extends WestBot15Inc {
     boolean switchControlState    = false,
