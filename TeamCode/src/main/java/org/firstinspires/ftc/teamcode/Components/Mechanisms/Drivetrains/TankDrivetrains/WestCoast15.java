@@ -99,7 +99,18 @@ public class WestCoast15 extends TankDT {
     public double averageRightEncoders(){
         return (rfEncoder.currentPosition + rrEncoder.currentPosition) / 2;
     }
-
+    public void spicyDrive(Vector2 leftStick1, double leftTrigger, double rightTrigger){
+        double velocity = rightTrigger - leftTrigger;
+        leftFore.setPower(maxSpeed * (velocity + leftStick1.x));
+        leftRear.setPower(maxSpeed * (velocity + leftStick1.x));
+        rightFore.setPower(maxSpeed * (velocity - leftStick1.x));
+        rightRear.setPower(maxSpeed * (velocity - leftStick1.x));
+    }
+    public void spicyDrive2(Vector2 leftStick1, double leftTrigger, double rightTrigger){
+        double velocity = rightTrigger - leftTrigger;
+        setLeftPow(velocity + leftStick1.x);
+        setRightPow(velocity - leftStick1.x);
+    }
     @Override
     public double averageEncoders() {
         return (averageLeftEncoders() + averageRightEncoders()) / 2;

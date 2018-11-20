@@ -70,7 +70,7 @@ public class SamplingTest extends WestBot15 {
         double horiAng = temp.x / 480 * motoG4.rearCamera.horizontalAngleOfView();
 
         double newY = (10 - 2 / 2) / Math.tan(-vertAng);
-        double newX = newY * Math.tan(horiAng) * -1 + Math.PI / 2;
+        double newX = newY * Math.tan(horiAng);
         if(gamepad1.right_trigger > UniversalConstants.Triggered.TRIGGER && !hasDrove) {
             hasDrove = true;
             sampleVect = new Vector2(newX - 3.5, newY + 5.75);
@@ -84,7 +84,7 @@ public class SamplingTest extends WestBot15 {
         i = gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER ? 1 : -1;
 
         if(hasDrove){
-            if(gamepad1.right_stick_button){
+            if(gamepad1.right_stick_button && !hasDriven){
                 hasDriven = true;
                 hardNewY = newY;
                 rightEncPosition = drivetrain.averageRightEncoders();
@@ -93,21 +93,15 @@ public class SamplingTest extends WestBot15 {
             else
                 hasDriven = false;
             if(hasDriven){
-                if(drivetrain.averageLeftEncoders() - leftEncPosition > drivetrain.ENC_PER_INCH * hardNewY) {
-                    drivetrain.setLeftPow(0);
-                    drivetrain.setRightPow(0);
-                }
-                else {
                     Vector2 newVect = new Vector2(sampleVect.x, sampleVect.y);
                     newVect.setFromPolar(UniversalFunctions.clamp(0, sampleVect.magnitude(), 1), sampleVect.angle());
                     drivetrain.teleOpLoop(newVect, new Vector2(), robotAngle);
                     drivetrain.setLeftPow();
                     drivetrain.setRightPow();
-                }
             }
             else{
-                drivetrain.setLeftPow(-i * Math.sin(horiAng));
-                drivetrain.setRightPow(i * Math.sin(horiAng));
+                drivetrain.setLeftPow(-i * Math.sin(sampleVect.angle() + robotAngle.angle()));
+                drivetrain.setRightPow(i * Math.sin(sampleVect.angle() + robotAngle.angle()));
             }
         }
         /*if(hasDrove) {
@@ -121,12 +115,10 @@ public class SamplingTest extends WestBot15 {
                 drivetrain.setRightPow(0);
             }
         }*/
-        telemetry.addData("hasDrove", hasDrove);
         telemetry.addData("horiAng: ", Math.toDegrees(horiAng));
         telemetry.addData("robot ang: ", Math.toDegrees(robotAngle.angle()));
         telemetry.addData("left pow", drivetrain.leftFore.getPower());
-        telemetry.addData("hasDriven, ", hasDriven);
-        telemetry.addData("cosThing, ", Math.abs(Math.cos(xAng - robotAngle.angle())));
+        telemetry.addData("sampleVect, ", sampleVect);
         telemetry.addData("desired distance, ", drivetrain.ENC_PER_INCH * hardNewY);
         telemetry.addData("distance traveled, ", drivetrain.averageLeftEncoders() - leftEncPosition );
 
