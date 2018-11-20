@@ -20,6 +20,8 @@ public class AutoScaleCraterTune extends WestBot15 {
     // 100 is a temporary value.
     // TODO: This needs to be tuned.
     private final static int ON_CRATER_RIM_THRESHOLD = 60;
+    private       static int on_crater_rim_tuner = 60;
+    private final static int TUNING_INCREMENT = 2;
     public boolean onCrater = false;
 
     @Override
@@ -47,8 +49,15 @@ public class AutoScaleCraterTune extends WestBot15 {
     @Override
     public void loop() {
         getGyroAngle();
+        updateGamepad1();
 
-        if (Math.abs(gyroAngles.getY()) > ON_CRATER_RIM_THRESHOLD) {
+        if (gamepad1.left_bumper) {
+        	on_crater_rim_tuner += TUNING_INCREMENT;
+        } else {
+        	on_crater_rim_tuner -= TUNING_INCREMENT;
+		}
+
+        if (Math.abs(gyroAngles.getY()) > on_crater_rim_tuner) {
             onCrater = true;
         } else {
             onCrater = false;
@@ -61,6 +70,7 @@ public class AutoScaleCraterTune extends WestBot15 {
 
         //drivetrain.updateEncoders();
 
+        telemetry.addData("Tuner", on_crater_rim_tuner);
         telemetry.addData("onCrater?", onCrater);
         telemetry.addData("Robot Y", gyroAngles.getY());
         telemetry.addData("Robot X", gyroAngles.getX());
