@@ -292,5 +292,4 @@ public abstract class TankDT extends Drivetrain {
 
     public abstract double averageLeftEncoders();
     public abstract double averageRightEncoders();
-    public abstract double averageEncoders();
 }

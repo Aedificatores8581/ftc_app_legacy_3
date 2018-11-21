@@ -111,9 +111,4 @@ public class WestCoast15 extends TankDT {
         setLeftPow(velocity + leftStick1.x);
         setRightPow(velocity - leftStick1.x);
     }
-    @Override
-    public double averageEncoders() {
-        return (averageLeftEncoders() + averageRightEncoders()) / 2;
-    }
-
 }
