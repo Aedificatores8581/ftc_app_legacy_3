@@ -131,19 +131,16 @@ public class BlockDetector extends Detector {
 
         Point center = new Point();
 
-        double area = -1;
+        double maxCenterY = -999;
         element = new Point();
 
         for (int i = 0; i < contours.size(); i++) {
             MatOfPoint c = contours.get(i);
-
-            double contourArea = Imgproc.contourArea(c);
-
-            if(contourArea > area) {
-                MatOfPoint2f c2f = new MatOfPoint2f(c.toArray());
-                Imgproc.minEnclosingCircle(c2f, center, radius);
+            MatOfPoint2f c2f = new MatOfPoint2f(c.toArray());
+            Imgproc.minEnclosingCircle(c2f, center, radius);
+            if(center.y > maxCenterY) {
                 element = center.clone();
-                area = contourArea;
+                maxCenterY = center.y;
             }
         }
         //element = center;

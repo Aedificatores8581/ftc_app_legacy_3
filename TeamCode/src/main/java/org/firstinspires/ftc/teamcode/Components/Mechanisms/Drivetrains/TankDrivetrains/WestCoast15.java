@@ -38,14 +38,20 @@ public class WestCoast15 extends TankDT {
     }
 
     public void setLeftPow(double pow) {
-        pow = UniversalFunctions.clamp(-1, pow, 1);
+        if(pow >= 1)
+            pow = 1;
+        if(pow <= -1)
+            pow = -1;
         leftFore.setPower(pow * maxSpeed);
         leftRear.setPower(pow * maxSpeed);
         leftPow = pow;
     }
 
     public void setRightPow(double pow) {
-        pow = UniversalFunctions.clamp(-1, pow, 1);
+        if(pow >= 1)
+            pow = 1;
+        if(pow <= -1)
+            pow = -1;
         rightFore.setPower(pow * maxSpeed);
         rightRear.setPower(pow * maxSpeed);
         rightPow = pow;
@@ -57,15 +63,24 @@ public class WestCoast15 extends TankDT {
         leftRear = map.dcMotor.get("la");
         rightRear = map.dcMotor.get("ra");
 
-        leftFore.setZeroPowerBehavior(zeroPowerBehavior);
-        leftRear.setZeroPowerBehavior(zeroPowerBehavior);
-        rightFore.setZeroPowerBehavior(zeroPowerBehavior);
-        rightRear.setZeroPowerBehavior(zeroPowerBehavior);
+        //leftFore.setZeroPowerBehavior(zeroPowerBehavior);
+        //leftRear.setZeroPowerBehavior(zeroPowerBehavior);
+        //rightFore.setZeroPowerBehavior(zeroPowerBehavior);
+        //rightRear.setZeroPowerBehavior(zeroPowerBehavior);
 
-        rightFore.setDirection(FORWARD);
-        rightRear.setDirection(FORWARD);
-        leftFore.setDirection(REVERSE);
-        leftRear.setDirection(REVERSE);
+        rightFore.setDirection(REVERSE);
+        rightRear.setDirection(REVERSE);
+        leftFore.setDirection(FORWARD);
+        leftRear.setDirection(FORWARD);
+        leftFore.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFore.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftFore.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightFore.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         lfEncoder = new MotorEncoder(leftFore);
         lrEncoder = new MotorEncoder(leftRear);
         rfEncoder = new MotorEncoder(rightFore);

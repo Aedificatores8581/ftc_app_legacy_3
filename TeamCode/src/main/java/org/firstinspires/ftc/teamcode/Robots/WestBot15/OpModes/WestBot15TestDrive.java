@@ -80,7 +80,7 @@ public class WestBot15TestDrive extends WestBot15 {
                     drivetrain.controlState = TankDT.ControlState.ARCADE;
                     canSwitchControlState = false;
                 } else if (!gamepad1.left_stick_button && canSwitchControlState) {
-                    drivetrain.controlState = TankDT.ControlState.TANK;
+                    drivetrain.controlState = TankDT.ControlState.FIELD_CENTRIC;
                     canSwitchControlState = false;
                 }
                 break;

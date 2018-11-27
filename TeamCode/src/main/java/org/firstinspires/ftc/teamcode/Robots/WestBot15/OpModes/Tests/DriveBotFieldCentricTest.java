@@ -12,8 +12,7 @@ import org.firstinspires.ftc.teamcode.Universal.UniversalFunctions;
 /**
  * Created by Frank Portman on 6/17/2018
  */
-@Disabled
-@TeleOp(name = "WestBotFieldCentricTest", group = "")
+@TeleOp(name = "Field Centric Test", group = "")
 public class DriveBotFieldCentricTest extends WestBot15 {
     boolean switchControlState    = false,
             canSwitchControlState = false,
@@ -22,6 +21,7 @@ public class DriveBotFieldCentricTest extends WestBot15 {
 
     @Override
     public void init(){
+        usingIMU = true;
         super.init();
         activateGamepad1();
         drivetrain.controlState = TankDT.ControlState.TANK;
@@ -35,113 +35,59 @@ public class DriveBotFieldCentricTest extends WestBot15 {
     }
 
     @Override
-    public void loop(){
-        double y = gamepad1.left_stick_y;
-        double x = gamepad1.left_stick_x;
-        double rad = Math.sqrt(x * x + y * y);
-        double angleBetween = Math.toRadians(
-                UniversalFunctions.normalizeAngleDegrees(Math.toDegrees(Math.atan2(y, x)),
-                UniversalFunctions.normalizeAngleDegrees(getGyroAngle()))
-        );
-
-        if (rad < UniversalConstants.Triggered.STICK) {
-            drivetrain.setLeftPow(0.001);
-            drivetrain.setRightPow(0.001);
-
-        } else {
+    public void loop() {
+        drivetrain.maxSpeed = 0.5;
+        setRobotAngle();
+        updateGamepad1();
+        double angleBetween = UniversalFunctions.normalizeAngleRadians(leftStick1.angle(), robotAngle.angle());
+        if (leftStick1.magnitude() > UniversalConstants.Triggered.STICK) {
             switch (drivetrain.direction) {
                 case FOR:
-                    double sin = Math.sin(angleBetween);
                     if (Math.sin(angleBetween) < 0 && drivetrain.turn) {
                         drivetrain.direction = Drivetrain.Direction.BACK;
                         drivetrain.directionMult *= -1;
                         drivetrain.turn = false;
-                    } else if (Math.sin(angleBetween) >= 0) {
+                    } else if (Math.sin(angleBetween) >= 0)
                         drivetrain.turn = true;
-                    }
-
                     break;
 
                 case BACK:
-                    sin = Math.sin(angleBetween);
                     if (Math.sin(angleBetween) > 0 && drivetrain.turn) {
                         drivetrain.direction = Drivetrain.Direction.FOR;
                         drivetrain.turn = false;
                         drivetrain.directionMult *= -1;
-                    } else if (Math.sin(angleBetween) <= 0) {
+                    } else if (Math.sin(angleBetween) <= 0)
                         drivetrain.turn = true;
-                    }
-
                     break;
             }
 
             double cos = Math.cos(angleBetween);
-
-            switch(drivetrain.turnState){
-                case FAST:
-                    double fsTurn = Math.abs(cos) + 1;
-                    double lp = -rad * drivetrain.directionMult - drivetrain.directionMult* fsTurn * cos;
-                    double rp = -rad * drivetrain.directionMult + drivetrain.directionMult * fsTurn * cos;
-
-                    drivetrain.setLeftPow(lp);
-                    drivetrain.setRightPow(rp);
-
-                    if(switchTurnState){
-                        drivetrain.turnState = TankDT.FCTurnState.SMOOTH;
-                        switchTurnState = false;
-                        canSwitchTurnState = false;
-                    } else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER){
-                        switchTurnState = false;
-                        canSwitchTurnState = true;
-                    } else if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState)
-                        switchTurnState = true;
-                    break;
-
-                case SMOOTH:
-                    if (cos > 0) {
-                        lp = drivetrain.directionMult * rad;
-                        rp = drivetrain.directionMult * -Math.cos(2 * angleBetween) * rad;
-                    } else {
-                        lp = drivetrain.directionMult * rad;
-                        rp = drivetrain.directionMult * -Math.cos(2 * angleBetween) * rad;
-                    }
-
-                    if (switchTurnState) {
-                        drivetrain.turnState = TankDT.FCTurnState.FAST;
-                        switchTurnState = false;
-                        canSwitchTurnState = false;
-                    } else if(gamepad1.left_trigger < UniversalConstants.Triggered.TRIGGER) {
-                        switchTurnState = false;
-                        canSwitchTurnState = true;
-                    } else if(gamepad1.left_trigger > UniversalConstants.Triggered.TRIGGER && canSwitchControlState) {
-                        switchTurnState = true;
-                    }
-
-                    break;
+            double turnMult = Math.abs(cos) + 1;
+            double leftPow = drivetrain.directionMult * (leftStick1.magnitude() + turnMult * cos);
+            double rightPow = drivetrain.directionMult * (leftStick1.magnitude() - turnMult * cos);
+            if(gamepad1.left_trigger > 0.2){
+                drivetrain.setLeftPow(leftPow);
+                drivetrain.setRightPow(rightPow);
+                telemetry.addData("setPow functions are being used", "");
+            }
+            else {
+                drivetrain.leftFore.setPower(drivetrain.maxSpeed * leftPow);
+                drivetrain.leftRear.setPower(drivetrain.maxSpeed * leftPow);
+                drivetrain.rightFore.setPower(drivetrain.maxSpeed * rightPow);
+                drivetrain.rightRear.setPower(drivetrain.maxSpeed * rightPow);
             }
 
-            double fsTurn = Math.abs(cos) + 1;
-            double lp = -rad * drivetrain.directionMult - drivetrain.directionMult* fsTurn * cos;
-            double rp = -rad * drivetrain.directionMult + drivetrain.directionMult * fsTurn * cos;
-
-            drivetrain.setLeftPow(lp);
-            drivetrain.setRightPow(rp);
-        }
-
-        telemetry.addData("leftvect1", x + " " + y);
-        telemetry.addData("leftPower", drivetrain.leftPow);
-        telemetry.addData("rightPower", drivetrain.rightPow);
-        telemetry.addData("direction", drivetrain.direction);
-        telemetry.addData("turn", drivetrain.turn);
-        telemetry.addData("sin", Math.sin(angleBetween));
-        telemetry.addData("angleBetween", angleBetween);
-    }
-
-    public void refreshStartAngle() {
-        if (gamepad1.left_stick_button) {
-            startAngle = Math.toDegrees(leftStick1.angleBetween(robotAngle));
-            leftStick1.x = 0;
-            leftStick1.y = 0;
+            telemetry.addData("leftPow", leftPow);
+            telemetry.addData("left rear pow", drivetrain.leftRear.getPower());
+            telemetry.addData("left fore pow", drivetrain.leftFore.getPower());
+            telemetry.addData("right", rightPow);
+            telemetry.addData("right rear pow", drivetrain.rightRear.getPower());
+            telemetry.addData("right fore pow", drivetrain.rightFore.getPower());
+        } else {
+            drivetrain.leftFore.setPower(0);
+            drivetrain.leftRear.setPower(0);
+            drivetrain.rightFore.setPower(0);
+            drivetrain.rightRear.setPower(0);
         }
     }
 }

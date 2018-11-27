@@ -13,7 +13,6 @@ import org.firstinspires.ftc.teamcode.Vision.Detectors.BlockDetector;
 import org.opencv.core.Point;
 
 import ftc.vision.Detector;
-@Disabled
 @Autonomous(name = "block detector test", group = "none")
 public class VisionTest extends WestBot15 {
     BlockDetector detector;

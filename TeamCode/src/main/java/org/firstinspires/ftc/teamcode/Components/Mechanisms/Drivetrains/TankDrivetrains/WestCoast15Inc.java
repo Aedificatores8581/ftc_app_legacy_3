@@ -36,7 +36,6 @@ public class WestCoast15Inc extends TankDT {
 
     @Override
     public double averageRightEncoders() { return 0; }
-    @Override
     public double averageEncoders() { return 0; }
     @Override
     public double averageLeftEncoders() { return 0; }

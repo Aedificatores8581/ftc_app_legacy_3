@@ -92,10 +92,6 @@ public abstract class RobitBot extends Robot {
             return rightMotor.getCurrentPosition();
         }
 
-        @Override
-        public double averageEncoders() {
-            return (averageLeftEncoders() + averageRightEncoders()) /2;
-        }
     };
 
     @Override

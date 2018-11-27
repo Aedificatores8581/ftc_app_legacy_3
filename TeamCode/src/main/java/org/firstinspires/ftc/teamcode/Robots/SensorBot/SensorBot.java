@@ -61,10 +61,6 @@ public abstract class SensorBot extends Robot {
             return 0;
         }
 
-        @Override
-        public double averageEncoders() {
-            return (lm.getCurrentPosition() + rm.getCurrentPosition()) / 2;
-        }
     };
     @Override
     public void init(){

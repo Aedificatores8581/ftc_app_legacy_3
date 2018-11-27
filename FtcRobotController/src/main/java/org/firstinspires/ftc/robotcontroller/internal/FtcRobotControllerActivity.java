@@ -122,8 +122,8 @@ import ftc.vision.Frame;
 @SuppressWarnings("WeakerAccess")
 public class FtcRobotControllerActivity extends Activity {
 
-    static final int FRAME_WIDTH_REQUEST = 176 * 20;
-    static final int FRAME_HEIGHT_REQUEST = 144 * 20;
+    static final int FRAME_WIDTH_REQUEST = 960;
+    static final int FRAME_HEIGHT_REQUEST = 720;
 
     // Loads camera view of OpenCV for us to use. This lets us see using OpenCV
     private CameraBridgeViewBase cameraBridgeViewBase;

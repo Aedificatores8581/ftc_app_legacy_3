@@ -26,8 +26,8 @@ public class MotorTest2 extends OpMode {
     public void loop(){
         rightfront.setPower(gamepad1.right_stick_y);
         rightback.setPower(gamepad1.right_stick_y);
-        leftback.setPower(gamepad1.left_stick_y);
-        leftfront.setPower(gamepad1.left_stick_y);
+        leftback.setPower(-gamepad1.left_stick_y);
+        leftfront.setPower(-gamepad1.left_stick_y);
         telemetry.addData("rightfront", rightfront.getPower());
         telemetry.addData("rightback", rightback.getPower());
         telemetry.addData("leftfront", leftfront.getPower());

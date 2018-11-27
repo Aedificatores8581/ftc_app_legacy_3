@@ -9,7 +9,7 @@ public abstract class Drivetrain {
     public static final DcMotor.Direction FORWARD  = DcMotor.Direction.FORWARD,
                                           REVERSE  = DcMotor.Direction.REVERSE;
     public double minTurn;
-    public double maxSpeed = 0.2;
+    public double maxSpeed;
 
     public enum Direction {FOR, BACK}
 

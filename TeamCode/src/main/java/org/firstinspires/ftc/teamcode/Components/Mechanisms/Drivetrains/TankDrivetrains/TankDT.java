@@ -146,7 +146,6 @@ public abstract class TankDT extends Drivetrain {
                 case FOR:
                     directionMult = 1;
                     break;
-
                 case BACK:
                     directionMult = -1;
                     break;
@@ -162,7 +161,6 @@ public abstract class TankDT extends Drivetrain {
                     leftPow = -rightPow;
                 }
                 break;
-
             case BACK:
                 directionMult = -1;
                 if (Math.sin(angleBetween) > 0) {

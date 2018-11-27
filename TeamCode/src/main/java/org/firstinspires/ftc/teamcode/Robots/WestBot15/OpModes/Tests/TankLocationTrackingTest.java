@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.Universal.Math.Vector2;
 /**
  * Created by Frank Portman on 6/17/2018
  */
-@Disabled
 @TeleOp(name = "Location tracking test", group = "WestBot15")
 public class TankLocationTrackingTest extends WestBot15 {
     double leftEncVal = 0, rightEncVal = 0, radius, angle, totalAngle = 0;

@@ -61,9 +61,9 @@ public class AutoScaleCraterTest extends WestBot15 {
         }
 
         if (!onCrater) {
-			drivetrain.setRightPow(0.2);
-			drivetrain.setLeftPow(0.2);
-		}
+            drivetrain.setRightPow(0.2);
+            drivetrain.setLeftPow(0.2);
+        }
 
         drivetrain.updateEncoders();
 
