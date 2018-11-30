@@ -26,7 +26,8 @@ public class DriveBotFieldCentricTest extends WestBot15 {
         activateGamepad1();
         drivetrain.controlState = TankDT.ControlState.TANK;
         drivetrain.turnState = TankDT.FCTurnState.FAST;
-        drivetrain.direction = TankDT.Direction.FOR;
+        drivetrain.direction = TankDT.Direction.BACK;
+        drivetrain.directionMult = 1;
     }
 
     @Override
@@ -63,8 +64,8 @@ public class DriveBotFieldCentricTest extends WestBot15 {
 
             double cos = Math.cos(angleBetween);
             double turnMult = Math.abs(cos) + 1;
-            double leftPow = drivetrain.directionMult * (leftStick1.magnitude() + turnMult * cos);
-            double rightPow = drivetrain.directionMult * (leftStick1.magnitude() - turnMult * cos);
+            double leftPow = drivetrain.directionMult * (leftStick1.magnitude() - turnMult * cos);
+            double rightPow = drivetrain.directionMult * (leftStick1.magnitude() + turnMult * cos);
             if(gamepad1.left_trigger > 0.2){
                 drivetrain.setLeftPow(leftPow);
                 drivetrain.setRightPow(rightPow);

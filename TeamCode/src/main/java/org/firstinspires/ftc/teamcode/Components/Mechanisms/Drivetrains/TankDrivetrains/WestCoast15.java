@@ -18,11 +18,10 @@ public class WestCoast15 extends TankDT {
     public MotorEncoder rfEncoder, lfEncoder, lrEncoder, rrEncoder;
     public DcMotor.ZeroPowerBehavior zeroPowerBehavior;
     //TODO: Find this value
-    public final double MAX_ENC_VAL = 3036;
 
     public WestCoast15() {
         ENC_PER_INCH = 140 / Math.PI;
-        DISTANCE_BETWEEN_WHEELS = 390.9515 / 25.4;
+        DISTANCE_BETWEEN_WHEELS = 391.60085 / 25.4;
         zeroPowerBehavior = DcMotor.ZeroPowerBehavior.FLOAT;
         maxSpeed = 1;
         leftMotors = new DcMotor[]{leftFore, leftRear};
@@ -30,6 +29,8 @@ public class WestCoast15 extends TankDT {
     }
 
     public WestCoast15(DcMotor.ZeroPowerBehavior zeroPowBehavior, double speed) {
+        ENC_PER_INCH = 140 / Math.PI;
+        DISTANCE_BETWEEN_WHEELS = 391.60085 / 25.4;
         zeroPowerBehavior = zeroPowBehavior;
         maxSpeed = speed;
 

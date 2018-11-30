@@ -35,7 +35,7 @@ public class CraterAuto1 extends WestBot15 {
     Orientation angle;
 
     private final static int ON_CRATER_RIM_THRESHOLD = 60;
-
+    AutoState autoState = AutoState.LOWER;
     public void init(){
         drivetrain.position = new Pose();
         msStuckDetectInit = 500000;
@@ -48,7 +48,7 @@ public class CraterAuto1 extends WestBot15 {
         gyroAngles = new GyroAngles(angle);
         normalizeGyroAngle();
         drivetrain.controlState = TankDT.ControlState.FIELD_CENTRIC;
-        drivetrain.direction = TankDT.Direction.FOR;
+        drivetrain.direction = TankDT.Direction.BACK;
         drivetrain.leftFore.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         drivetrain.leftFore.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         drivetrain.leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -69,75 +69,69 @@ public class CraterAuto1 extends WestBot15 {
     }
 
     public void loop(){
-        updateLocation(drivetrain.averageLeftEncoders() - prevLeft, drivetrain.averageRightEncoders() - prevRight);
-        prevLeft = drivetrain.averageLeftEncoders();
-        prevRight = drivetrain.averageRightEncoders();
-        setRobotAngle();
-        drivetrain.maxSpeed = 0.2;
+        switch (autoState) {
+            case LOWER:
+                break;
+            case SAMPLE:
+            updateLocation(drivetrain.averageLeftEncoders() - prevLeft, drivetrain.averageRightEncoders() - prevRight);
+            prevLeft = drivetrain.averageLeftEncoders();
+            prevRight = drivetrain.averageRightEncoders();
+            setRobotAngle();
+            drivetrain.maxSpeed = 0.2;
 
 
-        Vector2 temp = new Vector2(-detector.element.x, detector.element.y);
-        temp.x += 640/ 2;
-        temp.y -= 480 / 2;
+            Vector2 temp = new Vector2(-detector.element.x, detector.element.y);
+            temp.x += 640 / 2;
+            temp.y -= 480 / 2;
 
-        double vertAng = temp.y / 480 * motoG4.rearCamera.horizontalAngleOfView() - 0.364773814;
-        double horiAng = temp.x / 640 * motoG4.rearCamera.verticalAngleOfView();
+            double vertAng = temp.y / 480 * motoG4.rearCamera.horizontalAngleOfView();
+            double horiAng = temp.x / 640 * motoG4.rearCamera.verticalAngleOfView();
 
-        double newY = (motoG4.getLocation().z - 2 / 2) / Math.tan(-vertAng);
-        double newX = newY * Math.tan(horiAng);
-        if(UniversalFunctions.getTimeInSeconds() - startTime > 1 && !hasDrove) {
-            hasDrove = true;
-            sampleVect = new Vector2(newX - motoG4.getLocation().x, newY + motoG4.getLocation().y);
+            double newY = (motoG4.getLocation().z - 2 / 2) / Math.tan(-vertAng - 0.364773814);
+            double newX = newY * Math.tan(horiAng);
+            newY *= -1;
+            if (UniversalFunctions.getTimeInSeconds() - startTime > 1 && !hasDrove) {
+                hasDrove = true;
+                sampleVect = new Vector2(newX - motoG4.getLocation().x, newY + motoG4.getLocation().y);
 
-        }
-        if(!hasDrove && !hasDriven) {
-            hasDriven = true;
-            hardNewY = newY;
-            rightEncPosition = drivetrain.averageRightEncoders();
-            leftEncPosition = drivetrain.averageLeftEncoders();
-        }
-        else
-            hasDriven = true;
-        if(hasDrove){
-
-            if(hasDriven){
-                Vector2 newVect = new Vector2(sampleVect.x, sampleVect.y);
+            }
+            if (!hasDrove && !hasDriven) {
+                hasDriven = true;
+                hardNewY = newY;
                 rightEncPosition = drivetrain.averageRightEncoders();
                 leftEncPosition = drivetrain.averageLeftEncoders();
-
-                if(!parking) {
+            } else
+                hasDriven = true;
+            if (hasDrove) {
+                if (!hasDriven) {
+                    Vector2 newVect = new Vector2(sampleVect.x, sampleVect.y);
+                    rightEncPosition = drivetrain.averageRightEncoders();
+                    leftEncPosition = drivetrain.averageLeftEncoders();
                     drivetrain.updateEncoders();
-                    newVect.x -= robotPose.x;
-                    newVect.y -= robotPose.y;
+                    drivetrain.updateLocation(leftEncPosition - prevLeft, rightEncPosition - prevRight);
+                    prevLeft = leftEncPosition;
+                    prevRight = rightEncPosition;
                     newVect.setFromPolar(UniversalFunctions.clamp(0, sampleVect.magnitude(), 1), sampleVect.angle());
                     drivetrain.teleOpLoop(newVect, new Vector2(), robotAngle);
                     drivetrain.setLeftPow();
                     drivetrain.setRightPow();
-                }
-
-                if(!parking && newVect.magnitude() < 4) {
-                    parking = true;
-                    newVect.setFromPolar(sampleVect.magnitude(), - sampleVect.angle());
-                }
-                if(parking){
-                    if(!onCrater) {
-                        drivetrain.teleOpLoop(newVect, new Vector2(), robotAngle);
-                        drivetrain.setLeftPow();
-                        drivetrain.setRightPow();
+                    if (drivetrain.position.radius() - sampleVect.magnitude() < 6) {
+                        hasDriven = true;
+                        drivetrain.setLeftPow(-drivetrain.leftPow);
+                        drivetrain.setRightPow(-drivetrain.rightPow);
                     }
-                    else{
-                        drivetrain.setRightPow(0);
-                        drivetrain.setLeftPow(0);
-                    }
-                    if (Math.abs(gyroAngles.getY()) > ON_CRATER_RIM_THRESHOLD) {
-                        onCrater = true;
-                    } else {
-                        onCrater = false;
-                    }
-
                 }
+                else
+                    if(drivetrain.position.radius() < 6)
+                        autoState = AutoState.CLAIM;
+                break;
             }
-        }
+            case CLAIM:
+                drivetrain.teleOpLoop(new Vector2(84.85, -16.1), new Vector2(), robotAngle);
+                break;
+            case PARK:
+                drivetrain.teleOpLoop(new Vector2(Math.sqrt(2)/2, Math.sqrt(2) / 2), new Vector2(), 0);
+                break;
         /*if(hasDrove) {
             drivetrain.updateLocation(drivetrain.averageLeftEncoders() - prevLeft0, drivetrain.averageRightEncoders() - prevRight);
             prevLeft0 = drivetrain.averageLeftEncoders();
@@ -149,8 +143,7 @@ public class CraterAuto1 extends WestBot15 {
                 drivetrain.setRightPow(0);
             }
         }*/
-        telemetry.addData("horiAng: ", Math.toDegrees(horiAng));
-        telemetry.addData("robot ang: ", Math.toDegrees(robotAngle.angle()));
+        }telemetry.addData("robot ang: ", Math.toDegrees(robotAngle.angle()));
         telemetry.addData("left pow", drivetrain.leftFore.getPower());
         telemetry.addData("sampleVect, ", sampleVect);
         telemetry.addData("desired distance, ", drivetrain.ENC_PER_INCH * hardNewY);
